@@ -6,7 +6,6 @@ import Welcome from './pages/Welcome.vue';
 
 import store from './store/store'
 
-
 function authGuard(to, from, next)
 {
     var isAuthenticated= false;
@@ -16,33 +15,26 @@ function authGuard(to, from, next)
     isAuthenticated = true;
     else
     isAuthenticated= false;
+    
     if(isAuthenticated) 
-    {
-        next(); // allow to enter route
-    } 
+    next(); // allow to enter route
     else
-    {
-        next({name: 'login'}); // go to '/login';
-    }
+    next({name: 'login'}); // go to '/login';
 }
 
 function guestGuard(to, from, next)
 {
     var isAuthenticated= false;
-    //this is just an example. You will have to find a better or 
-    // centralised way to handle you localstorage data handling 
+    
     if(store.getters.loggedIn)
     isAuthenticated = true;
     else
     isAuthenticated= false;
+
     if(!isAuthenticated) 
-    {
-        next(); // allow to enter route
-    } 
+    next(); 
     else
-    {
-        next({name: 'home'}); // go to '/login';
-    }
+    next({name: 'home'});
 }
 
 export const routes = [
