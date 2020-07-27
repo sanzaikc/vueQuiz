@@ -1,11 +1,11 @@
 <template>
   <div class="mx-auto col-md-4 p-4 rounded bg-light">
     <b-form @submit.prevent="onSubmit">
-      <b-form-group id="input-group-1" label="Name:" label-for="name">
+      <b-form-group id="input-group-1" label="Name" label-for="name">
         <b-form-input id="name" v-model="form.name" type="text" required placeholder="Enter Name "></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-2" label="Email:" label-for="email">
+      <b-form-group id="input-group-2" label="Email" label-for="email">
         <b-form-input
           id="email"
           v-model="form.email"
@@ -60,7 +60,6 @@ export default {
         name: "",
         email: "",
         password: "",
-        password_confirmation: "",
       },
     };
   },
