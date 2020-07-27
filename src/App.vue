@@ -1,25 +1,25 @@
 <template>
-    <div class="container">
-      <navbar></navbar>
-      <transition name="slide-fade" mode="out-in">
-        <router-view></router-view>
-      </transition>
-    </div>
+  <div class="container bg-light">
+    <navbar></navbar>
+    <transition name="slide-fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
+  </div>
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue'
+import Navbar from "./components/Navbar.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Navbar,
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
-  /*** TRANSITIONS ***/
+/*** TRANSITIONS ***/
 .fade-enter {
   opacity: 0;
 }

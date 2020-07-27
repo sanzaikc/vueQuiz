@@ -28,6 +28,18 @@ const actions = {
             });
         });
     },
+    register: (context, credentials) => {
+        return new Promise((resolve, reject)=>{
+            axios.post('/register', credentials)
+            .then(res => {
+                resolve(res);
+            })
+            .catch(error => {
+                console.log(error.response.data);
+                reject(error);
+            });
+        });
+    },
     logout: (context) => {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
         if(context.getters.loggedIn) {
