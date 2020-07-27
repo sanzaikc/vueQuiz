@@ -79,6 +79,7 @@
     },
     methods: {
       onSubmit() {
+        this.$store.dispatch('register')
         // axios.post('/register',  this.form )
         // .then(res =>{
         //     localStorage.setItem('token', JSON.stringify(res.data.token));

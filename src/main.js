@@ -24,6 +24,31 @@ const router = new VueRouter({
   routes,
 });
 
+// Navigation Guard 
+router.beforeEach((to, from, next) => {
+  // this route requires auth, check if loggedIn 
+  // if not, redirect to login 
+  if(to.matched.some(record => record.meta.requiresAuth)){
+    if(!store.getters.loggedIn){
+      next({
+        name: 'login',
+        query: { redirect: to.fullPath }
+      });
+    }else{
+      next();
+    }
+  }else if(to.matched.some(record => record.meta.requiresVisitor)){
+    if(store.getters.loggedIn){
+      next({
+        name: 'home',
+        query: { redirect: to.fullPath }
+      });
+    }else{
+       next();
+    }
+  }
+});
+
 
 new Vue({
   router,
