@@ -1,8 +1,49 @@
-import Login from './components/Auth/Login.vue';
-import Register from './components/Auth/Register.vue';
-import Logout from './components/Auth/Logout.vue';
-import Home from './components/Home.vue';
-import Welcome from './components/Welcome.vue';
+import Login from './pages/auth/Login.vue';
+import Register from './pages/auth/Register.vue';
+import Logout from './pages/auth/Logout.vue';
+import Home from './pages/Home.vue';
+import Welcome from './pages/Welcome.vue';
+
+import store from './store/store'
+
+
+function authGuard(to, from, next)
+{
+    var isAuthenticated= false;
+    //this is just an example. You will have to find a better or 
+    // centralised way to handle you localstorage data handling 
+    if(store.getters.loggedIn)
+    isAuthenticated = true;
+    else
+    isAuthenticated= false;
+    if(isAuthenticated) 
+    {
+        next(); // allow to enter route
+    } 
+    else
+    {
+        next({name: 'login'}); // go to '/login';
+    }
+}
+
+function guestGuard(to, from, next)
+{
+    var isAuthenticated= false;
+    //this is just an example. You will have to find a better or 
+    // centralised way to handle you localstorage data handling 
+    if(store.getters.loggedIn)
+    isAuthenticated = true;
+    else
+    isAuthenticated= false;
+    if(!isAuthenticated) 
+    {
+        next(); // allow to enter route
+    } 
+    else
+    {
+        next({name: 'home'}); // go to '/login';
+    }
+}
 
 export const routes = [
     { 
@@ -14,23 +55,24 @@ export const routes = [
         path: '/home', 
         component: Home, 
         name: 'home', 
-        meta: { requiresAuth: true } 
+        beforeEnter: authGuard,
     },
     { 
         path: '/login', 
         component: Login, 
         name: 'login', 
-        meta: { requiresVisitor: true } 
+        beforeEnter: guestGuard,
     },
     { 
         path: '/register', 
         component: Register, 
         name: 'register',
-         meta: { requiresVisitor: true } 
-        },
+        beforeEnter: guestGuard,
+    },
     { 
         path: '/logout', 
         component: Logout, 
         name: 'logout' 
     },
 ];
+
