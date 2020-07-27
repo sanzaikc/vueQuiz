@@ -7,6 +7,9 @@ const state = {
 const mutations = {
     retrieveToken: (state, token) => {
         state.token = token;
+    },
+    destroyToken: (state) => {
+        state.token = null;
     }
 };
 const actions = {
@@ -24,10 +27,30 @@ const actions = {
                 reject(error);
             });
         });
+    },
+    logout: (context) => {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+        if(context.getters.loggedIn) {
+            return new Promise((resolve, reject)=>{
+                axios.post('/logout')
+                .then(res => {
+                    localStorage.removeItem('access_token');
+                    context.commit('destroyToken');
+                    resolve(res);
+                })
+                .catch(error => {
+                    localStorage.removeItem('access_token');
+                    context.commit('destroyToken');
+                    reject(error);
+                });
+            });
+        }   
     }
 };
 const getters = {
-    
+    loggedIn: state => {
+        return state.token != null;
+    }
 };
 
 export default {
