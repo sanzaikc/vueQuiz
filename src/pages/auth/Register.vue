@@ -53,7 +53,7 @@
                 <small
                     class="text-primary mb-2"
                     role="button"
-                    @click.exact="showPassword = !showPassword"
+                    @click="showPassword = !showPassword"
                     v-text="showPassword ? 'Hide password' : 'Show password'"
                     ></small>
               </div>
@@ -69,7 +69,7 @@
             </b-form-group>
         </validation-provider>
 
-        <b-button type="submit" variant="outline-primary" class="w-100">
+        <b-button type="submit" variant="outline-primary" class="w-100" :disabled="isLoading">
           {{ isLoading ? 'Registering' : 'Register' }} <b-spinner v-if="isLoading" small type="grow" class="ml-2"></b-spinner>
         </b-button>
 

@@ -39,7 +39,7 @@
                 <small
                     class="text-primary mb-2"
                     role="button"
-                    @click.exact="showPassword = !showPassword"
+                    @click="showPassword = !showPassword"
                     v-text="showPassword ? 'Hide password' : 'Show password'"
                     ></small>
               </div>
@@ -57,7 +57,7 @@
 
         <div class="d-flex flex-column align-items-start">
           <router-link :to="{}" tag="b-link" class="text-center mb-3">Forgot password?</router-link>
-          <b-button type="submit" variant="outline-primary w-100">
+          <b-button type="submit" variant="outline-primary w-100" :disabled="isLoading">
             {{ isLoading ? 'Logging in' : 'Login' }} <b-spinner v-if="isLoading" small type="grow" class="ml-2"></b-spinner>
           </b-button>
         </div>
@@ -69,14 +69,6 @@
 
 <script>
 export default {
-  // created(){
-  //   let token = JSON.parse(localStorage.getItem('token'));
-  //   if(token) axios.get('/users/me', { headers: {
-  //       'Authorization': 'Bearer '+ token,
-  //   }})
-  //   .then(this.$router.push({name:'home'})
-  //   )
-  // },
   created() {
     document.title = "Login";
   },
@@ -106,7 +98,6 @@ export default {
         })
         .catch(error => {
           this.isLoading = false;
-          console.log(error.response.data);
           this.serverError = error.response.data.message;
         });
     },

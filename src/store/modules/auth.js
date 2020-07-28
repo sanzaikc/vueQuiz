@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const state = {
     token: localStorage.getItem('accessToken') || null, 
-    currentUser: localStorage.getItem('currentUser') || null,
+    currentUser: JSON.parse(localStorage.getItem('currentUser')) || null,
 };
 const mutations = {
     retrieveToken: (state, token) => {

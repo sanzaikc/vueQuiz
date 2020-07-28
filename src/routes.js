@@ -18,7 +18,7 @@ function authGuard(to, from, next)
     else
     isAuthenticated= false;
     
-    if(isAuthenticated) 
+    if(isAuthenticated)
     next(); // allow to enter route
     else
     next({name: 'login'}); // go to '/login';
@@ -74,6 +74,9 @@ export const routes = [
         component: Admin, 
         name: 'admin', 
         beforeEnter: authGuard,
+        children: [
+            
+        ],
     },
 ];
 
