@@ -1,10 +1,20 @@
 <template>
     <div>
-        <h2>Admin</h2>
-        <router-link :to="{ name:'users' }" tag="b-nav-item">Users</router-link>
-        <router-link :to="{ name:'categories' }" tag="b-nav-item">Categories</router-link>
+        <div>
+            <b-card title="Card Title" no-body>
+                <b-card-header header-tag="nav">
+                    <b-nav card-header tabs>
+                        <router-link :to="{ name: 'users' }" tag="b-nav-item" active="window.location.pathname === '/admin'">Users</router-link>
+                        <router-link :to="{ name: 'categories' }" tag="b-nav-item" active-class="active">Categories</router-link>
+                    </b-nav>
+                </b-card-header>
+
+                <b-card-body>
+                <router-view></router-view>
+                </b-card-body>
+            </b-card>
+        </div>
         <hr>
-        <router-view></router-view>
     </div>
 </template>
 

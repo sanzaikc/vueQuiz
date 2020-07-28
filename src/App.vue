@@ -1,10 +1,14 @@
 <template>
-  <div class="container bg-light">
-    <div v-if="isLoading">Loading...</div>
+  <div class="container bg-light vh-100">
+    <div v-if="isLoading" class="vh-100 d-flex justify-content-center align-items-center">
+      <b-spinner variant="primary mr-2" type="grow" label="Spinning"></b-spinner>
+      <b-spinner style="width: 3rem; height: 3rem;" variant="primary " type="grow" label="Spinning"></b-spinner>
+      <b-spinner variant="primary ml-2" type="grow" label="Spinning"></b-spinner>
+    </div>
     <div v-else>
       <navbar></navbar>
       <transition name="slide-fade" mode="out-in">
-        <router-view></router-view>
+        <router-view class="py-4"></router-view>
       </transition>
     </div>
   </div>
