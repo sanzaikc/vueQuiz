@@ -51,16 +51,19 @@ export const routes = [
 		name: "admin",
 		beforeEnter: adminGuard,
         meta: { auth: true },
+        redirect: {
+            name: 'admin.users'
+        },
         children: [
             {
-                path: '',
+                path: 'users',
                 component: User,
-                name: 'users'
+                name: 'admin.users'
             },
             {
                 path: 'categories',
                 component: Category,
-                name: 'categories'
+                name: 'admin.categories'
             }
         ]
 	},
