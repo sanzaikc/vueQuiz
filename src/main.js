@@ -36,6 +36,33 @@ const router = new VueRouter({
   routes,
 });
 
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.auth)) {
+		if (!store.getters.loggedIn) {
+			next({
+				path: "/login",
+			});
+		} else {
+			next();
+		}
+	} else if (to.matched.some((record) => record.meta.guest)) {
+		if (store.getters.loggedIn) {
+			if (store.getters.currentUser.is_admin)
+				next({
+					path: "/admin",
+				});
+			else
+				next({
+					path: "/home",
+				});
+		} else {
+			next();
+		}
+	} else {
+		next();
+	}
+})
+
 new Vue({
   router,
   store,

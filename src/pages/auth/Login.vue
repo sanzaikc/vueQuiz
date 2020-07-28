@@ -94,6 +94,9 @@ export default {
       this.isLoading = true;
       this.$store.dispatch("login", this.form)
         .then(() => {
+          if(this.$store.getters.currentUser.is_admin)
+          this.$router.push({name: "admin"});
+          else
           this.$router.push({ name: "home" });
         })
         .catch(error => {

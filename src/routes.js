@@ -4,79 +4,65 @@ import Logout from './pages/auth/Logout.vue';
 import Home from './pages/Home.vue';
 import Welcome from './pages/Welcome.vue';
 import Admin from './pages/admin/Admin.vue';
+import User from './pages/admin/User.vue';
+import Category from './pages/admin/Category.vue';
 
+import store from './store/store';
 
-import store from './store/store'
-
-function authGuard(to, from, next)
-{
-    var isAuthenticated= false;
-    //this is just an example. You will have to find a better or 
-    // centralised way to handle you localstorage data handling 
-    if(store.getters.loggedIn)
-    isAuthenticated = true;
-    else
-    isAuthenticated= false;
-    
-    if(isAuthenticated)
-    next(); // allow to enter route
-    else
-    next({name: 'login'}); // go to '/login';
-}
-
-function guestGuard(to, from, next)
-{
-    var isAuthenticated= false;
-    
-    if(store.getters.loggedIn)
-    isAuthenticated = true;
-    else
-    isAuthenticated= false;
-
-    if(!isAuthenticated) 
-    next(); 
-    else
-    next({name: 'home'});
+function adminGuard(to, from, next) {
+	if (store.getters.loggedIn && store.getters.currentUser.is_admin) next();
+	else next({ name: "home" });
 }
 
 export const routes = [
-    { 
-        path: '', 
-        component: Welcome, 
-        name: 'welcome', 
-    },
-    { 
-        path: '/login', 
-        component: Login, 
-        name: 'login', 
-        props: true,
-        beforeEnter: guestGuard,
-    },
-    { 
-        path: '/register', 
-        component: Register, 
-        name: 'register',
-        beforeEnter: guestGuard,
-    },
-    { 
-        path: '/logout', 
-        component: Logout, 
-        name: 'logout' 
-    },
-    { 
-        path: '/home', 
-        component: Home, 
-        name: 'home', 
-        beforeEnter: authGuard,
-    },
-    {
-        path: '/admin',
-        component: Admin, 
-        name: 'admin', 
-        beforeEnter: authGuard,
+	{
+		path: "",
+		component: Welcome,
+		name: "welcome",
+		meta: { guest: true },
+	},
+	{
+		path: "/login",
+		component: Login,
+		name: "login",
+		props: true,
+		meta: { guest: true },
+	},
+	{
+		path: "/register",
+		component: Register,
+		name: "register",
+		meta: { guest: true },
+	},
+	{
+		path: "/logout",
+		component: Logout,
+		name: "logout",
+	},
+	{
+		path: "/home",
+		component: Home,
+		name: "home",
+		meta: { auth: true },
+	},
+	{
+		path: "/admin",
+		component: Admin,
+		name: "admin",
+		beforeEnter: adminGuard,
+        meta: { auth: true },
         children: [
-            
-        ],
-    },
+            {
+                path: '',
+                component: User,
+                name: 'users'
+            },
+            {
+                path: 'categories',
+                component: Category,
+                name: 'categories'
+            }
+        ]
+	},
 ];
 
