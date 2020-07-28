@@ -50,7 +50,9 @@
 
         <div class="d-flex flex-column align-items-start">
           <router-link :to="{}" tag="b-link" class="text-center mb-3">Forgot password?</router-link>
-          <b-button type="submit" variant="outline-primary w-100">Login</b-button>
+          <b-button type="submit" variant="outline-primary w-100">
+            {{ isLoading ? 'Loggin in' : 'Login' }} <b-spinner v-if="isLoading" small type="grow" class="ml-3"></b-spinner>
+          </b-button>
         </div>
       </b-form>
     </validation-observer>
@@ -74,6 +76,7 @@ export default {
   data() {
     return {
       showPassword: false,
+      isLoading: false,
       form: {
         email: "",
         password: "",
@@ -86,11 +89,13 @@ export default {
       return dirty || validated ? valid : null;
     },
     onLogin() {
+      this.isLoading = true;
       this.$store.dispatch("login", this.form)
         .then(() => {
           this.$router.push({ name: "home" });
         })
         .catch(error => {
+          this.isLoading = false;
           console.log(error.response.data);
           this.serverError = error.response.data.message;
         });

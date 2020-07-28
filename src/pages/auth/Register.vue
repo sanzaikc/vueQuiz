@@ -3,7 +3,7 @@
 
     <validation-observer ref="observer" v-slot="{ handleSubmit }">
       <b-form @submit.prevent="handleSubmit(onRegister)">
-        <!-- <div v-if="serverError" class="text-danger mb-3">{{ serverError }}</div> -->
+        <div v-if="serverError" class="text-danger mb-3">{{ serverError }}</div>
         <validation-provider
             name="Name"
             :rules="{ required: true, min: 5 }"
@@ -65,7 +65,9 @@
             </b-form-group>
         </validation-provider>
 
-        <b-button type="submit" variant="outline-primary" class="w-100">Register</b-button>
+        <b-button type="submit" variant="outline-primary" class="w-100">
+          {{ isLoading ? 'Registering' : 'Register' }} <b-spinner v-if="isLoading" small type="grow" class="ml-3"></b-spinner>
+        </b-button>
 
       </b-form>
     </validation-observer>
@@ -90,11 +92,13 @@ export default {
   data() {
     return {
       showPassword: false,
+      isLoading: false,
       form: {
         name: "",
         email: "",
         password: "",
       },
+      serverError: '',
     };
   },
   methods: {
@@ -102,9 +106,17 @@ export default {
       return dirty || validated ? valid : null;
     },
     onRegister() {
-      this.$store.dispatch('register', this.form)
+      this.isLoading = true;
+
+        this.$store.dispatch('register', this.form)
         .then(() => {
+          this.isLoading = false;
           this.$router.push({ name: "login" });
+        })
+        .catch(error => {
+          this.isLoading = false;
+          this.form.email = '';
+          this.serverError = error.response.data.errors.email[0];
         });
     },
   },
