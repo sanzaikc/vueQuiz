@@ -2,7 +2,10 @@
   <div class="mx-auto col-md-4 p-4 rounded-lg bg-light">
     <validation-observer ref="observer" v-slot="{ handleSubmit }">
       <b-form @submit.prevent="handleSubmit(onLogin)">
-        <div v-if="serverError" class="text-danger mb-3">{{ serverError }}</div>
+
+        <b-alert v-if="serverError" variant="danger" show dismissible fade>
+         {{ serverError }}
+        </b-alert>
 
         <validation-provider
             name="Email"
