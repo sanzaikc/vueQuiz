@@ -1,13 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import {
-  ValidationObserver,
-  ValidationProvider,
-  extend,
-  localize
-} from "vee-validate";
-
 import en from "vee-validate/dist/locale/en.json";
 import * as rules from "vee-validate/dist/rules";
 
@@ -22,6 +15,13 @@ import Axios from 'axios'
 Axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
 
 import store from './store/store'
+
+import {
+  ValidationObserver,
+  ValidationProvider,
+  extend,
+  localize
+} from "vee-validate";
 
 // Install VeeValidate rules and localization
 Object.keys(rules).forEach(rule => {

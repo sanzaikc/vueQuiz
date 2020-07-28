@@ -1,41 +1,75 @@
 <template>
   <div class="mx-auto col-md-4 p-4 rounded bg-light">
-    <b-form @submit.prevent="onRegister">
-      <b-form-group id="input-group-1" label="Name" label-for="name">
-        <b-form-input id="name" v-model="form.name" type="text" required placeholder="Enter Name "></b-form-input>
-      </b-form-group>
 
-      <b-form-group id="input-group-2" label="Email" label-for="email">
-        <b-form-input
-          id="email"
-          v-model="form.email"
-          type="email"
-          required
-          placeholder="Enter email"
-        ></b-form-input>
-      </b-form-group>
+    <validation-observer ref="observer" v-slot="{ handleSubmit }">
+      <b-form @submit.prevent="handleSubmit(onRegister)">
+        <!-- <div v-if="serverError" class="text-danger mb-3">{{ serverError }}</div> -->
+        <validation-provider
+            name="Name"
+            :rules="{ required: true, min: 5 }"
+            v-slot="validationContext"
+          >
+          <b-form-group id="input-group-1" label="Name" label-for="name">
+              <b-form-input
+                id="name"
+                v-model="form.name"
+                placeholder="Enter name"
+                :state="getValidationState(validationContext)"
+                aria-describedby="input-1-live-feedback"
+              ></b-form-input>
+              <b-form-invalid-feedback id="input-1-live-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+            </b-form-group>
+        </validation-provider>
 
-      <b-form-group id="input-group-3">
-        <div class="d-flex justify-content-between align-items-center">
-          <label for="password">Password</label>
-          <small
-            class="text-primary mb-2"
-            role="button"
-            @click="showPassword = !showPassword"
-            v-text="showPassword ? 'Hide password' : 'Show password'"
-          ></small>
-        </div>
-        <b-form-input
-          id="password"
-          v-model="form.password"
-          :type="showPassword ? 'text' : 'password'"
-          required
-          placeholder="Enter Password"
-        ></b-form-input>
-      </b-form-group>
+        <validation-provider
+            name="Email"
+            :rules="{ required: true, email: true }"
+            v-slot="validationContext"
+          >
+          <b-form-group id="input-group-2" label="Email" label-for="email">
+              <b-form-input
+                id="email"
+                v-model="form.email"
+                placeholder="Enter email"
+                :state="getValidationState(validationContext)"
+                aria-describedby="input-2-live-feedback"
+              ></b-form-input>
+              <b-form-invalid-feedback id="input-2-live-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+            </b-form-group>
+        </validation-provider>
 
-      <b-button type="submit" variant="outline-primary" class="w-100">Register</b-button>
-    </b-form>
+        <validation-provider
+            name="Password"
+            :rules="{ required: true, min: 6}"
+            v-slot="validationContext"
+          >
+          <b-form-group id="input-group-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <label for="password">Password</label>
+                <small
+                    class="text-primary mb-2"
+                    role="button"
+                    @click.exact="showPassword = !showPassword"
+                    v-text="showPassword ? 'Hide password' : 'Show password'"
+                    ></small>
+              </div>
+              <b-form-input
+                id="password"
+                v-model="form.password"
+                placeholder="Enter Password"
+                :type="showPassword ? 'text' : 'password'"
+                :state="getValidationState(validationContext)"
+                aria-describedby="input-3-live-feedback"
+              ></b-form-input>
+              <b-form-invalid-feedback id="input-3-live-feedback">{{ validationContext.errors[0] }}</b-form-invalid-feedback>
+            </b-form-group>
+        </validation-provider>
+
+        <b-button type="submit" variant="outline-primary" class="w-100">Register</b-button>
+
+      </b-form>
+    </validation-observer>
+
   </div>
 </template>
 
@@ -64,15 +98,10 @@ export default {
     };
   },
   methods: {
+    getValidationState({ dirty, validated, valid = null }) {
+      return dirty || validated ? valid : null;
+    },
     onRegister() {
-      // axios.post('/register',  this.form )
-      // .then(res =>{
-      //     localStorage.setItem('token', JSON.stringify(res.data.token));
-      //     this.$route.push({name:'login'});
-      // })
-      // .catch(error => {
-      //     console.log(error.response.data);
-      // })
       this.$store.dispatch('register', this.form)
         .then(() => {
           this.$router.push({ name: "login" });
