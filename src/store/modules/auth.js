@@ -1,15 +1,25 @@
 import axios from 'axios'
 
 const state = {
-    token: localStorage.getItem('access_token') || null, 
-    currentUser: {},
+    token: localStorage.getItem('accessToken') || null, 
+    currentUser: localStorage.getItem('currentUser') || null,
 };
 const mutations = {
     retrieveToken: (state, token) => {
         state.token = token;
+        localStorage.setItem('accessToken', token);
     },
     destroyToken: (state) => {
         state.token = null;
+        localStorage.removeItem('accessToken');
+    },
+    setCurrentUser: (state, user) => {
+        state.currentUser = user;
+        localStorage.setItem('currentUser', JSON.stringify(user));
+    },
+    removeUser: (state) => {
+        state.currentUser = null;
+        localStorage.removeItem('currentUser');
     }
 };
 const actions = {
@@ -18,8 +28,11 @@ const actions = {
             axios.post('/login', credentials)
             .then(res => {
                 let token = res.data.token;
-                localStorage.setItem('access_token', token);
                 commit('retrieveToken', token);
+
+                let user = res.data.user;
+                commit('setCurrentUser', user);
+
                 resolve(res);
             })
             .catch(error => {
@@ -46,13 +59,13 @@ const actions = {
             return new Promise((resolve, reject)=>{
                 axios.post('/logout')
                 .then(res => {
-                    localStorage.removeItem('access_token');
                     context.commit('destroyToken');
+                    context.commit('removeUser');
                     resolve(res);
                 })
                 .catch(error => {
-                    localStorage.removeItem('access_token');
                     context.commit('destroyToken');
+                    context.commit('removeUser');
                     reject(error);
                 });
             });
@@ -62,6 +75,9 @@ const actions = {
 const getters = {
     loggedIn: state => {
         return state.token != null;
+    },
+    currentUser: state => {
+        return state.currentUser;
     }
 };
 

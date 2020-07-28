@@ -70,7 +70,7 @@
         </validation-provider>
 
         <b-button type="submit" variant="outline-primary" class="w-100">
-          {{ isLoading ? 'Registering' : 'Register' }} <b-spinner v-if="isLoading" small type="grow" class="ml-3"></b-spinner>
+          {{ isLoading ? 'Registering' : 'Register' }} <b-spinner v-if="isLoading" small type="grow" class="ml-2"></b-spinner>
         </b-button>
 
       </b-form>
@@ -80,16 +80,7 @@
 </template>
 
 <script>
-// import axios from 'axios';
 export default {
-  //   created(){
-  //   let token = JSON.parse(localStorage.getItem('token'));
-  //   if(token) axios.get('/users/me', { headers: {
-  //       'Authorization': 'Bearer '+ token,
-  //   }})
-  //   .then(this.$router.push({name:'home'})
-  //   )
-  // },
   created() {
     document.title = "Register Account";
   },
@@ -115,7 +106,7 @@ export default {
         this.$store.dispatch('register', this.form)
         .then(() => {
           this.isLoading = false;
-          this.$router.push({ name: "login" });
+          this.$router.push({ name: "login", params: { success:"User registered successfully, now login from here!"} });
         })
         .catch(error => {
           this.isLoading = false;

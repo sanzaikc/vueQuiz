@@ -3,6 +3,8 @@ import Register from './pages/auth/Register.vue';
 import Logout from './pages/auth/Logout.vue';
 import Home from './pages/Home.vue';
 import Welcome from './pages/Welcome.vue';
+import Admin from './pages/admin/Admin.vue';
+
 
 import store from './store/store'
 
@@ -44,15 +46,10 @@ export const routes = [
         name: 'welcome', 
     },
     { 
-        path: '/home', 
-        component: Home, 
-        name: 'home', 
-        beforeEnter: authGuard,
-    },
-    { 
         path: '/login', 
         component: Login, 
         name: 'login', 
+        props: true,
         beforeEnter: guestGuard,
     },
     { 
@@ -65,6 +62,18 @@ export const routes = [
         path: '/logout', 
         component: Logout, 
         name: 'logout' 
+    },
+    { 
+        path: '/home', 
+        component: Home, 
+        name: 'home', 
+        beforeEnter: authGuard,
+    },
+    {
+        path: '/admin',
+        component: Admin, 
+        name: 'admin', 
+        beforeEnter: authGuard,
     },
 ];
 

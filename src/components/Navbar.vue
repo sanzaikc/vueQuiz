@@ -22,6 +22,7 @@
               tag="b-nav-item"
             >Register</router-link>
           </li>
+          <li v-if="loggedIn" tag="b-nav-item" >{{ user.name }}</li>
           <li v-if="loggedIn">
             <router-link :to="{ name:'logout' }" tag="b-nav-item">Logout</router-link>
           </li>
@@ -37,9 +38,9 @@ export default {
     loggedIn() {
       return this.$store.getters.loggedIn;
     },
-  },
-  mounted() {
-    console.log(this.$router.currentRoute.path);
+    user(){
+      return this.$store.getters.currentUser ;
+    }
   },
 };
 </script>

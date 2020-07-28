@@ -1,33 +1,26 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import en from "vee-validate/dist/locale/en.json";
-import * as rules from "vee-validate/dist/rules";
-
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+import en from "vee-validate/dist/locale/en.json";
+import * as rules from "vee-validate/dist/rules";
+
 import VueRouter from 'vue-router'
 import {routes} from './routes'
+import store from './store/store'
 
 import Axios from 'axios'
 Axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
 
-import store from './store/store'
-
-import {
-  ValidationObserver,
-  ValidationProvider,
-  extend,
-  localize
-} from "vee-validate";
+import { ValidationObserver, ValidationProvider, extend, localize } from "vee-validate";
 
 // Install VeeValidate rules and localization
 Object.keys(rules).forEach(rule => {
   extend(rule, rules[rule]);
 });
-
 localize("en", en);
 
 Vue.use(BootstrapVue);

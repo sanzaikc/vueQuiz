@@ -3,6 +3,10 @@
     <validation-observer ref="observer" v-slot="{ handleSubmit }">
       <b-form @submit.prevent="handleSubmit(onLogin)">
 
+        <b-alert v-if="successMessage" variant="success" show dismissible fade>
+         {{ successMessage }}
+        </b-alert>
+
         <b-alert v-if="serverError" variant="danger" show dismissible fade>
          {{ serverError }}
         </b-alert>
@@ -54,7 +58,7 @@
         <div class="d-flex flex-column align-items-start">
           <router-link :to="{}" tag="b-link" class="text-center mb-3">Forgot password?</router-link>
           <b-button type="submit" variant="outline-primary w-100">
-            {{ isLoading ? 'Loggin in' : 'Login' }} <b-spinner v-if="isLoading" small type="grow" class="ml-3"></b-spinner>
+            {{ isLoading ? 'Logging in' : 'Login' }} <b-spinner v-if="isLoading" small type="grow" class="ml-2"></b-spinner>
           </b-button>
         </div>
       </b-form>
@@ -75,6 +79,9 @@ export default {
   // },
   created() {
     document.title = "Login";
+  },
+  props: {
+    success: { type: String }
   },
   data() {
     return {
@@ -104,5 +111,10 @@ export default {
         });
     },
   },
+  computed: {
+    successMessage(){
+      return this.success;
+    }
+  }
 };
 </script>
