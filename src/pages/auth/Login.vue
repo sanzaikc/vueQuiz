@@ -11,7 +11,7 @@
 
       <validation-provider
           name="Email"
-          :rules="{ required: true }"
+          :rules="{ required: true, email: true }"
           v-slot="validationContext"
         >
          <b-form-group id="input-group-2" label="Email" label-for="email">
