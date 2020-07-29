@@ -8,7 +8,7 @@
     <div v-else>
       <navbar></navbar>
       <transition name="slide-fade" mode="out-in">
-        <router-view class="py-4"></router-view>
+        <router-view></router-view>
       </transition>
     </div>
   </div>
