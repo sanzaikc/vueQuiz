@@ -25,7 +25,6 @@ const mutations = {
 const actions = {
 	restoreToken: (context) => {
 		let token = localStorage.getItem("accessToken");
-		console.log(token);
 		if (token) {
 			axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 			return new Promise((resolve, reject) => {
@@ -99,6 +98,9 @@ const actions = {
 	},
 };
 const getters = {
+	fetchToken: state=> {
+		return state.token;
+	},
 	loggedIn: (state) => {
 		return state.token != null;
 	},

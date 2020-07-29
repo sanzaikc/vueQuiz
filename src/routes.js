@@ -5,7 +5,7 @@ import Home from './pages/Home.vue';
 import Welcome from './pages/Welcome.vue';
 import Admin from './pages/admin/Admin.vue';
 import User from './pages/admin/User.vue';
-import Category from './pages/admin/Category.vue';
+import Categories from './pages/admin/Categories.vue';
 
 import store from './store/store';
 
@@ -52,7 +52,7 @@ export const routes = [
 		beforeEnter: adminGuard,
         meta: { auth: true },
         redirect: {
-            name: 'admin.users'
+            name: 'admin.categories'
         },
         children: [
             {
@@ -62,7 +62,7 @@ export const routes = [
             },
             {
                 path: 'categories',
-                component: Category,
+                component: Categories,
                 name: 'admin.categories'
             }
         ]

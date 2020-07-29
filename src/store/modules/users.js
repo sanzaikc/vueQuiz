@@ -1,9 +1,8 @@
 import axios from 'axios'
+import store from '../store'
 
 const state = {
     userList: [],
-    token: localStorage.getItem('accessToken') || null, 
-
 };
 const mutations = {
     setUsers: (state, users) => {
@@ -13,7 +12,7 @@ const mutations = {
 const actions = {
     retrieveUsers: (context) => {
         return new Promise((resolve, reject)=>{
-            axios.defaults.headers.common["Authorization"] = "Bearer " + context.state.token;
+            axios.defaults.headers.common["Authorization"] = "Bearer " + store.getters.fetchToken;
             axios.get('/users')
                     .then(res => {
                         let users = res.data.users;
