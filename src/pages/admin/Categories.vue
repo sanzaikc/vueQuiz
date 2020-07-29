@@ -1,9 +1,16 @@
 <template>
-    <div class="">
-        <h2>Category Component</h2>
-        <div v-for="(category, key) in categoryList" :key="key" class="row">
-            <category :category="category"></category>
+    <div>
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Create new category</h2>
+            <button class="btn btn-outline-primary btn-sm">Add new</button>
         </div>
+
+        <hr>
+        <transition-group name="slide-fade" class="row">
+            <div v-for="(category, key) in categoryList" :key="key" class="mx-3">       
+                <category :category="category"></category>
+            </div>
+        </transition-group>
     </div>
 </template>
 
@@ -13,6 +20,7 @@
         data(){
             return{
                 categoryList: [],
+                name: ''
             }
         },
         created(){

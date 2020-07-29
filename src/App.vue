@@ -35,7 +35,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 /*** TRANSITIONS ***/
 .fade-enter {
   opacity: 0;

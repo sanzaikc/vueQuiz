@@ -10,13 +10,13 @@ const mutations = {
     }
 };
 const actions = {
-    retrieveUsers: (context) => {
+    retrieveUsers: ({commit}) => {
         return new Promise((resolve, reject)=>{
             axios.defaults.headers.common["Authorization"] = "Bearer " + store.getters.fetchToken;
             axios.get('/users')
                     .then(res => {
                         let users = res.data.users;
-                        context.commit("setUsers", users);
+                        commit("setUsers", users);
                         resolve(res);
                     })
                     .catch(error => {
