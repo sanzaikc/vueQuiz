@@ -32,6 +32,7 @@
                 name: '',
                 show: false,
                 isLoading: false,
+                category: '',
             }
         },
         created(){

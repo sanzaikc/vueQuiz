@@ -15,7 +15,7 @@ export default {
     actions: {
         retrieveCategories: ({commit}) => {
             axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-            axios.defaults.headers.common["Authorization"] = "Bearer " + store.getters.fetchToken;
+            axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
             return new Promise((resolve, reject) => {
                 axios.get('/categories')
                 .then(res=> {

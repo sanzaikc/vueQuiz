@@ -11,7 +11,7 @@
           <b-nav-item-dropdown right v-if="loggedIn">
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
-              <span> {{ user.name }} </span>
+              <span> {{ currentUser.name }} </span>
             </template>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
             <router-link :to="{ name: 'logout' }" tag="b-dropdown-item">Logout</router-link>
@@ -23,14 +23,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'; 
 export default {
   computed: {
+    ...mapState({
+      'currentUser': state => state.auth.currentUser,
+    }),
     loggedIn() {
       return this.$store.getters.loggedIn;
     },
-    user(){
-      return this.$store.getters.currentUser;
-    }
   },
 };
 </script>

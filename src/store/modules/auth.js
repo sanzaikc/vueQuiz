@@ -98,14 +98,8 @@ const actions = {
 	},
 };
 const getters = {
-	fetchToken: state=> {
-		return state.token;
-	},
 	loggedIn: (state) => {
 		return state.token != null;
-	},
-	currentUser: (state) => {
-		return state.currentUser;
 	},
 };
 

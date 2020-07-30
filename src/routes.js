@@ -10,7 +10,7 @@ import Categories from './pages/admin/Categories.vue';
 import store from './store/store';
 
 function adminGuard(to, from, next) {
-	if (store.getters.loggedIn && store.getters.currentUser.is_admin) next();
+	if (store.getters.loggedIn && store.state.auth.currentUser.is_admin) next();
 	else next({ name: "home" });
 }
 
