@@ -12,10 +12,11 @@ export default {
             state.categoryList = categories;
         },
         ADD_CATEGORY: (state, category) => {
-            state.categoryList.push(category);
+            state.categoryList = [category, ...state.categoryList];
         },
         REMOVE_CATEGORY :(state, category) => {
-            state.categoryList.filter(q => q.id != category.id);
+            let updatedList = state.categoryList.filter(q => q.id != category.id);
+            state.categoryList = [...updatedList];
         }
     },
     actions: {
