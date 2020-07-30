@@ -1,8 +1,9 @@
 <template>
     <div>
         <div v-if="isLoading">Loading</div>
-
-        <table v-else class="table table-hover border-top-0">
+        <div v-else>
+          <h2>Users</h2>
+          <table  class="table table-hover border-top-0">
             <thead>
                 <tr>
                 <th scope="col">#</th>
@@ -21,10 +22,10 @@
                     <td v-text="user.is_admin ? 'Admin' : 'Host'"></td>
                     <td><b-badge :variant="user.is_disabled ? 'danger' : 'success'" v-text="user.is_disabled ? 'Disabled':'Active'"></b-badge></td>
                     <td> <div class="btn btn-outline-primary btn-sm">Edit</div></td>
-                </tr>
-                
+                </tr>   
             </tbody>
-        </table>
+          </table>
+        </div>        
     </div>
 </template>
 

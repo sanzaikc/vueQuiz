@@ -52,7 +52,7 @@ export const routes = [
 		beforeEnter: adminGuard,
         meta: { auth: true },
         redirect: {
-            name: 'admin.users'
+            name: 'admin.categories'
         },
         children: [
             {

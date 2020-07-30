@@ -9,7 +9,9 @@
                 </b-nav>
             </div>
             <div class="col-md-10 pl-4 py-3">
-                <router-view ></router-view>
+                <transition name="slide-fade" mode="out-in">
+                    <router-view ></router-view>
+                </transition>
             </div>
         </div>
     </div>

@@ -63,7 +63,7 @@ const actions = {
 				});
 		});
 	},
-	register: (context, credentials) => {
+	register: (credentials) => {
 		return new Promise((resolve, reject) => {
 			axios
 				.post("/register", credentials)

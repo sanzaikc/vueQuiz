@@ -1,22 +1,27 @@
 <template>
     <div>
-        <div class="d-flex justify-content-between align-items-center">
-            <h2>Create category</h2>
-            <div class="ml-auto d-flex justify-content-between align-items-center">
-                <div  v-if="show" class="d-flex align-items-center">
-                    <input v-model="category" type="text" class="form-control" placeholder="Category Name">
-                    <button class="btn btn-outline-primary ml-2" @click="createCategory">
-                        {{ isLoading ? '' : 'Create' }} 
-                        <b-spinner v-if="isLoading" small></b-spinner>
-                    </button>
+        <div v-if="isLoading">Loading</div>
+        <div v-else>
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Categories</h2>
+                <div class="ml-auto d-flex justify-content-between align-items-center">
+                    <transition name="slide-fade" mode="out-in"> 
+                        <div  v-if="show" class="d-flex align-items-center">
+                            <input v-model="category" type="text" class="form-control" placeholder="Category Name">
+                            <button class="btn btn-outline-primary ml-2" @click="createCategory" :disabled="isBusy">
+                                {{ isBusy ? '' : 'Create' }} 
+                                <b-spinner v-if="isBusy" small></b-spinner>
+                            </button>
+                        </div>
+                    </transition>
+                    <button v-text="show ? 'Cancel' : 'Add new'" class="btn btn-outline-primary ml-3" @click="show=!show" ></button>
                 </div>
-                <button v-text="show ? 'Cancel' : 'Add new'" class="btn btn-outline-primary ml-3" @click="show=!show" :disabled="isLoading"></button>
             </div>
-        </div>
-        <hr>
-        <div name="slide-fade" class="row">
-            <div v-for="(category, key) in categories" :key="key" class="m-2">       
-                <category :category="category"></category>        
+            <hr>
+            <div  class="row">
+                <div v-for="(category, key) in categories" :key="key" class="m-2">       
+                    <category :category="category" @onDelete="deleteCategory"></category>        
+                </div>
             </div>
         </div>
     </div>
@@ -29,14 +34,16 @@
     export default {
         data(){
             return{
-                name: '',
                 show: false,
-                isLoading: false,
-                category: '',
+                isLoading: true,
+                isBusy: false,
+                category: ''
             }
         },
         created(){
-            this.$store.dispatch('retrieveCategories');
+            this.$store.dispatch('retrieveCategories').finally(()=>{
+                this.isLoading = false;
+            });
         },
         computed: {
             ...mapState({
@@ -45,7 +52,22 @@
         },
         methods: {
             createCategory(){
-                this.show = false;
+                this.isBusy = true;
+                this.$store.dispatch('createCategory', {
+                    name: this.category
+                })
+                .then(()=> {
+                    this.category = '';
+                    this.show = false;
+                    this.isBusy = false;
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.isBusy = false;
+                });
+            },
+            deleteCategory(category){  
+                this.$store.dispatch('deleteCategory', category);
             }
         },
         components: {
