@@ -5,19 +5,19 @@ const state = {
     currentUser: JSON.parse(localStorage.getItem('currentUser')) || null,
 };
 const mutations = {
-	retrieveToken: (state, token) => {
+	RETRIEVE_TOKEN: (state, token) => {
 		state.token = token;
 		localStorage.setItem("accessToken", token);
 	},
-	destroyToken: (state) => {
+	DESTROY_TOKEN: (state) => {
 		state.token = null;
 		localStorage.removeItem("accessToken");
 	},
-	setCurrentUser: (state, user) => {
+	SET_CURRENT_USER: (state, user) => {
 		state.currentUser = user;
 		localStorage.setItem("currentUser", JSON.stringify(user));
 	},
-	removeUser: (state) => {
+	REMOVE_USER: (state) => {
 		state.currentUser = null;
 		localStorage.removeItem("currentUser");
 	},
@@ -32,13 +32,13 @@ const actions = {
 					.get("/users/me")
 					.then((res) => {
 						let user = res.data.user;
-						context.commit("setCurrentUser", user);
+						context.commit("SET_CURRENT_USER", user);
 
 						resolve(res);
 					})
 					.catch((error) => {
-						context.commit("destroyToken");
-						context.commit("removeUser");
+						context.commit("DESTROY_TOKEN");
+						context.commit("REMOVE_USER");
 						reject(error);
 					});
 			});
@@ -50,10 +50,10 @@ const actions = {
 				.post("/login", credentials)
 				.then((res) => {
 					let token = res.data.token;
-					commit("retrieveToken", token);
+					commit("RETRIEVE_TOKEN", token);
 
 					let user = res.data.user;
-					commit("setCurrentUser", user);
+					commit("SET_CURRENT_USER", user);
 
 					resolve(res);
 				})
@@ -84,13 +84,13 @@ const actions = {
 				axios
 					.post("/logout")
 					.then((res) => {
-						context.commit("destroyToken");
-						context.commit("removeUser");
+						context.commit("DESTROY_TOKEN");
+						context.commit("REMOVE_USER");
 						resolve(res);
 					})
 					.catch((error) => {
-						context.commit("destroyToken");
-						context.commit("removeUser");
+						context.commit("DESTROY_TOKEN");
+						context.commit("REMOVE_USER");
 						reject(error);
 					});
 			});
