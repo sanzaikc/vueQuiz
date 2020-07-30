@@ -17,11 +17,14 @@ export default {
         REMOVE_CATEGORY :(state, category) => {
             let updatedList = state.categoryList.filter(q => q.id != category.id);
             state.categoryList = [...updatedList];
-        }
+        },
+        UPDATE_LIST: (state,updates) => {
+            let updatedList = state.categoryList.map( q => q.id == updates.id ? updates : q );
+            state.categoryList = [...updatedList];
+        },
     },
     actions: {
         retrieveCategories: ({commit}) => {
-            // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
             axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
             return new Promise((resolve, reject) => {
                 axios.get("/categories")
@@ -31,7 +34,7 @@ export default {
                     resolve(res);
                 })
                 .catch(error => {
-                    console.log(error.response.data);
+                    console.log(error.response.data.errors.name);
                     reject(error);
                 })  
             });
@@ -50,10 +53,10 @@ export default {
                 })
             });
         },
-        deleteCategory: ({commit}, category) => {
+        deleteCategory: ({commit}, id) => {
             axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
             if(confirm("Are you sure you want to delete?")){
-                axios.delete("/categories/"+ category.id)
+                axios.delete("/categories/"+ id)
                 .then(res => {
                     let cate = res.data.category;
                     commit("REMOVE_CATEGORY",cate)
@@ -63,6 +66,19 @@ export default {
                 })
             }
         },
+        updateCategory: ({commit}, payload) => {
+            axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
+            axios.put("/categories/" + payload.id + "/",  {
+                name: payload.category
+                })
+                .then(res => {
+                    let updates = res.data;
+                    commit('UPDATE_LIST', updates )
+                })
+                .category(error => {
+                    console.log(error.response.data.errors.name);
+                });
+        }
 
     },
 }

@@ -20,7 +20,7 @@
             <hr>
             <div  class="row">
                 <div v-for="(category, key) in categories" :key="key" class="m-2">       
-                    <category :category="category" @onDelete="deleteCategory"></category>        
+                    <category :category="category" @onDelete="deleteCategory" @onUpdate="updateCategory"></category>        
                 </div>
             </div>
         </div>
@@ -66,8 +66,11 @@
                     this.isBusy = false;
                 });
             },
-            deleteCategory(category){  
-                this.$store.dispatch('deleteCategory', category);
+            deleteCategory(id){  
+                this.$store.dispatch('deleteCategory', id);
+            },
+            updateCategory(id, category){
+                this.$store.dispatch('updateCategory', { id, category})
             }
         },
         components: {
