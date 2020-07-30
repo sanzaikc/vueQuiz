@@ -5,7 +5,7 @@ const state = {
     userList: [],
 };
 const mutations = {
-    setUsers: (state, users) => {
+    SET_USERS: (state, users) => {
         state.userList = users;
     }
 };
@@ -16,7 +16,7 @@ const actions = {
             axios.get('/users')
                     .then(res => {
                         let users = res.data.users;
-                        commit("setUsers", users);
+                        commit("SET_USERS", users);
                         resolve(res);
                     })
                     .catch(error => {
@@ -27,9 +27,6 @@ const actions = {
     }
 };
 const getters = {
-    fetchUsers: (state )=> {
-        return state.userList;
-    }
 };
 
 export default {

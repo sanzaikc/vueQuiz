@@ -14,7 +14,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(user, index) in users" :key="user.id">
+                <tr v-for="(user, index) in userList" :key="user.id">
                     <th scope="row" v-text="index + 1"></th>
                     <td v-text="user.name"></td>
                     <td><b-badge :variant="user.email_verified_at == null ? 'secondary' : 'success'" v-text="user.email_verified_at == null ? 'Pending':'Approved'"></b-badge></td>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex';
   export default {
     data() {
       return {
@@ -37,11 +38,14 @@
       }
     },
     mounted() {
-        this.$store.dispatch('retrieveUsers')
-            .then(()=>{
-                this.isLoading = false
-                this.users = this.$store.getters.fetchUsers;
-            })
+        this.$store.dispatch('retrieveUsers').finally(()=>{
+          this.isLoading = false;
+        });
+    },
+    computed : {
+      ...mapState({
+        'userList': state => state.users.userList
+      }),
     },
     methods: {
 
