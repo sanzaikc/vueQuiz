@@ -40,7 +40,7 @@
                 category: ''
             }
         },
-        created(){
+        mounted(){
             this.$store.dispatch('retrieveCategories').finally(()=>{
                 this.isLoading = false;
             });

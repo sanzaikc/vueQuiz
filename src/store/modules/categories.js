@@ -1,4 +1,4 @@
-import axios from 'axios';
+import  axios from 'axios';
 import store from '../store'
 
 
@@ -56,7 +56,7 @@ export default {
         deleteCategory: ({commit}, id) => {
             axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
             if(confirm("Are you sure you want to delete?")){
-                axios.delete("/categories/"+ id)
+                axios.delete("/categories/"+ id + "/1")
                 .then(res => {
                     let cate = res.data.category;
                     commit("REMOVE_CATEGORY",cate)
@@ -69,7 +69,7 @@ export default {
         updateCategory: ({commit}, payload) => {
             axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
             axios.put("/categories/" + payload.id + "/",  {
-                name: payload.category
+                name: payload.category,
                 })
                 .then(res => {
                     let updates = res.data;

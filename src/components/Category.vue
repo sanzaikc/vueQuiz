@@ -2,14 +2,14 @@
     <div :class="'border-'+ randColor" class="border rounded px-3 py-1">
         <div v-if="edit" class="d-flex align-items-center">
             <input v-model="updatedCategory" type="text" class="form-control h-25">
-            <button class="btn"><b-icon icon="check" variant="info" @click="update(category)" ></b-icon></button> |
-            <button class="btn"><b-icon icon="trash-fill" variant="info" @click="edit=false" ></b-icon></button> 
+            <button class="btn"><b-icon icon="check2-circle" variant="success" @click="update(category)" ></b-icon></button> |
+            <button class="btn"><b-icon icon="x-circle" variant="danger" @click="edit=false" ></b-icon></button> 
         </div>
         <div v-else class=" d-flex justify-content-between align-items-center">
             <h4> {{ category.name }} </h4>
             <div class="ml-4">
                 <button class="btn btn-sm"><b-icon icon="pencil" variant="info" @click="edit=true"></b-icon></button> |
-                <button class="btn btn-sm"><b-icon icon="trash-fill" variant="danger" @click="del(category)"></b-icon></button>
+                <button class="btn btn-sm"><b-icon icon="trash" variant="danger" @click="del(category)"></b-icon></button>
             </div>
         </div>
     </div>
