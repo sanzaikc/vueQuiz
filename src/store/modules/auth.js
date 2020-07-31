@@ -101,6 +101,12 @@ const getters = {
 	loggedIn: (state) => {
 		return state.token != null;
 	},
+	isAdmin: state => {
+		return state.currentUser.is_admin;
+	},
+	isDisabled: state => {
+		return state.currentUser.is_disabled;
+	}
 };
 
 export default {

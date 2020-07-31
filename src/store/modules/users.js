@@ -7,7 +7,12 @@ const state = {
 const mutations = {
     SET_USERS: (state, users) => {
         state.userList = users;
+    },
+    UPDATE_LIST: (state, user) => {
+        let updatedList = state.userList.map(q => q.id != user.id ? q : user);
+        state.userList = updatedList;
     }
+    
 };
 const actions = {
     retrieveUsers: ({commit}) => {
@@ -24,7 +29,21 @@ const actions = {
                         reject(error);
                     })
         });
-    }
+    },
+    updateStatus: ({commit}, user) => {
+        axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
+        return new Promise((resolve, reject)=>{
+            axios.put('/users/update/' + user.id, {
+                is_disabled: user.status
+            })
+                .then(res => {
+                    let user = res.data.user;
+                    commit('UPDATE_LIST', user);
+                    resolve(res.data.user);
+                })
+                .catch(error => reject(error.response.data));
+        });
+    },
 };
 const getters = {
 };

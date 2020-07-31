@@ -13,7 +13,7 @@
             <template v-slot:button-content>
               <span> {{ currentUser.name }} </span>
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item> {{ currentUser.email }} </b-dropdown-item>
             <router-link :to="{ name: 'logout' }" tag="b-dropdown-item">Logout</router-link>
           </b-nav-item-dropdown>
         </b-navbar-nav>
