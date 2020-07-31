@@ -17,6 +17,9 @@ Axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
 
 import { ValidationObserver, ValidationProvider, extend, localize } from "vee-validate";
 
+import VueToasted from 'vue-toasted';
+
+
 // Install VeeValidate rules and localization
 Object.keys(rules).forEach(rule => {
   extend(rule, rules[rule]);
@@ -28,6 +31,13 @@ Vue.use(BootstrapVueIcons);
 
 Vue.component("ValidationObserver", ValidationObserver);
 Vue.component("ValidationProvider", ValidationProvider);
+
+Vue.use(VueToasted, {
+    iconPack : 'material', // set your iconPack, defaults to material. material|fontawesome|custom-class
+	duration: 2000,
+	theme: 'outline',
+	// position: 'bottom-right'
+});
 
 Vue.use(VueRouter);
 

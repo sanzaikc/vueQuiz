@@ -22,7 +22,7 @@
                     <td>
                       <b-btn v-if="user.is_disabled"
                         size="sm" 
-                        :variant=" user.is_disabled ? 'success' : 'light'"
+                        :variant="user.is_disabled ? 'success' : 'light'"
                         :disabled="isBusy"
                         @click="updateStatus(user, 0)">
                         <b-spinner v-if="isBusy" small></b-spinner>
@@ -75,12 +75,12 @@
         this.isBusy = true
         this.$store.dispatch('updateStatus', {id: user.id, status: status})
           .then(res => {
-            console.log(res);
             this.isBusy = false;
+            this.$toasted.show(res.is_disabled == 0 ? res.name+ " is Approved" : res.name+ " is Disabled");
           })
           .catch(error => {
             this.isBusy = false;
-            console.log(error);
+            this.$toasted.show(error);
           });
       },
     }

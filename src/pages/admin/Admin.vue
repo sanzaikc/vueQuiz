@@ -35,9 +35,7 @@ export default {
 <style scoped>
     .activeTab, a{
         background-color: #dbf3fc;
-        /* border: 1px solid grey; */
         border-radius: 2rem ;
-        color: black;
         font-size: 1rem;
         font-weight: bold;
     }

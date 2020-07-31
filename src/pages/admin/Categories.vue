@@ -57,29 +57,34 @@
                     name: this.category
                 })
                 .then((res)=> {
-                    console.log("Category '"+ res.name + "' added!");
                     this.category = '';
                     this.show = false;
                     this.isBusy = false;
+                    this.$toasted.show("Category '"+ res.name + "' added!");
                 })
                 .catch(error => {
                     console.log(error);
                     this.isBusy = false;
+                    this.$toasted.show(error);
                 });
             },
             deleteCategory(id){  
                 this.$store.dispatch('deleteCategory', id)
                     .then(res=> {
-                        console.log("Category '" + res.name + "' was deleted!");
+                        this.$toasted.show("Category '" + res.name + "' was deleted!");
                     })
-                    .catch(error => console.log(error));
+                    .catch(error => {
+                        this.$toasted.show(error);
+                    });
             },
             updateCategory(id, category){
                 this.$store.dispatch('updateCategory', { id, category})
                     .then(res => {
-                        console.log(res);
+                        this.$toasted.show("Category renamed as '"+ res.name + "'");
                     })
-                    .catch(error => console.log(error));
+                    .catch(error => {
+                        this.$toasted.show(error);
+                    });
             }
         },
         components: {
