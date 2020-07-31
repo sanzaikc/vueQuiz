@@ -71,6 +71,10 @@
             },
             updateCategory(id, category){
                 this.$store.dispatch('updateCategory', { id, category})
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(error => console.log(error));
             }
         },
         components: {

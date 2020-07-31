@@ -68,16 +68,19 @@ export default {
         },
         updateCategory: ({commit}, payload) => {
             axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
-            axios.put("/categories/" + payload.id + "/",  {
-                name: payload.category,
-                })
-                .then(res => {
-                    let updates = res.data;
-                    commit('UPDATE_LIST', updates )
-                })
-                .category(error => {
-                    console.log(error.response.data.errors.name);
-                });
+            return new Promise((resolve, reject)=>{
+                axios.put("/categories/" + payload.id + "/",  {
+                    name: payload.category,
+                    })
+                    .then(res => {
+                        let updates = res.data;
+                        commit('UPDATE_LIST', updates );
+                        resolve(res.data);
+                    })
+                    .catch(error => {
+                        reject(error.response.data.errors.name);
+                    });
+            });
         }
 
     },

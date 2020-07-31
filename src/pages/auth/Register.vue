@@ -10,13 +10,14 @@
 
         <validation-provider
             name="Name"
-            :rules="{ required: true, min: 5 }"
+            :rules="{ required: true, min: 5}"
             v-slot="validationContext"
           >
           <b-form-group id="input-group-1" label="Name" label-for="name">
               <b-form-input
                 id="name"
                 v-model="form.name"
+                type="text"
                 placeholder="Enter name"
                 :state="getValidationState(validationContext)"
                 aria-describedby="input-1-live-feedback"

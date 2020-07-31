@@ -24,7 +24,7 @@ export default {
         return{
             variants: ["success", "info", "danger", "warning", "secondary", "primary" ],
             edit: false,
-            updatedCategory: this.category.name
+            updatedCategory: this.category.name,
         }
     },
     methods: {
