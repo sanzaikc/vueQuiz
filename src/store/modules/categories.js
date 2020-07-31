@@ -46,7 +46,7 @@ export default {
                 .then(res => {
                     let newCategory = res.data.category;
                     commit('ADD_CATEGORY', newCategory);
-                    resolve(res);
+                    resolve(res.data.category);
                 })
                 .catch(error => {
                     reject(error.response.data.errors.name);
@@ -55,16 +55,19 @@ export default {
         },
         deleteCategory: ({commit}, id) => {
             axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
-            if(confirm("Are you sure you want to delete?")){
-                axios.delete("/categories/"+ id + "/1")
-                .then(res => {
-                    let cate = res.data.category;
-                    commit("REMOVE_CATEGORY",cate)
-                })
-                .catch(error => {
-                    console.log(error.response.data.errors.name);
-                })
-            }
+            return new Promise((resolve, reject)=>{
+                if(confirm("Are you sure you want to delete?")){
+                    axios.delete("/categories/"+ id + "/1")
+                    .then(res => {
+                        let cate = res.data.category;
+                        commit("REMOVE_CATEGORY",cate);
+                        resolve(res.data.category);
+                    })
+                    .catch(error => {
+                        reject(error.response.data.errors.name);
+                    })
+                }
+            });
         },
         updateCategory: ({commit}, payload) => {
             axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;

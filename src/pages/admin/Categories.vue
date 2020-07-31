@@ -18,11 +18,11 @@
                 </div>
             </div>
             <hr>
-            <div  class="row">
-                <div v-for="(category, key) in categories" :key="key" class="m-2">       
-                    <category :category="category" @onDelete="deleteCategory" @onUpdate="updateCategory"></category>        
+            <transition-group name="slide-fade" class="row" mode="out-in">
+                <div v-for="(category, key) in categories" :key="key" class="m-2">    
+                        <category :category="category" @onDelete="deleteCategory" @onUpdate="updateCategory"></category>        
                 </div>
-            </div>
+            </transition-group>   
         </div>
     </div>
 </template>
@@ -56,7 +56,8 @@
                 this.$store.dispatch('createCategory', {
                     name: this.category
                 })
-                .then(()=> {
+                .then((res)=> {
+                    console.log("Category '"+ res.name + "' added!");
                     this.category = '';
                     this.show = false;
                     this.isBusy = false;
@@ -67,7 +68,11 @@
                 });
             },
             deleteCategory(id){  
-                this.$store.dispatch('deleteCategory', id);
+                this.$store.dispatch('deleteCategory', id)
+                    .then(res=> {
+                        console.log("Category '" + res.name + "' was deleted!");
+                    })
+                    .catch(error => console.log(error));
             },
             updateCategory(id, category){
                 this.$store.dispatch('updateCategory', { id, category})
