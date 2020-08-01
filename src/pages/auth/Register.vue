@@ -3,11 +3,7 @@
 
     <validation-observer ref="observer" v-slot="{ handleSubmit }">
       <b-form @submit.prevent="handleSubmit(onRegister)">
-
-        <b-alert v-if="serverError" variant="danger" show dismissible fade>
-         {{ serverError }}
-        </b-alert>
-
+        
         <validation-provider
             name="Name"
             :rules="{ required: true, min: 5}"
@@ -94,7 +90,6 @@ export default {
         email: "",
         password: "",
       },
-      serverError: '',
     };
   },
   methods: {
@@ -112,7 +107,9 @@ export default {
         .catch(error => {
           this.isLoading = false;
           this.form.email = '';
-          this.serverError = error.response.data.errors.email[0];
+          this.$toasted.show(error, {
+            theme: 'bubble'
+          })
         });
     },
   },

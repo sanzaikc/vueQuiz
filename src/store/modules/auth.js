@@ -7,19 +7,19 @@ const state = {
 const mutations = {
 	RETRIEVE_TOKEN: (state, token) => {
 		state.token = token;
-		localStorage.setItem("accessToken", token);
+		localStorage.setItem("accessToken", token); 
 	},
 	DESTROY_TOKEN: (state) => {
-		state.token = null;
-		localStorage.removeItem("accessToken");
+		state.token = null; 
+		localStorage.removeItem("accessToken"); 
 	},
 	SET_CURRENT_USER: (state, user) => {
-		state.currentUser = user;
-		localStorage.setItem("currentUser", JSON.stringify(user));
+		state.currentUser = user; 
+		localStorage.setItem("currentUser", JSON.stringify(user)); 
 	},
 	REMOVE_USER: (state) => {
-		state.currentUser = null;
-		localStorage.removeItem("currentUser");
+		state.currentUser = null; 
+		localStorage.removeItem("currentUser"); 
 	},
 };
 const actions = {
@@ -50,7 +50,7 @@ const actions = {
 				.post("/login", credentials)
 				.then((res) => {
 					let token = res.data.token;
-					commit("RETRIEVE_TOKEN", token);
+					commit("RETRIEVE_TOKEN", token); 
 
 					let user = res.data.user;
 					commit("SET_CURRENT_USER", user);
@@ -58,8 +58,7 @@ const actions = {
 					resolve(res);
 				})
 				.catch((error) => {
-					console.log(error.response.data);
-					reject(error);
+					reject(error.response.data.message);
 				});
 		});
 	},
@@ -71,14 +70,12 @@ const actions = {
 					resolve(res);
 				})
 				.catch((error) => {
-					console.log(error.response.data);
-					reject(error);
+					reject(error.response.data.errors.email[0]);
 				});
 		});
 	},
 	logout: (context) => {
-		axios.defaults.headers.common["Authorization"] =
-			"Bearer " + context.state.token;
+		axios.defaults.headers.common["Authorization"] = "Bearer " + context.state.token;
 		if (context.getters.loggedIn) {
 			return new Promise((resolve, reject) => {
 				axios
@@ -91,7 +88,7 @@ const actions = {
 					.catch((error) => {
 						context.commit("DESTROY_TOKEN");
 						context.commit("REMOVE_USER");
-						reject(error);
+						reject(error.response.data.message);
 					});
 			});
 		}

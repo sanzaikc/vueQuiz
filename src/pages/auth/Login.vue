@@ -7,10 +7,6 @@
          {{ successMessage }}
         </b-alert>
 
-        <b-alert v-if="serverError" variant="danger" show dismissible fade>
-         {{ serverError }}
-        </b-alert>
-
         <validation-provider
             name="Email"
             :rules="{ required: true, email: true }"
@@ -83,7 +79,6 @@ export default {
         email: "",
         password: "",
       },
-      serverError: ''
     };
   },
   methods: {
@@ -101,7 +96,10 @@ export default {
         })
         .catch(error => {
           this.isLoading = false;
-          this.serverError = error.response.data.message;
+          this.form.password = '';
+          this.$toasted.show(error, {
+            theme: 'bubble',
+          });
         });
     },
   },
