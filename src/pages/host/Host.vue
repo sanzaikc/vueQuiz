@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row vh-100">
-            <div class="col-md-2 border-right">
+            <div class="col-md-2">
                 <b-nav vertical class="w-100 text py-3">
                     <router-link :to="{ name: 'host.home' }" tag="b-nav-item"  active-class="activeTab"> 
                         <b-icon icon="house" variant="dark" @click="edit=false" class="mr-2"></b-icon>Home
