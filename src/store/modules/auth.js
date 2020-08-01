@@ -102,7 +102,7 @@ const getters = {
 		return state.currentUser.is_admin;
 	},
 	isDisabled: state => {
-		return state.currentUser.is_disabled;
+		return state.currentUser && state.currentUser.is_disabled;
 	}
 };
 
