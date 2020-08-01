@@ -32,9 +32,9 @@ Vue.component("ValidationObserver", ValidationObserver);
 Vue.component("ValidationProvider", ValidationProvider);
 
 Vue.use(VueToasted, {
-    iconPack : 'material', // set your iconPack, defaults to material. material|fontawesome|custom-class
-	duration: 2000,
-	theme: 'outline',
+    // iconPack : 'material', // set your iconPack, defaults to material. material|fontawesome|custom-class
+    duration: 2000,
+    theme: 'outline',
 	// position: 'bottom-right'
 });
 
