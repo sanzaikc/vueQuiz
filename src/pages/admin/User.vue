@@ -80,7 +80,9 @@
           })
           .catch(error => {
             this.isBusy = false;
-            this.$toasted.show(error);
+            this.$toasted.show(error , {
+              theme: 'bubble'
+            });
           });
       },
     }

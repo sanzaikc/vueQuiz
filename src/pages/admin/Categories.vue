@@ -63,18 +63,23 @@
                     this.$toasted.show("Category '"+ res.name + "' added!");
                 })
                 .catch(error => {
-                    console.log(error);
                     this.isBusy = false;
-                    this.$toasted.show(error);
+                    this.$toasted.show(error , {
+                        theme: 'bubble'
+                    });
                 });
             },
             deleteCategory(id){  
                 this.$store.dispatch('deleteCategory', id)
                     .then(res=> {
-                        this.$toasted.show("Category '" + res.name + "' was deleted!");
+                        this.$toasted.show("Category '" + res.name + "' was deleted!", {
+                            theme: 'bubble',
+                        });
                     })
                     .catch(error => {
-                        this.$toasted.show(error);
+                        this.$toasted.show(error, {
+                            theme: 'bubble'
+                        });
                     });
             },
             updateCategory(id, category){
