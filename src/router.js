@@ -21,7 +21,7 @@ router.beforeEach((to, from, next) => {
 		}
 	} else if (to.matched.some((record) => record.meta.guest)) {
 		if (store.getters.loggedIn) {
-			if (store.getters.currentUser.is_admin)
+			if (store.state.auth.currentUser.is_admin)
 				next({
 					path: "/admin",
 				});

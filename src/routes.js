@@ -38,12 +38,7 @@ export const routes = [
 		path: "/logout",
 		name: "logout",
 		component: Logout,
-	},
-	{
-		path: "/home",
-		component: Home,
-		name: "home",
-		meta: { auth: true },
+		meta: { auth: true }
 	},
 	{
 		path: "/admin",
@@ -66,6 +61,12 @@ export const routes = [
                 component: ()=> import(/* webpackChunkName: "categories" */ './pages/admin/Categories.vue'),
             }
         ]
+	},
+	{
+		path: "/home",
+		name: "home",
+		component: Home,
+		meta: { auth: true },
 	},
 ];
 
