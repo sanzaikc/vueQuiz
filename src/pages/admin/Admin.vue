@@ -16,7 +16,9 @@
             </div>
             <div class="col-md-10 pl-4 py-3">
                 <transition name="slide-fade" mode="out-in">
-                    <router-view ></router-view>
+                    <keep-alive>
+                        <router-view ></router-view>
+                    </keep-alive>
                 </transition>
             </div>
         </div>

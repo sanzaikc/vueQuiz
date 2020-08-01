@@ -5,7 +5,7 @@ import Home from './pages/Home.vue';
 import Welcome from './pages/Welcome.vue';
 import Admin from './pages/admin/Admin.vue';
 import User from './pages/admin/User.vue';
-import Categories from './pages/admin/Categories.vue';
+// import Categories from './pages/admin/Categories.vue';
 
 import store from './store/store';
 
@@ -17,27 +17,27 @@ function adminGuard(to, from, next) {
 export const routes = [
 	{
 		path: "",
-		component: Welcome,
 		name: "welcome",
+		component: Welcome,
 		meta: { guest: true },
 	},
 	{
 		path: "/login",
-		component: Login,
 		name: "login",
+		component: Login,
 		props: true,
 		meta: { guest: true },
 	},
 	{
 		path: "/register",
-		component: Register,
 		name: "register",
+		component: Register,
 		meta: { guest: true },
 	},
 	{
 		path: "/logout",
-		component: Logout,
 		name: "logout",
+		component: Logout,
 	},
 	{
 		path: "/home",
@@ -47,8 +47,8 @@ export const routes = [
 	},
 	{
 		path: "/admin",
-		component: Admin,
 		name: "admin",
+		component: Admin,
 		beforeEnter: adminGuard,
         meta: { auth: true },
         redirect: {
@@ -57,13 +57,13 @@ export const routes = [
         children: [
             {
                 path: 'users',
+                name: 'admin.users',
                 component: User,
-                name: 'admin.users'
             },
             {
                 path: 'categories',
-                component: Categories,
-                name: 'admin.categories'
+				name: 'admin.categories',
+                component: ()=> import(/* webpackChunkName: "categories" */ './pages/admin/Categories.vue'),
             }
         ]
 	},

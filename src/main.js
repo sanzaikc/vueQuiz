@@ -8,9 +8,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import en from "vee-validate/dist/locale/en.json";
 import * as rules from "vee-validate/dist/rules";
 
-import VueRouter from 'vue-router'
-import {routes} from './routes'
-import store from './store/store'
+import {router} from './router';
+import store from './store/store';
 
 import Axios from 'axios'
 Axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
@@ -39,39 +38,7 @@ Vue.use(VueToasted, {
 	// position: 'bottom-right'
 });
 
-Vue.use(VueRouter);
 
-const router = new VueRouter({
-  mode: 'history',
-  routes,
-});
-
-router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.auth)) {
-		if (!store.getters.loggedIn) {
-			next({
-				path: "/login",
-			});
-		} else {
-			next();
-		}
-	} else if (to.matched.some((record) => record.meta.guest)) {
-		if (store.getters.loggedIn) {
-			if (store.getters.currentUser.is_admin)
-				next({
-					path: "/admin",
-				});
-			else
-				next({
-					path: "/home",
-				});
-		} else {
-			next();
-		}
-	} else {
-		next();
-	}
-})
 
 new Vue({
   router,
