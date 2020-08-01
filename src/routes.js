@@ -1,10 +1,10 @@
+import Welcome from './pages/Welcome.vue';
 import Login from './pages/auth/Login.vue';
 import Register from './pages/auth/Register.vue';
 import Logout from './pages/auth/Logout.vue';
-import Home from './pages/Home.vue';
-import Welcome from './pages/Welcome.vue';
 import Admin from './pages/admin/Admin.vue';
 import User from './pages/admin/User.vue';
+import Home from './pages/Home.vue';
 // import Categories from './pages/admin/Categories.vue';
 
 import store from './store/store';
@@ -68,5 +68,11 @@ export const routes = [
 		component: Home,
 		meta: { auth: true },
 	},
+	{
+		path: '/quiz',
+		name: 'quiz',
+		component: ()=> import(/* webpackChunkName: "quiz" */ './pages/Quiz.vue'),
+		meta: { auth: true}
+	}
 ];
 
