@@ -4,12 +4,6 @@
       <b-navbar-brand href="#">Quizy</b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
-         <!-- Right aligned nav items  -->
-        <b-navbar-nav v-if="loggedIn && !isAdmin" class="ml-5">
-          <router-link :to="{ name: 'home' }" tag="b-nav-item" active-class="active font-bold">Home</router-link>
-          <router-link :to="{ name: 'quiz' }" tag="b-nav-item" active-class="active font-bold">Quiz</router-link>
-
-        </b-navbar-nav>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <router-link v-if="!loggedIn" :to="{ name: 'login'}"  tag="b-nav-item" active-class="active font-bold">Login</router-link>

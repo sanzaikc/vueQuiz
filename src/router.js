@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
 				});
 			else
 				next({
-					path: "/home",
+					path: "/host",
 				});
 		} else {
 			next();

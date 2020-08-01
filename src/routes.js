@@ -4,14 +4,14 @@ import Register from './pages/auth/Register.vue';
 import Logout from './pages/auth/Logout.vue';
 import Admin from './pages/admin/Admin.vue';
 import User from './pages/admin/User.vue';
-import Home from './pages/Home.vue';
+import Host from './pages/host/Host.vue';
 // import Categories from './pages/admin/Categories.vue';
 
 import store from './store/store';
 
 function adminGuard(to, from, next) {
 	if (store.getters.loggedIn && store.state.auth.currentUser.is_admin) next();
-	else next({ name: "home" });
+	else next({ name: "host.home" });
 }
 
 export const routes = [
@@ -63,16 +63,25 @@ export const routes = [
         ]
 	},
 	{
-		path: "/home",
-		name: "home",
-		component: Home,
+		path: "/host",
+		name: "host",
+		component: Host,
 		meta: { auth: true },
+		redirect: {
+			name: 'host.home'
+		},
+		children: [
+			{
+				path: "home",
+				name: "host.home",
+				component: ()=> import(/* webpackChunkName: "home" */ './pages/host/Home.vue'),
+			},
+			{
+				path: "quiz",
+				name: "host.quiz",
+				component: ()=> import(/* webpackChunkName: "quiz" */ './pages/host/Quiz.vue'),
+			}
+		]
 	},
-	{
-		path: '/quiz',
-		name: 'quiz',
-		component: ()=> import(/* webpackChunkName: "quiz" */ './pages/Quiz.vue'),
-		meta: { auth: true}
-	}
 ];
 

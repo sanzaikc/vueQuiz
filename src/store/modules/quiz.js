@@ -28,27 +28,28 @@ const actions = {
             });
         });
     },
-    createQuiz: ( {commit}, quiz) => {
-    
+    createQuiz: ( {commit}, quiz) => {   
+        console.log(quiz);
         let quizData = new FormData();
         quizData.append('name', quiz.name);
         quizData.append('description', quiz.description);
-        quizData.append('image', quiz.img);
-
-              
-        axios.post('/quizzes', quizData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-        .then(res => {
-            console.log(res);
-            let quiz = res.data.quiz;
-            commit('ADD_QUIZ', quiz);
-        })
-        .catch(error => {
-            console.log(error.response.data);
-        })
+        quizData.append('image', quiz.image);
+      
+        return new Promise((resolve, reject) => {
+            axios.post('/quizzes', quizData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then(res => {
+                let quiz = res.data.quiz;
+                commit('ADD_QUIZ', quiz);
+                resolve(res.data.quiz);
+            })
+            .catch(error => {
+                reject(error.response.data.errors.name)
+            })
+        });
     },
 };
 const getters = {};

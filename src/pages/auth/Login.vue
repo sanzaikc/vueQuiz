@@ -93,7 +93,7 @@ export default {
             if(this.$store.state.auth.currentUser.is_admin)
             this.$router.push({name: "admin"});
             else
-            this.$router.push({ name: "home" });
+            this.$router.push({ name: "host.home" });
           }   
         })
         .catch(error => {
