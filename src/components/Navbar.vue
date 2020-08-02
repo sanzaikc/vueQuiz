@@ -1,7 +1,10 @@
 <template>
   <div>    
     <b-navbar toggleable="lg" type="light" class="border-bottom">
-      <b-navbar-brand href="#">Quizy</b-navbar-brand>
+      <b-navbar-brand href="#">
+        <b-icon icon="egg-fried" scale="1.5"></b-icon>
+        <span class="ml-2">Quizy</span>
+      </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <!-- Right aligned nav items -->
