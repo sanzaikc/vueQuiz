@@ -2,7 +2,7 @@
     <div style="cursor: pointer">
         <div @click="show = !show" class="d-flex justify-content-between">
             <h4 >1. What is the question here?</h4>
-            <b-icon :icon="show ? 'arrow-up' : 'arrow-down'"></b-icon>
+            <b-icon :icon="show ? 'chevron-up' : 'chevron-down'"></b-icon>
         </div>
         <transition name="fade">
             <ul v-if="show" class="list list-unstyled d-flex">
