@@ -83,9 +83,6 @@ export const routes = [
 				redirect: {
 					name: 'quizzes'
 				},
-				// components: {
-				// 	default: ()=> import(/* webpackChunkName: "quiz" */ './pages/host/quiz/Quiz.vue'),
-				// },
 				children: [
 					{
 						path: '',

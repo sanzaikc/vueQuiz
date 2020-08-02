@@ -3,6 +3,7 @@ import store from '../store';
 
 const state = {
     quizList: [],
+    quizDetail: {},
 };
 const mutations = {
     SET_QUIZ_LIST: (state, list) => {
@@ -10,6 +11,9 @@ const mutations = {
     },
     ADD_QUIZ: (state, quiz) => {
         state.quizList = [quiz, ...state.quizList]
+    },
+    QUIZ_DETAIL: (state, id) => {
+        state.quizDetail = state.quizList.find(q => q.id == id);
     }
 };
 const actions = {
@@ -50,6 +54,9 @@ const actions = {
                 reject(error.response.data.errors.name)
             })
         });
+    },
+    retreiveDetail: ({commit}, id) => {
+        commit('QUIZ_DETAIL', id);
     },
 };
 const getters = {};
