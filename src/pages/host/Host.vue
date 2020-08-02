@@ -7,7 +7,7 @@
             <b-icon icon="house" variant="dark" @click="edit=false" class="mr-2"></b-icon>Home
           </router-link>
           <router-link :to="{ name: 'host.quiz' }" tag="b-nav-item" active-class="activeTab">
-            <b-icon icon="book" variant="dark" @click="edit=false" class="mr-2"></b-icon>Quiz
+            <b-icon icon="book" variant="dark" @click="edit=false" class="mr-2"></b-icon>Quizzes
           </router-link>
           <router-link :to="{ name: 'host' }" tag="b-nav-item">
             <b-icon icon="question" variant="dark" @click="edit=false" class="mr-2"></b-icon>Questions
@@ -16,9 +16,7 @@
       </div>
       <div class="col-md-10 pl-4 py-3">
         <transition name="slide-fade" mode="out-in">
-          <keep-alive>
             <router-view></router-view>
-          </keep-alive>
         </transition>
       </div>
     </div>

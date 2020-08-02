@@ -107,7 +107,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import QuizCard from "../../components/QuizCard.vue";
+import QuizCard from "../../../components/QuizCard.vue";
 export default {
   data() {
     return {

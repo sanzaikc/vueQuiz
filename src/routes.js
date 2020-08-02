@@ -79,7 +79,25 @@ export const routes = [
 			{
 				path: "quiz",
 				name: "host.quiz",
-				component: ()=> import(/* webpackChunkName: "quiz" */ './pages/host/Quiz.vue'),
+				component:()=> import(/* webpackChunkName: "quiz" */ './pages/host/quiz/Quiz.vue'),
+				redirect: {
+					name: 'quizzes'
+				},
+				// components: {
+				// 	default: ()=> import(/* webpackChunkName: "quiz" */ './pages/host/quiz/Quiz.vue'),
+				// },
+				children: [
+					{
+						path: '',
+						name: 'quizzes',
+						component: ()=> import(/* webpackChunkName: "quizzes" */ './pages/host/quiz/Quizzes.vue')
+					},
+					{
+						path: ':id',
+						name: 'quizDetail',
+						component: ()=> import(/* webpackChunkName: "quizDetail" */ './pages/host/quiz/QuizDetail.vue')
+					}
+				]
 			}
 		]
 	},

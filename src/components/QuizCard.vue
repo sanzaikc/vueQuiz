@@ -9,8 +9,12 @@
       class="mb-2 img-fluid"
     >
       <b-card-text v-text="quiz.description" class="line-clamp"></b-card-text>
+        
+      <router-link 
+        :to="{ name: 'quizDetail', params: { id: quiz.id}}" 
+        class="col-md-4 btn btn-outline-primary btn-sm"
+        :quiz="quiz">View</router-link>
 
-      <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
     </b-card>
   </div>
 </template>
