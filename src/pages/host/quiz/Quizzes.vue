@@ -125,7 +125,6 @@ export default {
   },
   created() {
     this.$store.dispatch("retrieveQuiz");
-    console.log("created");
   },
   computed: {
     ...mapState({

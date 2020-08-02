@@ -1,22 +1,40 @@
 <template>
     <div>
-        <b-icon icon="arrow-left" font-scale="3" @click="goBack()"></b-icon>
-        <h3>QuizId : {{$route.params.id}}</h3>
-        {{ quiz }}
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Random Quiz Name {{$route.params.id}}</h2>
+            <b-icon icon="text-right" font-scale="2"></b-icon>
+        </div>
+        <hr>
+        <div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab sint incidunt accusantium qui in necessitatibus id velit tenetur magni. Qui!
+        </div>
+        <hr>
+
+        <div class="mb-4 d-flex justify-content-between align-items-center">
+            <h2>Questions</h2>
+            <button class="btn btn-outline-primary btn-sm">Attach</button>
+        </div>
+
+        <question-card></question-card>
+        <question-card></question-card>
+        <question-card></question-card>
+        <question-card></question-card> 
+        
     </div>
 </template>
 
 <script>
+import QuestionCard from '../../../components/QuestionCard.vue';
 export default {
-   props:{
-       quiz: {
-           type: Object
-       }
-   },
+    created(){
+        let id = this.$route.params.id;
+        this.$store.quiz.dispatch('retrieveDetail', id);
+    },
     methods: {
-        goBack(){
-            this.$router.push({ name: 'host.quiz' });
-        }
+    },
+    components:{
+        QuestionCard
     }
+
 }
 </script>
