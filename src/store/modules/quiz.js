@@ -58,6 +58,17 @@ const actions = {
     retreiveDetail: ({commit}, id) => {
         commit('QUIZ_DETAIL', id);
     },
+    deleteQuiz: (context, id) => {
+     return new Promise((resolve, reject) => {
+        axios.delete('/quizzes/'+ id)
+        .then(res=>{
+            resolve(res.data.message);
+        })
+        .catch(error=>{
+            reject(error.response.data);
+        })
+     })
+    },
 };
 const getters = {};
 
