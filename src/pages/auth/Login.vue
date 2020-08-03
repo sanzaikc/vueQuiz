@@ -58,7 +58,7 @@
 					<router-link :to="{}" tag="b-link" class="text-center mb-3"
 						>Forgot password?</router-link
 					>
-					<b-button type="submit" variant="primary w-100" :disabled="isLoading">
+					<b-button type="submit" variant="outline-primary w-100" :disabled="isLoading">
 						{{ isLoading ? "Logging in" : "Login" }}
 						<b-spinner
 							v-if="isLoading"

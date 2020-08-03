@@ -38,7 +38,7 @@
 					placeholder="Category Name"
 				/>
 				<button
-					class="btn btn-primary w-100"
+					class="btn btn-outline-primary w-100"
 					@click="createCategory"
 					:disabled="isBusy"
 				>
