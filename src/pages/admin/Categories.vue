@@ -7,7 +7,7 @@
 					id="popover-button-variant"
 					@click="showPopover = !showPopover"
 					variant="primary"
-					style="position: fixed; bottom: 4rem; right: 15rem; height: 4rem; width: 4rem; border-radius: 50%"
+					style="position: fixed; bottom: 4rem; right: 10%; height: 4rem; width: 4rem; border-radius: 50%"
 				>
 					<b-icon
 						icon="plus"
@@ -46,7 +46,7 @@
 				<div
 					v-for="category in categories"
 					:key="category.id"
-					class="col-4 mb-3"
+					class="col-3 mb-3"
 				>
 					<category
 						:category="category"
