@@ -7,7 +7,7 @@
 					id="popover-button-variant"
 					@click="showPopover = !showPopover"
 					variant="primary"
-					style="position: fixed; bottom: 4rem; right: 10%; height: 4rem; width: 4rem; border-radius: 50%"
+					style="position: fixed; bottom: 4rem; right: 5%; height: 4rem; width: 4rem; border-radius: 50%"
 				>
 					<b-icon
 						icon="plus"
