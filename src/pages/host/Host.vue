@@ -9,7 +9,7 @@
           <router-link :to="{ name: 'host.quiz' }" tag="b-nav-item" active-class="activeTab">
             <b-icon icon="book" variant="dark" @click="edit=false" class="mr-2"></b-icon>Quizzes
           </router-link>
-          <router-link :to="{ name: 'host' }" tag="b-nav-item">
+          <router-link :to="{ name: 'host.question' }" tag="b-nav-item" active-class="activeTab">
             <b-icon icon="question" variant="dark" @click="edit=false" class="mr-2"></b-icon>Questions
           </router-link>
         </b-nav>

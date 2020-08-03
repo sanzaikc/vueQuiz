@@ -95,6 +95,11 @@ export const routes = [
 						component: ()=> import(/* webpackChunkName: "quizDetail" */ './pages/host/quiz/QuizDetail.vue')
 					}
 				]
+			},
+			{
+				path: "question",
+				name: "host.question",
+				component: ()=> import(/* webpackChunkName: "question" */ './pages/host/question/Question.vue')
 			}
 		]
 	},
