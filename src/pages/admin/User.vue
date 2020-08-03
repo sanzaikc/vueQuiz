@@ -1,6 +1,11 @@
 <template>
 	<div>
-		<div v-if="isLoading">Loading</div>
+		<b-spinner
+			v-if="isLoading"
+			variant="primary"
+			label="Spinning"
+			style="position: fixed; top: 50%; left: 50%"
+		></b-spinner>
 		<div v-else>
 			<h2>Users</h2>
 			<table class="table table-hover border-top-0">
