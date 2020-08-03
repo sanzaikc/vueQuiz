@@ -90,6 +90,7 @@ const actions = {
                 }
             })
             .then(res => {
+                console.log(res.data.quiz);
                 let quiz = res.data.quiz;
                 commit('UPDATE_DETAIL', quiz);
                 resolve(res.data.quiz);

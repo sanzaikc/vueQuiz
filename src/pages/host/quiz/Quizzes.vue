@@ -8,11 +8,8 @@
             bg-color="#007bff"
             :actions="fabActions"
             @show="showSidebar">
-        </fab>
-
-        
+        </fab>  
         <quiz-sidebar :text="'Creat'" @onSubmit="createQuiz"></quiz-sidebar>
-       
       </div>
 
       <div class="row">

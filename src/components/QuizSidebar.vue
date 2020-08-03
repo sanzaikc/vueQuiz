@@ -119,8 +119,7 @@ export default {
         },
         onSubmit(){
           this.$emit('onSubmit', this.quiz);
-        }
-        
+        }   
     },
 }
 </script>

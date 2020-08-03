@@ -84,8 +84,12 @@ export default {
             }
         },
         updateQuiz(quiz){
-            // console.log(quiz);
-            this.$store.dispatch('updateQuiz', {id:this.quizDetail.id ,data: quiz})    
+            this.$store.dispatch('updateQuiz', {id:this.quizDetail.id ,data: quiz})
+                .then(res => {
+                    this.$toasted.show("Updated as "+ res.name);
+                    document.getElementById('sidebar').click();
+                    this.form
+                })    
         }
     },
     computed:{
