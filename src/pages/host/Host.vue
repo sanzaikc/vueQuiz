@@ -29,7 +29,11 @@
 						></b-icon
 						>Quizzes
 					</router-link>
-					<router-link :to="{ name: 'host' }" tag="b-nav-item">
+					<router-link 
+						:to="{ name: 'host.question' }" 
+						tag="b-nav-item"
+						active-class="activeTab"
+					>
 						<b-icon
 							icon="question"
 							variant="dark"
