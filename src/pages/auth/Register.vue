@@ -72,7 +72,7 @@
 
 				<b-button
 					type="submit"
-					variant="primary"
+					variant="outline-primary"
 					class="w-100"
 					:disabled="isLoading"
 				>
