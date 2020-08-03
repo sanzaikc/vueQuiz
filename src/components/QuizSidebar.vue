@@ -88,22 +88,24 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
+    mounted(){
+      if(this.detail){
+        this.quiz.name = this.detail.name;
+      }
+    },
     props: {
       text: {
         type: String,
       },
-      quizData: {
-        type: Object,
-        default: null,
-      }
     },
     data(){
         return{
             isCreating: false,
             quiz: {
-                name: this.quizData ? this.quizData.name : '',
-                description: this.quizData ? this.quizData.description : '',
+                name: '',
+                description: '',
                 image: null,
             },
             url: "",
@@ -121,5 +123,10 @@ export default {
           this.$emit('onSubmit', this.quiz);
         }   
     },
+    computed:{
+      ...mapState({
+        'detail': state => state.quiz.quizDetail,
+      }),
+    }
 }
 </script>

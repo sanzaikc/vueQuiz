@@ -7,7 +7,7 @@
             @edit="showSidebar"
             @deleteMe="del">
         </fab>
-        <quiz-sidebar :text="'Updat'" :quizData="quizDetail" @onSubmit="updateQuiz"></quiz-sidebar>
+        <quiz-sidebar :text="'Updat'" @onSubmit="updateQuiz"></quiz-sidebar>
         <div>
             <h2> {{ quizDetail.name }} </h2>
             <hr>
