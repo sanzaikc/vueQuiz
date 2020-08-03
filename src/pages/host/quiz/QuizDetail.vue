@@ -4,12 +4,10 @@
             main-icon='menu'
             bg-color="#007bff"
             :actions="fabActions"
-            @editMe="showSidebar"
+            @edit="showSidebar"
             @deleteMe="del">
         </fab>
-
         <quiz-sidebar :text="'Updat'" :quizData="quizDetail" @onSubmit="updateQuiz"></quiz-sidebar>
-
         <div>
             <h2> {{ quizDetail.name }} </h2>
             <hr>
@@ -25,9 +23,7 @@
                 </div>
             </div>
         </div>
-
         <hr>
-
         <div class="mb-4 d-flex justify-content-between align-items-center">
             <h2>Questions</h2>
             <button class="btn btn-outline-primary btn-sm">Attach</button>
@@ -35,21 +31,25 @@
 
         <question-card></question-card>
         <question-card></question-card>
-        <question-card></question-card>
-        <question-card></question-card> 
         
     </div>
 </template>
 
 <script>
 import fab from 'vue-fab';
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import QuizSidebar from '../../../components/QuizSidebar';
 import QuestionCard from '../../../components/QuestionCard.vue';
 export default {
     mounted(){
-        let id = this.$route.params.id;
-        this.$store.dispatch('retreiveDetail', id);       
+        if(this.$store.state.quiz.quizList.length > 0){
+            this.QUIZ_DETAIL(this.$route.params.id);
+        }else{
+            this.$store.dispatch('retrieveQuiz')
+                .then(res=> {
+                    if(res) this.QUIZ_DETAIL(this.$route.params.id);
+                });
+        }    
     },
     data(){
         return{
@@ -60,13 +60,16 @@ export default {
                   bgColor: 'red'
               },
               {
-                  name: 'editMe',
+                  name: 'edit',
                   icon: 'edit'
               }
           ],
         }
     },
     methods: {
+        ...mapMutations([
+            'QUIZ_DETAIL'
+        ]),
         showSidebar(){
             document.getElementById('sidebar').click();
         },
@@ -88,7 +91,6 @@ export default {
                 .then(res => {
                     this.$toasted.show("Updated as '"+ res.name + "'");
                     document.getElementById('sidebar').click();
-                    this.form
                 })    
         }
     },

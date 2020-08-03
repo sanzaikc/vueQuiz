@@ -17,7 +17,9 @@ const mutations = {
         state.quizList = [...newList];
     },
     QUIZ_DETAIL: (state, id) => {
+        console.log(id);
         state.quizDetail = state.quizList.find(q => q.id == id);
+        console.log(state.quizDetail);
     },
     UPDATE_DETAIL: (state, quiz) => {
         state.quizDetail = quiz;
@@ -38,7 +40,6 @@ const actions = {
                 resolve(res.data.quizzes);
             })
             .catch(error => {
-                // console.log(error.response.data);
                 reject(error.response.data);
             });
         });
@@ -64,9 +65,6 @@ const actions = {
                 reject(error.response.data.errors.name)
             })
         });
-    },
-    retreiveDetail: ({commit}, id) => {
-        commit('QUIZ_DETAIL', id);
     },
     deleteQuiz: ({commit}, id) => {
      return new Promise((resolve, reject) => {
