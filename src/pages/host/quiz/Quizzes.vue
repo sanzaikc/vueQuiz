@@ -3,12 +3,14 @@
     <div v-if="isLoading"> Loading </div>
     <div v-else>
       <div class="d-flex justify-content-between align-items-center">
-        <fab
-          v-b-toggle.sidebar-backdrop
-          id="sidebar"
-          bg-color="#007bff"
-          style="outline:none">
+         <fab
+            main-icon='menu'
+            bg-color="#007bff"
+            :actions="fabActions"
+            @show="showSidebar">
         </fab>
+
+        <button id="sidebar" v-b-toggle.sidebar-backdrop hidden> </button>
 
         <quiz-sidebar :text="'Creat'" @onSubmit="createQuiz"></quiz-sidebar>
        
@@ -30,6 +32,12 @@ export default {
   data() {
     return {
       isLoading: true,
+      fabActions: [
+              {
+                  name: 'show',
+                  icon: 'add',
+              },
+          ],
     };
   },
   mounted() {
@@ -44,6 +52,9 @@ export default {
     }),
   },
   methods: {
+    showSidebar(){
+      document.getElementById('sidebar').click();
+    },
     createQuiz(quiz) {
       this.$store
         .dispatch("createQuiz", quiz)
