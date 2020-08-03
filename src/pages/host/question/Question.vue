@@ -1,7 +1,5 @@
 <template>
     <div>
-        <h2>Questions</h2>
-        <hr>
         <question-card></question-card>
     </div>
 </template>
