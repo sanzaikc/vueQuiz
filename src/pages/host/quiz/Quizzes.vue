@@ -10,8 +10,7 @@
             @show="showSidebar">
         </fab>
 
-        <button id="sidebar" v-b-toggle.sidebar-backdrop hidden> </button>
-
+        
         <quiz-sidebar :text="'Creat'" @onSubmit="createQuiz"></quiz-sidebar>
        
       </div>

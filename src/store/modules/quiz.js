@@ -18,7 +18,10 @@ const mutations = {
     },
     QUIZ_DETAIL: (state, id) => {
         state.quizDetail = state.quizList.find(q => q.id == id);
-    }
+    },
+    UPDATE_DETAIL: (state, quiz) => {
+        state.quizDetail = quiz;
+    },
 };
 const actions = {
     retrieveQuiz: ({commit}) => {
@@ -37,7 +40,6 @@ const actions = {
         });
     },
     createQuiz: ( {commit}, quiz) => {   
-        console.log(quiz);
         let quizData = new FormData();
         quizData.append('name', quiz.name);
         quizData.append('description', quiz.description);
@@ -73,6 +75,29 @@ const actions = {
             reject(error.response.data);
         })
      })
+    },
+    updateQuiz: ({commit}, quiz) => {
+        console.log(quiz);
+        let quizData = new FormData();
+        quizData.append('name', quiz.data.name);
+        quizData.append('description', quiz.data.description);
+        quizData.append('image', quiz.data.image);
+      
+        return new Promise((resolve, reject) => {
+            axios.post('/quizzes/'+ quiz.id, quizData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then(res => {
+                let quiz = res.data.quiz;
+                commit('UPDATE_DETAIL', quiz);
+                resolve(res.data.quiz);
+            })
+            .catch(error => {
+                reject(error.response.data.errors.name)
+            })
+        });
     },
 };
 const getters = {};

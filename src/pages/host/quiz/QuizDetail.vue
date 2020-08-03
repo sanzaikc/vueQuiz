@@ -4,11 +4,13 @@
             main-icon='menu'
             bg-color="#007bff"
             :actions="fabActions"
-            @editMe="editQuiz"
+            @editMe="showSidebar"
             @deleteMe="del">
         </fab>
 
-        <div v-if="!edit" >
+        <quiz-sidebar :text="'Updat'" :quizData="quizDetail" @onSubmit="updateQuiz"></quiz-sidebar>
+
+        <div>
             <h2> {{ quizDetail.name }} </h2>
             <hr>
             <div class="d-flex justify-content-between">
@@ -23,11 +25,7 @@
                 </div>
             </div>
         </div>
-        <div v-else>
-            <input type="text">
-            <textarea name="" id="" cols="30" rows="10"></textarea>
-            <button @click="edit=false">Save</button>
-        </div>
+
         <hr>
 
         <div class="mb-4 d-flex justify-content-between align-items-center">
@@ -46,6 +44,7 @@
 <script>
 import fab from 'vue-fab';
 import { mapState } from 'vuex';
+import QuizSidebar from '../../../components/QuizSidebar';
 import QuestionCard from '../../../components/QuestionCard.vue';
 export default {
     mounted(){
@@ -65,12 +64,11 @@ export default {
                   icon: 'edit'
               }
           ],
-          edit: false,
         }
     },
     methods: {
-        editQuiz(){
-            this.edit = true
+        showSidebar(){
+            document.getElementById('sidebar').click();
         },
         del(){
             if(confirm("Are you sure you want to delete '" + this.quizDetail.name + "' ?")){
@@ -84,6 +82,10 @@ export default {
                         }
                     })
             }
+        },
+        updateQuiz(quiz){
+            // console.log(quiz);
+            this.$store.dispatch('updateQuiz', {id:this.quizDetail.id ,data: quiz})    
         }
     },
     computed:{
@@ -93,6 +95,7 @@ export default {
     },
     components:{
         fab,
+        QuizSidebar,
         QuestionCard
     }
 

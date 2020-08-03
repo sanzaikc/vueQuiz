@@ -1,19 +1,20 @@
 <template>
-     <b-sidebar
-          id="sidebar-backdrop"
-          :title="text + 'e Quiz'"
-          backdrop
-          shadow
-          :lazy="true"
-          width="400px">
+  <div>
+    <button id="sidebar" v-b-toggle.sidebar-backdrop hidden> </button>
+    <b-sidebar
+        id="sidebar-backdrop"
+        :title="text + 'e Quiz'"
+        backdrop
+        shadow
+        :lazy="true"
+        width="400px">
           <div class="px-3 py-2 border-top">
             <validation-observer ref="observer" v-slot="{ handleSubmit }">
               <b-form @submit.prevent="handleSubmit(onSubmit)">
                 <validation-provider
                   name="Name"
                   :rules="{ required: true, min: 3}"
-                  v-slot="validationContext"
-                >
+                  v-slot="validationContext">
                   <b-form-group id="input-group-1" label="Name" label-for="name">
                     <b-form-input
                       id="name"
@@ -32,8 +33,7 @@
                 <validation-provider
                   name="Description"
                   :rules="{ required: true, min: 10}"
-                  v-slot="validationContext"
-                >
+                  v-slot="validationContext">
                   <b-form-group id="input-group-2" label="Description" label-for="description">
                     <b-form-textarea
                       id="description"
@@ -56,7 +56,6 @@
                     v-model="quiz.image"
                     :state="Boolean(quiz.image)"
                     placeholder="Choose a file or drop it here..."
-                    drop-placeholder="Drop file here..."
                     accept=".jpg, .png, .gif"
                     @change="onFileChange"
                   ></b-form-file>
@@ -84,7 +83,8 @@
               </b-form>
             </validation-observer>
           </div>
-        </b-sidebar>
+      </b-sidebar>
+  </div>
 </template>
 
 <script>
@@ -92,14 +92,18 @@ export default {
     props: {
       text: {
         type: String,
+      },
+      quizData: {
+        type: Object,
+        default: null,
       }
     },
     data(){
         return{
             isCreating: false,
             quiz: {
-                name: "",
-                description: "",
+                name: this.quizData ? this.quizData.name : '',
+                description: this.quizData ? this.quizData.description : '',
                 image: null,
             },
             url: "",
