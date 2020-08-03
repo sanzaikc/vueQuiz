@@ -81,7 +81,6 @@ const actions = {
      })
     },
     updateQuiz: ({commit}, quiz) => {
-        console.log(quiz);
         let quizData = new FormData();
         quizData.append('name', quiz.data.name);
         quizData.append('description', quiz.data.description);
@@ -94,7 +93,6 @@ const actions = {
                 }
             })
             .then(res => {
-                console.log(res.data.quiz);
                 let quiz = res.data.quiz;
                 commit('UPDATE_DETAIL', quiz);
                 commit('UPDATE_LIST', quiz);

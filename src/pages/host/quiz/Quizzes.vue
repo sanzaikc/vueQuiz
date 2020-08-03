@@ -12,9 +12,13 @@
         <quiz-sidebar :text="'Creat'" @onSubmit="createQuiz"></quiz-sidebar>
       </div>
 
-      <div class="row">
+      <div v-if="quizzes.length > 0" class="row">
         <quiz-card v-for="quiz in quizzes" :key="quiz.id" :quiz="quiz"></quiz-card>
       </div> 
+
+      <div v-else>
+        No quizzes by you, yet!
+      </div>
 
     </div>
   </div>
