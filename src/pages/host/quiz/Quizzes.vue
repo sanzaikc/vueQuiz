@@ -44,7 +44,11 @@ export default {
     document.title = "Quiz";
   },
   created() {
-    this.$store.dispatch("retrieveQuiz").finally(this.isLoading = false);
+    this.$store.dispatch("retrieveQuiz")
+      .then(res => {
+        if(res) this.isLoading = false ;
+      })
+      .catch(error => console.log(error));
   },
   computed: {
     ...mapState({

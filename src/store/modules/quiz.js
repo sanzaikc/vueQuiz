@@ -17,9 +17,7 @@ const mutations = {
         state.quizList = [...newList];
     },
     QUIZ_DETAIL: (state, id) => {
-        console.log(id);
         state.quizDetail = state.quizList.find(q => q.id == id);
-        console.log(state.quizDetail);
     },
     UPDATE_DETAIL: (state, quiz) => {
         state.quizDetail = quiz;
