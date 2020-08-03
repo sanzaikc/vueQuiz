@@ -22,6 +22,10 @@ const mutations = {
     UPDATE_DETAIL: (state, quiz) => {
         state.quizDetail = quiz;
     },
+    UPDATE_LIST: (state, updates) => {
+        let updatedList = state.quizList.map( q => q.id == updates.id ? updates : q );
+        state.quizList = [...updatedList];
+    }
 };
 const actions = {
     retrieveQuiz: ({commit}) => {
@@ -93,6 +97,7 @@ const actions = {
                 console.log(res.data.quiz);
                 let quiz = res.data.quiz;
                 commit('UPDATE_DETAIL', quiz);
+                commit('UPDATE_LIST', quiz);
                 resolve(res.data.quiz);
             })
             .catch(error => {
