@@ -12,6 +12,10 @@ const mutations = {
     ADD_QUIZ: (state, quiz) => {
         state.quizList = [quiz, ...state.quizList]
     },
+    REMOVE_QUIZ: (state, quiz) => {
+        let newList = state.quizList.filter(q => q.id != quiz.id);
+        state.quizList = [...newList];
+    },
     QUIZ_DETAIL: (state, id) => {
         state.quizDetail = state.quizList.find(q => q.id == id);
     }
@@ -58,10 +62,11 @@ const actions = {
     retreiveDetail: ({commit}, id) => {
         commit('QUIZ_DETAIL', id);
     },
-    deleteQuiz: (context, id) => {
+    deleteQuiz: ({commit}, id) => {
      return new Promise((resolve, reject) => {
         axios.delete('/quizzes/'+ id)
         .then(res=>{
+            commit('REMOVE_QUIZ', res.data.quiz);            
             resolve(res.data.message);
         })
         .catch(error=>{
