@@ -3,36 +3,51 @@
 		<div v-if="isLoading">Loading</div>
 		<div v-else>
 			<div class="d-flex justify-content-between align-items-center">
-				<h2>Categories</h2>
-				<div class="ml-auto d-flex justify-content-between align-items-center">
-					<transition name="slide-fade" mode="out-in">
-						<div v-if="show" class="d-flex align-items-center">
-							<input
-								v-model="category"
-								type="text"
-								class="form-control"
-								placeholder="Category Name"
-							/>
-							<button
-								class="btn btn-outline-primary ml-2"
-								@click="createCategory"
-								:disabled="isBusy"
-							>
-								{{ isBusy ? "" : "Create" }}
-								<b-spinner v-if="isBusy" small></b-spinner>
-							</button>
-						</div>
-					</transition>
+				<b-button
+					id="popover-button-variant"
+					@click="showPopover = !showPopover"
+					variant="primary"
+					style="position: fixed; bottom: 4rem; right: 15rem; height: 4rem; width: 4rem; border-radius: 50%"
+				>
+					<b-icon
+						icon="plus"
+						v-if="!showPopover"
+						style="height: 2rem; width: 2rem"
+					></b-icon>
+					<b-icon
+						icon="x"
+						v-if="showPopover"
+						style="height: 2rem; width: 2rem"
+					></b-icon>
+				</b-button>
+				<b-popover
+					target="popover-button-variant"
+					triggers="click"
+					placement="topleft"
+				>
+					<template v-slot:title>Create new category</template>
+					<input
+						v-model="category"
+						type="text"
+						class="form-control mb-2"
+						placeholder="Category Name"
+					/>
 					<button
-						v-text="show ? 'Cancel' : 'Add new'"
-						class="btn btn-outline-primary ml-3"
-						@click="show = !show"
-					></button>
-				</div>
+						class="btn btn-primary w-100"
+						@click="createCategory"
+						:disabled="isBusy"
+					>
+						{{ isBusy ? "" : "Create" }}
+						<b-spinner v-if="isBusy" small></b-spinner>
+					</button>
+				</b-popover>
 			</div>
-			<hr />
 			<transition-group name="slide-fade" class="row" mode="out-in">
-				<div v-for="category in categories" :key="category.id" class="m-2">
+				<div
+					v-for="category in categories"
+					:key="category.id"
+					class="col-4 mb-3"
+				>
 					<category
 						:category="category"
 						@onDelete="deleteCategory"
@@ -51,7 +66,7 @@ import { mapState } from "vuex";
 export default {
 	data() {
 		return {
-			show: false,
+			showPopover: false,
 			isLoading: true,
 			isBusy: false,
 			category: "",
@@ -76,7 +91,6 @@ export default {
 				})
 				.then((res) => {
 					this.category = "";
-					this.show = false;
 					this.isBusy = false;
 					this.$toasted.show("Category '" + res.name + "' added!");
 				})

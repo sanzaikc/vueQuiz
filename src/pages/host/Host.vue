@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="row h-100">
-			<div class="col-md-2">
+			<div class="col-md-2 bg-light">
 				<b-nav vertical class="w-100 text py-3">
 					<router-link
 						:to="{ name: 'host.home' }"
@@ -40,7 +40,7 @@
 					</router-link>
 				</b-nav>
 			</div>
-			<div class="col-md-10 pl-4 py-3">
+			<div class="col-md-10 pl-4 py-3 bg-white">
 				<transition name="slide-fade" mode="out-in">
 					<router-view></router-view>
 				</transition>
