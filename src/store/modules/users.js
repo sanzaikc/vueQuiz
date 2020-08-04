@@ -31,7 +31,6 @@ const actions = {
         });
     },
     updateStatus: ({commit}, user) => {
-        axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
         return new Promise((resolve, reject)=>{
             axios.put('/users/update/' + user.id, {
                 is_disabled: user.status
