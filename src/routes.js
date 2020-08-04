@@ -14,6 +14,11 @@ function adminGuard(to, from, next) {
 	else next({ name: "host.home" });
 }
 
+function disableGuard(to, from, next) {
+	if (store.state.auth.currentUser.is_disabled) next({ name: "host" });
+	else next();
+}
+
 export const routes = [
 	{
 		path: "",
@@ -79,6 +84,7 @@ export const routes = [
 			{
 				path: "quiz",
 				name: "host.quiz",
+				beforeEnter: disableGuard,
 				component:()=> import(/* webpackChunkName: "quiz" */ './pages/host/quiz/Quiz.vue'),
 				redirect: {
 					name: 'quizzes'

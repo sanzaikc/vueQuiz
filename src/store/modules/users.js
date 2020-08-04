@@ -39,6 +39,7 @@ const actions = {
                 .then(res => {
                     let user = res.data.user;
                     commit('UPDATE_LIST', user);
+                    commit('SET_CURRENT_USER', user, { root: true });
                     resolve(res.data.user);
                 })
                 .catch(error => reject(error.response.data));

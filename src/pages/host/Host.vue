@@ -15,10 +15,11 @@
 					></b-icon
 					>Home
 				</router-link>
-				<router-link
+				<router-link 
 					:to="{ name: 'host.quiz' }"
 					tag="b-nav-item"
 					active-class="activeTab"
+					:disable="disabled"
 				>
 					<b-icon
 						icon="book"
@@ -28,7 +29,11 @@
 					></b-icon
 					>Quizzes
 				</router-link>
-				<router-link :to="{ name: 'host' }" tag="b-nav-item">
+				<router-link 
+					:to="{ name: 'host' }" 
+					tag="b-nav-item"
+					:disable="disabled"
+					>
 					<b-icon
 						icon="question"
 						variant="dark"
@@ -48,10 +53,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
 	mounted() {
 		document.title = "Host";
 	},
+	computed: {
+		...mapState({
+			'disabled': (state) => state.auth.currentUser.is_disabled,
+		}),
+	}
+
 };
 </script>
 
