@@ -5,7 +5,7 @@
 			:img-src="
 				quiz.image_url
 					? quiz.image_url
-					: require('../assets/images/quizDefault.jpg')
+					: require('../../assets/images/quizDefault.jpg')
 			"
 			img-alt="Image"
 			img-top

@@ -2,7 +2,14 @@ const state = {
     questionList : [],
 };
 const mutations = {};
-const actions = {};
+const actions = {
+    retriveQuestions: ()=>{},
+    createQuestion: ()=>{
+        
+    },
+    removeQuestion: ()=>{},
+    updateQuestion: ()=>{},
+};
 const getters = {};
 
 export default {
