@@ -9,10 +9,9 @@
       :lazy="true"
       width="400px"
     >
-      <b-form class="p-3" @submit.prevent="handleSubmit">
+      <b-form class="p-3" @submit.prevent="onSubmit">
         <b-form-textarea
           id="textarea"
-          size="sm"
           v-model="question.body"
           placeholder="Question"
           rows="3"
@@ -35,18 +34,46 @@
           :key="key"
           :id="'option' + key"
           :label="key === 0 ? 'Answer' : 'Option ' + key"
-          :label-for="'option' + key"
-        >
+          :label-for="'option' + key">
           <b-form-input
             id="answer"
             v-model="question.options[key].body"
             required
-            placeholder="Enter answer"
+            :placeholder="key === 0 ? 'Correct answer' : 'Option'"
           ></b-form-input>
         </b-form-group>
+        
+        <b-form-group>
+          <div class="d-flex justify-content-between align-items-center" @click="show = !show" style="cursor: pointer">
+            <label for="image">Image (optional)</label>
+            <b-icon :icon="show ? 'chevron-compact-up' : 'chevron-compact-down'"></b-icon>
+          </div>
+          <div v-if="show">
+            <b-form-file
+              id="image"
+              v-model="question.image"
+              :state="Boolean(question.image)"
+              accept=".jpg, .png, .gif"
+              placeholder="Choose a file or drop it here..."
+              ref="file-input"
+              @change="onFileChange">
+            </b-form-file>
+            <div class="my-2 d-flex">
+                <img
+                  v-if="question.image"
+                  :src="url"
+                  alt
+                  height="150"
+                  class="mx-auto rounded-lg border border-success"
+                />
+            </div>
+          </div>
+        </b-form-group>
 
-        <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button>
+        <div class="d-flex justify-content-between">
+            <b-button type="submit" variant="outline-primary" class="w-75">Submit</b-button>
+            <b-button type="reset" variant="outline-danger" @click="reset">Reset</b-button>
+        </div>
       </b-form>
     </b-sidebar>
   </div>
@@ -65,10 +92,12 @@ export default {
   },
   data() {
     return {
+      show: false,
       isCreating: false,  
       question: {
         body: "",
         category_id: null,
+        image: null,
         options: [
           {
             body: "",
@@ -87,22 +116,21 @@ export default {
             correct: false,
           },
         ],
+        url: '',
       },
     };
   },
   methods: {
-    handleSubmit() {
-      console.log(this.question);
-    },
-    getValidationState({ dirty, validated, valid = null }) {
-      return dirty || validated ? valid : null;
-    },
     onFileChange(e) {
       const file = e.target.files[0];
       this.url = URL.createObjectURL(file ? file : "");
     },
+    reset() {
+      this.$refs['file-input'].reset();
+      this.question.category_id = null;
+    },
     onSubmit() {
-      console.log("Submitted");
+      console.log(this.question);
     },
   },
   computed: {
