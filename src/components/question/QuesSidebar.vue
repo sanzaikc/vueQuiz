@@ -75,9 +75,9 @@
               type="submit" 
               variant="outline-primary" 
               class="w-75"  
-              :disabled="this.value">
-              {{ this.value ? text+'ing' : text+'e' }}
-              <b-spinner v-if="this.value" small type="grow" class="ml-2"></b-spinner>
+              :disabled="value">
+              {{ value ? text+'ing' : text+'e' }}
+              <b-spinner v-if="value" small type="grow" class="ml-2"></b-spinner>
             </b-button>
             <b-button type="reset" variant="outline-danger" @click="reset">Reset</b-button>
         </div>

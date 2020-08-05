@@ -10,21 +10,24 @@
                 <b-dropdown-item @click="del(question.id)">Delete</b-dropdown-item>
             </b-dropdown>
         </div>
-        <div v-if="showAns" class="d-flex justify-content-between">
-            <ul class="list list-unstyled w-75 ml-3">
-                <li 
-                    v-for="option in question.options" 
-                    :key="option.id" 
-                    class="px-2 rounded font-weight-bold mb-2 w-100" 
-                    :class="option.id == question.answer.option_id ? 'answer' : ''" 
-                    v-text="option.body">
-                </li>
-            </ul>
-            <div v-if="question.image_url" class="w-50 text-center">
-                <p>This question contains an image</p>
-                <img :src="question.image_url" height="100px">
+        <transition name="fade">
+            <div v-if="showAns" class="d-flex justify-content-between">
+                <ul class="list list-unstyled w-75 ml-3">
+                    <li 
+                        v-for="option in question.options" 
+                        :key="option.id" 
+                        class="px-2 rounded font-weight-bold mb-2 w-100" 
+                        :class="option.id == question.answer.option_id ? 'answer' : ''" 
+                        v-text="option.body">
+                    </li>
+                </ul>
+                <div v-if="question.image_url" class="w-50 text-center">
+                    <p>This question contains an image</p>
+                    <img :src="question.image_url" class="rounded" height="100px">
+                </div>
             </div>
-        </div>
+        </transition>
+        
     </div>
 </template>
 
