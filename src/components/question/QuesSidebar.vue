@@ -71,7 +71,14 @@
         </b-form-group>
 
         <div class="d-flex justify-content-between">
-            <b-button type="submit" variant="outline-primary" class="w-75">Submit</b-button>
+            <b-button 
+              type="submit" 
+              variant="outline-primary" 
+              class="w-75"  
+              :disabled="this.value">
+              {{ this.value ? text+'ing' : text+'e' }}
+              <b-spinner v-if="this.value" small type="grow" class="ml-2"></b-spinner>
+            </b-button>
             <b-button type="reset" variant="outline-danger" @click="reset">Reset</b-button>
         </div>
       </b-form>
@@ -89,11 +96,13 @@ export default {
     text: {
       type: String,
     },
+    value: {
+      type: Boolean,
+    }
   },
   data() {
     return {
       show: false,
-      isCreating: false,  
       question: {
         body: "",
         category_id: null,
@@ -120,7 +129,7 @@ export default {
       url: '',
     };
   },
-  methods: {
+  methods: { 
     onFileChange(e) {
       const file = e.target.files[0];
       this.url = URL.createObjectURL(file ? file : "");
@@ -130,13 +139,13 @@ export default {
       this.question.category_id = null;
     },
     onSubmit() {
-      this.$store.dispatch('createQuestion', this.question);
+      this.$emit('onSubmit', this.question);
     },
   },
   computed: {
     ...mapGetters([
       'categories',
-    ])
+    ]),
   },
 };
 </script>

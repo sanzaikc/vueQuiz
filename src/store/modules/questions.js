@@ -14,20 +14,26 @@ const actions = {
 
 		for (var i = 0; i < question.options.length; i++) {
 			questionData.append(`options[${i}]['body']`, question.options[i].body);
-			questionData.append(
-				`options[${i}]['correct']`,
-				question.options[i].correct
-			);
+			questionData.append(`options[${i}]['correct']`,question.options[i].correct);
 		}
 		questionData.append("image", question.image);
 
 		axios.defaults.headers.common["Authorization"] =
 			"Bearer " + store.state.auth.token;
-		axios.post("/questions", questionData, {
-			headers: {
-				"Content-Type": "multipart/form-data",
-			},
-		});
+		return new Promise((resolve, reject)=>{
+            axios.post("/questions", questionData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+                .then(res=>{
+                    resolve(res.data.question);
+                })
+                .catch(error => {
+                    console.log(error.response.data.errors.body[0]);
+                    reject(error.response.data);
+                })
+        });
 	},
 	removeQuestion: () => {},
 	updateQuestion: () => {},
