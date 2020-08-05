@@ -1,8 +1,8 @@
 <template>
     <div  class="px-3 py-2 mb-2 border rounded-lg shadow-sm">
-        <div class="d-flex justify-content-between">
-            <h4 @click="showAns = !showAns" style="cursor: pointer" class="W-100">{{ index + 1  + '.'}} {{ question.body }} </h4>
-            <b-dropdown size="sm" dropleft  variant="link" toggle-class="text-decoration-none" class="W-25" no-caret>
+        <div class="d-flex justify-content-between w-100">
+            <h4 @click="showAns = !showAns" style="cursor: pointer" class="w-100">{{ index + 1  + '.'}} {{ question.body }} </h4>
+            <b-dropdown size="sm" dropleft  variant="link" toggle-class="text-decoration-none" no-caret>
                 <template v-slot:button-content>
                     <b-icon icon="text-right"></b-icon>
                 </template>
@@ -11,7 +11,7 @@
             </b-dropdown>
         </div>
         <div v-if="showAns" class="d-flex justify-content-between">
-            <ul class="list list-unstyled w-75">
+            <ul class="list list-unstyled w-75 ml-3">
                 <li 
                     v-for="option in question.options" 
                     :key="option.id" 
