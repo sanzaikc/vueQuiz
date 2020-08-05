@@ -17,7 +17,8 @@
                     <img 
                     v-if="quizDetail.image_url"
                     :src="quizDetail.image_url"
-                    alt="" height="100px"
+                    alt="" 
+                    height="100px"
                     class="border border-success rounded-lg mx-4"> 
                     <p v-else class="">No Image</p>
                 </div>

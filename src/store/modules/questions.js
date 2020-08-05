@@ -7,6 +7,14 @@ const state = {
 const mutations = {
     SET_QUESTION_LIST: (state, list) => {
         state.questionList = list;
+    },
+    // ADD_QUESTION: (state, question) => {
+    //     console.log(question);
+    //     state.questionList = [question, ...state.questionList];
+    // },
+    REMOVE_QUESTION: (state, question) => {
+        let newList = state.questionList.filter(q => q.id != question.id);
+        state.questionList = [...newList];
     }
 };
 const actions = {
@@ -35,6 +43,10 @@ const actions = {
                 },
             })
                 .then(res=>{
+                    console.log(res.data);
+                    // let question = res.data.question;
+
+                    // commit('ADD_QUESTION', question);
                     resolve(res.data.question);
                 })
                 .catch(error => {
@@ -43,7 +55,18 @@ const actions = {
                 })
         });
 	},
-	removeQuestion: () => {},
+	deleteQuestion: ({commit}, id) => {
+        return new Promise((resolve, reject) => {
+           axios.delete('/questions/'+ id)
+           .then(res=>{
+               commit('REMOVE_QUESTION', res.data.question);            
+               resolve(res.data.message);
+           })
+           .catch(error=>{
+               reject(error.response.data);
+           })
+        })
+       },
 	updateQuestion: () => {},
 };
 const getters = {};

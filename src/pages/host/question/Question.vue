@@ -8,7 +8,9 @@
         >
         </fab>
         <sidebar :text=" 'Creat' " v-model="isLoading" @onSubmit="create"></sidebar>
-        <question-card v-for="question in questions" :key="question.id" :question="question"></question-card>
+        <transition-group name="slide-fade">
+            <question-card v-for="(question, index) in questions" :key="question.id" :question="question" :index="index"></question-card>
+        </transition-group>
     </div>
 </template>
 
@@ -43,7 +45,6 @@ export default {
                     if(res) this.$toasted.show("Question added successfully");
                     this.isLoading = false;
                     document.getElementById("sidebar").click();
-
                 })
                 .catch(error => {
                         if(error.errors.body[0] =="The body has already been taken."){
