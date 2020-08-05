@@ -12,18 +12,20 @@
       <b-form class="p-3" @submit.prevent="handleSubmit">
         <b-form-textarea
           id="textarea"
+          size="sm"
           v-model="question.body"
           placeholder="Question"
           rows="3"
           max-rows="3"
           class="my-3"
+          required
         ></b-form-textarea>
 
         <b-form-group id="input-group-3" label="Category" label-for="category">
           <b-form-select
             id="category"
             v-model="question.category_id"
-            :options="categoriesList"
+            :options="categories"
             required
           ></b-form-select>
         </b-form-group>
@@ -32,7 +34,7 @@
           v-for="(option, key) in question.options"
           :key="key"
           :id="'option' + key"
-          :label="key === 0 ? 'Answer' : 'Option'"
+          :label="key === 0 ? 'Answer' : 'Option ' + key"
           :label-for="'option' + key"
         >
           <b-form-input
@@ -51,17 +53,10 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import axios from "axios";
+import { mapGetters } from "vuex";
 export default {
   mounted() {
-    this.$store.dispatch("retrieveCategories");
-    axios.get("/categories").then((res) => {
-      this.categoriesList = res.data.categories.map((cat) => ({
-        value: cat.id,
-        text: cat.name,
-      }));
-    });
+    this.$store.dispatch("retrieveCategories")
   },
   props: {
     text: {
@@ -70,11 +65,10 @@ export default {
   },
   data() {
     return {
-      isCreating: false,
-      categoriesList: [],
+      isCreating: false,  
       question: {
         body: "",
-        category_id: "",
+        category_id: null,
         options: [
           {
             body: "",
@@ -94,7 +88,6 @@ export default {
           },
         ],
       },
-      url: "",
     };
   },
   methods: {
@@ -113,9 +106,9 @@ export default {
     },
   },
   computed: {
-    ...mapState({
-      categories: (state) => state.categories.categoryList,
-    }),
+    ...mapGetters([
+      'categories',
+    ])
   },
 };
 </script>

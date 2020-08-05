@@ -84,4 +84,19 @@ export default {
         }
 
     },
+    getters: {
+        categories: state => {
+            let categories = state.categoryList.map((cat) => ({
+                value: cat.id,
+                text: cat.name,
+            }));
+            let placeholder = {
+                value: null,
+                text: "Select a category",
+                disabled: true,
+            };
+            categories.unshift(placeholder);
+            return categories;
+        }
+    }
 }
