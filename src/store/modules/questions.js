@@ -8,10 +8,10 @@ const mutations = {
     SET_QUESTION_LIST: (state, list) => {
         state.questionList = list;
     },
-    // ADD_QUESTION: (state, question) => {
-    //     console.log(question);
-    //     state.questionList = [question, ...state.questionList];
-    // },
+    ADD_QUESTION: (state, question) => {
+        console.log(question);
+        state.questionList = [question, ...state.questionList];
+    },
     REMOVE_QUESTION: (state, question) => {
         let newList = state.questionList.filter(q => q.id != question.id);
         state.questionList = [...newList];
@@ -31,7 +31,7 @@ const actions = {
                 });
         });
     },
-	createQuestion: (context, question) => {
+	createQuestion: ({commit}, question) => {
 		let questionData = new FormData();
 		questionData.append("body", question.body);
 		questionData.append("category_id", question.category_id);
@@ -50,9 +50,8 @@ const actions = {
             })
                 .then(res=>{
                     console.log(res.data);
-                    // let question = res.data.question;
-
-                    // commit('ADD_QUESTION', question);
+                    let question = res.data.question;
+                    commit('ADD_QUESTION', question);
                     resolve(res.data.question);
                 })
                 .catch(error => {

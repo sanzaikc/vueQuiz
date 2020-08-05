@@ -10,6 +10,9 @@
                 <b-dropdown-item @click="del(question.id)">Delete</b-dropdown-item>
             </b-dropdown>
         </div>
+        <div v-if="!showAns">
+           <span class="px-2 border rounded-pill text-secondary"> </span>
+        </div>
         <transition name="fade">
             <div v-if="showAns" class="d-flex justify-content-between">
                 <ul class="list list-unstyled w-75 ml-3">
@@ -27,14 +30,20 @@
                 </div>
             </div>
         </transition>
-        
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 // import Sidebar from '../question/QuesSidebar.vue';
 export default {
     mounted(){
+        this.$store.dispatch('retrieveCategories')
+            .then(res=>{
+                if(res){
+                    this.categoryList = this.categories
+                }
+            })
     },
     props: {
         question: {
@@ -47,6 +56,7 @@ export default {
     data(){
         return{
             showAns: false,
+            categoryList: [],
         }
     },
     methods: {
@@ -68,6 +78,11 @@ export default {
             }
         }
     },
+    computed: {
+        ...mapGetters([
+            'categories'
+        ]),
+    },
     components: {
         // Sidebar,
     }
@@ -75,11 +90,4 @@ export default {
 </script>
 
 <style scoped>
-    .answer{
-        /* background-color: #85db8a; */
-        color: green;
-    }
-    /* .answer:hover{
-        background-color: #a1eda5;
-    } */
 </style>
