@@ -30,9 +30,7 @@
             <button class="btn btn-outline-primary btn-sm">Attach</button>
         </div>
 
-        <question-card></question-card>
-        <question-card></question-card>
-        
+        <question-card></question-card>        
     </div>
 </template>
 

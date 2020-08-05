@@ -75,10 +75,10 @@
                   type="submit"
                   variant="outline-primary"
                   class="w-100"
-                  :disabled="isCreating"
+                  :disabled="value"
                 >
-                  {{ isCreating ? text+'ing' : text+'e' }}
-                  <b-spinner v-if="isCreating" small type="grow" class="ml-2"></b-spinner>
+                  {{ value ? text+'ing' : text+'e' }}
+                  <b-spinner v-if="value" small type="grow" class="ml-2"></b-spinner>
                 </b-button>
               </b-form>
             </validation-observer>
@@ -99,10 +99,12 @@ export default {
       text: {
         type: String,
       },
+      value: {
+        type: Boolean,
+      }
     },
     data(){
         return{
-            isCreating: false,
             quiz: {
                 name: '',
                 description: '',

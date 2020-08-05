@@ -15,7 +15,7 @@
 					@show="showSidebar"
 				>
 				</fab>
-				<quiz-sidebar :text="'Creat'" @onSubmit="createQuiz"></quiz-sidebar>
+				<quiz-sidebar :text="'Creat'" v-model="isBusy" @onSubmit="createQuiz"></quiz-sidebar>
 			</div>
 
 			<div v-if="quizzes.length > 0" class="row">
@@ -41,6 +41,7 @@ export default {
 	data() {
 		return {
 			isLoading: true,
+			isBusy: false,
 			fabActions: [
 				{
 					name: "show",
@@ -65,13 +66,16 @@ export default {
 			document.getElementById("sidebar").click();
 		},
 		createQuiz(quiz) {
+			this.isBusy = true;
 			this.$store
 				.dispatch("createQuiz", quiz)
 				.then((res) => {
+					this.isBusy = false;
 					this.$toasted.show("Quiz '" + res.name + "' created.");
 					document.getElementById("sidebar").click();
 				})
 				.catch((error) => {
+					this.isBusy = false;
 					this.$toasted.show(error, {
 						theme: "bubble",
 					});

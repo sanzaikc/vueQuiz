@@ -7,7 +7,7 @@
             @show="showSidebar"
         >
         </fab>
-        <sidebar :text=" 'Creat' " v-model="isLoading" @onSubmit="create"></sidebar>
+        <sidebar :text=" 'Creat' " v-model="isBusy" @onSubmit="create"></sidebar>
         <transition-group name="slide-fade">
             <question-card v-for="(question, index) in questions" :key="question.id" :question="question" :index="index"></question-card>
         </transition-group>
@@ -25,7 +25,7 @@ export default {
     },
     data(){
         return{
-            isLoading: false,
+            isBusy: false,
             fabActions: [
 				{
 					name: "show",
@@ -39,11 +39,11 @@ export default {
 			document.getElementById("sidebar").click();
         },
         create(question){
-            this.isLoading = true;
+            this.isBusy = true;
             this.$store.dispatch('createQuestion',question)
                 .then(res => {
                     if(res) this.$toasted.show("Question added successfully");
-                    this.isLoading = false;
+                    this.isBusy = false;
                     document.getElementById("sidebar").click();
                 })
                 .catch(error => {
@@ -51,7 +51,7 @@ export default {
                             this.$toasted.show("Question already exists!", {
                             theme: 'bubble',
                         });
-                        this.isLoading = false;
+                        this.isBusy = false;
                     }  
                 });
         }
