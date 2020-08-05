@@ -7,7 +7,7 @@
             @edit="showSidebar"
             @deleteMe="del">
         </fab>
-        <quiz-sidebar :text="'Updat'" @onSubmit="updateQuiz"></quiz-sidebar>
+        <quiz-sidebar :text="'Updat'" v-model="isBusy" @onSubmit="updateQuiz"></quiz-sidebar>
         <div>
             <h2> {{ quizDetail.name }} </h2>
             <hr>
@@ -52,6 +52,7 @@ export default {
     },
     data(){
         return{
+            isBusy: false,
             fabActions: [
               {
                   name: 'deleteMe',
@@ -86,10 +87,17 @@ export default {
             }
         },
         updateQuiz(quiz){
+            this.isBusy= true,
             this.$store.dispatch('updateQuiz', {id:this.quizDetail.id ,data: quiz})
                 .then(res => {
+                    this.isBusy= false,
                     this.$toasted.show("Updated as '"+ res.name + "'");
                     document.getElementById('sidebar').click();
+                }).catch(error => {
+                    this.isBusy= false,
+                    this.$toasted.show(error, {
+                        theme: 'bubble',
+                    });
                 })    
         }
     },
