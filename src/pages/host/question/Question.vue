@@ -8,17 +8,18 @@
         >
         </fab>
         <sidebar :text=" 'Creat' " v-model="isLoading" @onSubmit="create"></sidebar>
-        <question-card></question-card>
+        <question-card v-for="question in questions" :key="question.id" :question="question"></question-card>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import fab from "vue-fab";
 import QuestionCard from '../../../components/question/QuesCard.vue';
 import Sidebar from '../../../components/question/QuesSidebar.vue';
 export default {
     mounted(){
-        
+        this.$store.dispatch('retriveQuestions');
     },
     data(){
         return{
@@ -54,7 +55,11 @@ export default {
                 });
         }
     },
-    
+    computed:{
+        ...mapState({
+            'questions': state => state.questions.questionList,
+        }),
+    },
     components: {
         fab,
         QuestionCard,

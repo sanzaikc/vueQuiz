@@ -4,9 +4,19 @@ import store from "../store";
 const state = {
 	questionList: [],
 };
-const mutations = {};
+const mutations = {
+    SET_QUESTION_LIST: (state, list) => {
+        state.questionList = list;
+    }
+};
 const actions = {
-	retriveQuestions: () => {},
+	retriveQuestions: ({commit}) => {
+        axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
+        axios.get('/questions')
+            .then(res => {
+                commit('SET_QUESTION_LIST', res.data.questions)
+            })
+    },
 	createQuestion: (context, question) => {
 		let questionData = new FormData();
 		questionData.append("body", question.body);
@@ -18,8 +28,6 @@ const actions = {
 		}
 		questionData.append("image", question.image);
 
-		axios.defaults.headers.common["Authorization"] =
-			"Bearer " + store.state.auth.token;
 		return new Promise((resolve, reject)=>{
             axios.post("/questions", questionData, {
                 headers: {
