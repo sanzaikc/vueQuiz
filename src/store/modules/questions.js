@@ -9,7 +9,6 @@ const mutations = {
         state.questionList = list;
     },
     ADD_QUESTION: (state, question) => {
-        console.log(question);
         state.questionList = [question, ...state.questionList];
     },
     REMOVE_QUESTION: (state, question) => {

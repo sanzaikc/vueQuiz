@@ -14,7 +14,7 @@
                 @show="showSidebar">
             </fab>
             <sidebar :text=" 'Creat' " v-model="isBusy" @onSubmit="create"></sidebar>
-            <transition-group name="slide-fade">
+            <transition-group name="slide-fade" mode="out-in">
                 <question-card v-for="(question, index) in questions" :key="question.id" :question="question" :index="index"></question-card>
             </transition-group>
         </div>

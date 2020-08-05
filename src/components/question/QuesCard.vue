@@ -11,7 +11,7 @@
             </b-dropdown>
         </div>
         <div v-if="!showAns">
-           <span class="px-2 border rounded-pill text-secondary"> </span>
+           <span class="px-2 border rounded-pill text-secondary" v-text="this.categoryName"> </span>
         </div>
         <transition name="fade">
             <div v-if="showAns" class="d-flex justify-content-between">
@@ -20,7 +20,7 @@
                         v-for="option in question.options" 
                         :key="option.id" 
                         class="px-2 rounded font-weight-bold mb-2 w-100" 
-                        :class="option.id == question.answer.option_id ? 'answer' : ''" 
+                        :class="option.id == question.answer.option_id ? 'text-succes' : ''" 
                         v-text="option.body">
                     </li>
                 </ul>
@@ -41,7 +41,10 @@ export default {
         this.$store.dispatch('retrieveCategories')
             .then(res=>{
                 if(res){
-                    this.categoryList = this.categories
+                    if(this.categories){
+                        let cat = this.categories.find(q => q.value === this.question.category_id);
+                        this.categoryName = cat.text;
+                    }
                 }
             })
     },
@@ -56,7 +59,7 @@ export default {
     data(){
         return{
             showAns: false,
-            categoryList: [],
+            categoryName: ''
         }
     },
     methods: {
