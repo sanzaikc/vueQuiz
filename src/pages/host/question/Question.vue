@@ -1,17 +1,25 @@
 <template>
     <div>
-        <fab
-            main-icon="menu"
-            bg-color="#007bff"
-            :actions="fabActions"
-            @show="showSidebar"
-        >
-        </fab>
-        <sidebar :text=" 'Creat' " v-model="isBusy" @onSubmit="create"></sidebar>
-        <transition-group name="slide-fade">
-            <question-card v-for="(question, index) in questions" :key="question.id" :question="question" :index="index"></question-card>
-        </transition-group>
+         <b-spinner
+			v-if="isLoading"
+			variant="primary"
+			label="Spinning"
+			style="position: fixed; top: 50%; left: 50%">
+        </b-spinner>
+        <div v-else>
+            <fab
+                main-icon="menu"
+                bg-color="#007bff"
+                :actions="fabActions"
+                @show="showSidebar">
+            </fab>
+            <sidebar :text=" 'Creat' " v-model="isBusy" @onSubmit="create"></sidebar>
+            <transition-group name="slide-fade">
+                <question-card v-for="(question, index) in questions" :key="question.id" :question="question" :index="index"></question-card>
+            </transition-group>
+        </div>
     </div>
+    
 </template>
 
 <script>
@@ -21,10 +29,14 @@ import QuestionCard from '../../../components/question/QuesCard.vue';
 import Sidebar from '../../../components/question/QuesSidebar.vue';
 export default {
     mounted(){
-        this.$store.dispatch('retriveQuestions');
+        this.$store.dispatch('retriveQuestions')
+            .then(res => {
+                if(res) this.isLoading = false;
+            });
     },
     data(){
         return{
+            isLoading: true,
             isBusy: false,
             fabActions: [
 				{

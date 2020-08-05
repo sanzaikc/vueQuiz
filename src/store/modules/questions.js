@@ -20,10 +20,16 @@ const mutations = {
 const actions = {
 	retriveQuestions: ({commit}) => {
         axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
-        axios.get('/questions')
-            .then(res => {
-                commit('SET_QUESTION_LIST', res.data.questions)
-            })
+        return new Promise((resolve, reject)=>{
+            axios.get('/questions')
+                .then(res => {
+                    commit('SET_QUESTION_LIST', res.data.questions)
+                    resolve(res.data);
+                })
+                .catch(error=> {
+                    reject(error.response.data);
+                });
+        });
     },
 	createQuestion: (context, question) => {
 		let questionData = new FormData();

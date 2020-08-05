@@ -38,6 +38,17 @@ import { mapState } from "vuex";
 import QuizCard from "../../../components/quiz/QuizCard";
 import QuizSidebar from "../../../components/quiz/QuizSidebar.vue";
 export default {
+	mounted() {
+		document.title = "Quiz";
+	},
+	created() {
+		this.$store
+			.dispatch("retrieveQuiz")
+			.then((res) => {
+				if (res) this.isLoading = false;
+			})
+			.catch((error) => console.log(error));
+	},
 	data() {
 		return {
 			isLoading: true,
@@ -49,17 +60,6 @@ export default {
 				},
 			],
 		};
-	},
-	mounted() {
-		document.title = "Quiz";
-	},
-	created() {
-		this.$store
-			.dispatch("retrieveQuiz")
-			.then((res) => {
-				if (res) this.isLoading = false;
-			})
-			.catch((error) => console.log(error));
 	},
 	methods: {
 		showSidebar() {
