@@ -5,6 +5,7 @@ import auth from './modules/auth'
 import users from './modules/users'
 import categories from './modules/categories'
 import quiz from './modules/quiz'
+import questions from './modules/questions'
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
         auth,
         users,
         categories,
-        quiz
+        quiz,
+        questions
     },
 });

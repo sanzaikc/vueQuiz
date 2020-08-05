@@ -1,8 +1,6 @@
 import  axios from 'axios';
 import store from '../store'
 
-
-
 export default {
     state: {
         categoryList: [],
@@ -40,7 +38,6 @@ export default {
             });
         },
         createCategory: ({commit}, category) => {
-            axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
             return new Promise((resolve, reject)=>{
                 axios.post("/categories", category)
                 .then(res => {
@@ -54,7 +51,6 @@ export default {
             });
         },
         deleteCategory: ({commit}, id) => {
-            axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
             return new Promise((resolve, reject)=>{
                 if(confirm("Are you sure you want to delete?")){
                     axios.delete("/categories/"+ id + "/1")
@@ -70,7 +66,6 @@ export default {
             });
         },
         updateCategory: ({commit}, payload) => {
-            axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
             return new Promise((resolve, reject)=>{
                 axios.put("/categories/" + payload.id + "/",  {
                     name: payload.category,
@@ -87,4 +82,19 @@ export default {
         }
 
     },
+    getters: {
+        categories: state => {
+            let categories = state.categoryList.map((cat) => ({
+                value: cat.id,
+                text: cat.name,
+            }));
+            let placeholder = {
+                value: null,
+                text: "Select a category",
+                disabled: true,
+            };
+            categories.unshift(placeholder);
+            return categories;
+        }
+    }
 }

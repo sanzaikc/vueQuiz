@@ -35,8 +35,8 @@
 <script>
 import fab from "vue-fab";
 import { mapState } from "vuex";
-import QuizCard from "../../../components/QuizCard.vue";
-import QuizSidebar from "../../../components/QuizSidebar.vue";
+import QuizCard from "../../../components/quiz/QuizCard";
+import QuizSidebar from "../../../components/quiz/QuizSidebar.vue";
 export default {
 	data() {
 		return {
@@ -60,11 +60,6 @@ export default {
 			})
 			.catch((error) => console.log(error));
 	},
-	computed: {
-		...mapState({
-			quizzes: (state) => state.quiz.quizList,
-		}),
-	},
 	methods: {
 		showSidebar() {
 			document.getElementById("sidebar").click();
@@ -82,6 +77,11 @@ export default {
 					});
 				});
 		},
+	},
+	computed: {
+		...mapState({
+			quizzes: (state) => state.quiz.quizList,
+		}),
 	},
 	components: {
 		fab,

@@ -17,7 +17,8 @@
                     <img 
                     v-if="quizDetail.image_url"
                     :src="quizDetail.image_url"
-                    alt="" height="100px"
+                    alt="" 
+                    height="100px"
                     class="border border-success rounded-lg mx-4"> 
                     <p v-else class="">No Image</p>
                 </div>
@@ -36,10 +37,10 @@
 </template>
 
 <script>
-import fab from 'vue-fab';
 import { mapState, mapMutations } from 'vuex';
-import QuizSidebar from '../../../components/QuizSidebar';
-import QuestionCard from '../../../components/QuestionCard.vue';
+import fab from 'vue-fab';
+import QuizSidebar from '../../../components/quiz/QuizSidebar';
+import QuestionCard from '../../../components/question/QuesCard';
 export default {
     mounted(){
         if(this.$store.state.quiz.quizList.length > 0){
