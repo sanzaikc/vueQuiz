@@ -116,8 +116,8 @@ export default {
             correct: false,
           },
         ],
-        url: '',
       },
+      url: '',
     };
   },
   methods: {
@@ -130,7 +130,7 @@ export default {
       this.question.category_id = null;
     },
     onSubmit() {
-      console.log(this.question);
+      this.$store.dispatch('createQuestion', this.question);
     },
   },
   computed: {
