@@ -1,8 +1,8 @@
 <template>
     <div  class="px-3 py-2 mb-2 border rounded-lg shadow-sm">
         <div class="d-flex justify-content-between">
-            <h4 @click="showAns = !showAns" style="cursor: pointer">{{ index + 1  + '.'}} {{ question.body }} </h4>
-            <b-dropdown size="sm" dropleft  variant="link" toggle-class="text-decoration-none" no-caret>
+            <h4 @click="showAns = !showAns" style="cursor: pointer" class="W-100">{{ index + 1  + '.'}} {{ question.body }} </h4>
+            <b-dropdown size="sm" dropleft  variant="link" toggle-class="text-decoration-none" class="W-25" no-caret>
                 <template v-slot:button-content>
                     <b-icon icon="text-right"></b-icon>
                 </template>
@@ -11,11 +11,11 @@
             </b-dropdown>
         </div>
         <div v-if="showAns" class="d-flex justify-content-between">
-            <ul class="list list-unstyled w-50">
+            <ul class="list list-unstyled w-75">
                 <li 
                     v-for="option in question.options" 
                     :key="option.id" 
-                    class="px-2 rounded font-weight-bold mb-2 w-50" 
+                    class="px-2 rounded font-weight-bold mb-2 w-100" 
                     :class="option.id == question.answer.option_id ? 'answer' : ''" 
                     v-text="option.body">
                 </li>
@@ -48,7 +48,8 @@ export default {
     },
     methods: {
         del(id){
-            this.$store.dispatch('deleteQuestion', id)
+            if(confirm('Are you sure you want to delete?')){
+                this.$store.dispatch('deleteQuestion', id)
                 .then(res => {
                     if(res){
                         this.$toasted.show("Question deleted", {
@@ -60,7 +61,8 @@ export default {
                     this.$toasted.show(error, {
                         theme: 'bubble'
                     })
-                });
+                });      
+            }
         }
     },
     components: {
