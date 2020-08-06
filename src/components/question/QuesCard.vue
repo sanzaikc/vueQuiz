@@ -6,7 +6,7 @@
                 <template v-slot:button-content>
                     <b-icon icon="text-right"></b-icon>
                 </template>
-                <b-dropdown-item>Edit</b-dropdown-item>
+                <b-dropdown-item @click="showEdit(question)">Edit</b-dropdown-item>
                 <b-dropdown-item @click="del(question.id)">Delete</b-dropdown-item>
             </b-dropdown>
         </div>
@@ -63,6 +63,9 @@ export default {
         }
     },
     methods: {
+        showEdit(question){
+           this.$emit('edit', question);
+        },
         del(id){
             if(confirm('Are you sure you want to delete?')){
                 this.$store.dispatch('deleteQuestion', id)

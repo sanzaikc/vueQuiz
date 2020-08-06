@@ -14,6 +14,10 @@ const mutations = {
     REMOVE_QUESTION: (state, question) => {
         let newList = state.questionList.filter(q => q.id != question.id);
         state.questionList = [...newList];
+    },
+    UPDATE_LIST : (state, updates) => {
+        let updatedList = state.questionList.map( q => q.id == updates.id ? updates : q );
+        state.questionList = [...updatedList];
     }
 };
 const actions = {
@@ -48,7 +52,6 @@ const actions = {
                 },
             })
                 .then(res=>{
-                    console.log(res.data);
                     let question = res.data.question;
                     commit('ADD_QUESTION', question);
                     resolve(res.data.question);
@@ -71,7 +74,35 @@ const actions = {
            })
         })
        },
-	updateQuestion: () => {},
+	updateQuestion: ({commit}, question) => {
+        let questionData = new FormData();
+		questionData.append("body", question.data.body);
+		questionData.append("category_id", question.data.category_id);
+
+		for (var i = 0; i < question.data.options.length; i++) {
+			questionData.append(`options[${i}]['body']`, question.data.options[i].body);
+			questionData.append(`options[${i}]['correct']`,question.data.options[i].correct);
+		}
+		questionData.append("image", question.data.image);
+
+        console.log(questionData);
+		return new Promise((resolve, reject)=>{
+            axios.post("/questions/" + question.id, questionData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+                .then(res=>{
+                    let question = res.data.question;
+                    commit('UPDATE_LIST', question);
+                    resolve(res.data.question);
+                })
+                .catch(error => {
+                    console.log(error.response.data.errors.body[0]);
+                    reject(error.response.data);
+                })
+        }); 
+    },
 };
 const getters = {};
 

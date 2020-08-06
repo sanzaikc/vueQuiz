@@ -11,11 +11,22 @@
                 main-icon="menu"
                 bg-color="#007bff"
                 :actions="fabActions"
-                @show="showSidebar">
+                @show="createSidebar">
             </fab>
-            <sidebar :text=" 'Creat' " v-model="isBusy" @onSubmit="create"></sidebar>
+            <sidebar 
+                v-model="isBusy" 
+                :text=" sideBarTitle " 
+                :qData="data"
+                @onSubmit="create" 
+                @onUpdate="update" >
+            </sidebar>
             <transition-group name="slide-fade" mode="out-in">
-                <question-card v-for="(question, index) in questions" :key="question.id" :question="question" :index="index"></question-card>
+                <question-card 
+                v-for="(question, index) in questions" 
+                :key="question.id" 
+                :question="question" 
+                :index="index" 
+                @edit="editSidebar"></question-card>
             </transition-group>
         </div>
     </div>
@@ -38,6 +49,8 @@ export default {
         return{
             isLoading: true,
             isBusy: false,
+            sideBarTitle : '',
+            data: {},
             fabActions: [
 				{
 					name: "show",
@@ -47,8 +60,15 @@ export default {
         }
     },
     methods: {
-        showSidebar() {
+        createSidebar() {
+            this.sideBarTitle = "Creat"
+            this.data = null;
 			document.getElementById("sidebar").click();
+        },
+        editSidebar(data){
+            this.sideBarTitle = "Updat";
+            this.data = data
+            document.getElementById("sidebar").click();
         },
         create(question){
             this.isBusy = true;
@@ -66,7 +86,24 @@ export default {
                         this.isBusy = false;
                     }  
                 });
-        }
+        },
+        update(question){
+            this.isBusy = true;
+            this.$store.dispatch('updateQuestion',question)
+                .then(res => {
+                    if(res) {
+                        this.$toasted.show("Question Updated successfully");
+                        this.isBusy = false;
+                        document.getElementById("sidebar").click();
+                    }
+                })
+                .catch(error => {
+                    this.$toasted.show(error, {
+                        theme: 'bubble',
+                    });
+                    this.isBusy = false; 
+                });
+        },
     },
     computed:{
         ...mapState({

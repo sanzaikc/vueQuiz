@@ -98,18 +98,21 @@ export default {
     },
     value: {
       type: Boolean,
+    },
+    qData: {
+      type: Object,
     }
   },
   data() {
     return {
       show: false,
       question: {
-        body: "",
-        category_id: null,
+        body: '',
+        category_id: null ,
         image: null,
         options: [
           {
-            body: "",
+            body:"",
             correct: true,
           },
           {
@@ -139,7 +142,11 @@ export default {
       this.question.category_id = null;
     },
     onSubmit() {
-      this.$emit('onSubmit', this.question);
+      if(!this.qData){
+        this.$emit('onSubmit', this.question);
+      }else{
+        this.$emit('onUpdate',{ id:this.qData.id, data: this.question});
+      }
     },
   },
   computed: {
