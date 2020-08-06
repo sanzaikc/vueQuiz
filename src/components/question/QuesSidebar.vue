@@ -34,7 +34,8 @@
           :key="key"
           :id="'option' + key"
           :label="key === 0 ? 'Answer' : 'Option ' + key"
-          :label-for="'option' + key">
+          :label-for="'option' + key"
+        >
           <b-form-input
             id="answer"
             v-model="question.options[key].body"
@@ -42,9 +43,13 @@
             :placeholder="key === 0 ? 'Correct answer' : 'Option'"
           ></b-form-input>
         </b-form-group>
-        
+
         <b-form-group>
-          <div class="d-flex justify-content-between align-items-center" @click="show = !show" style="cursor: pointer">
+          <div
+            class="d-flex justify-content-between align-items-center"
+            @click="show = !show"
+            style="cursor: pointer"
+          >
             <label for="image">Image (optional)</label>
             <b-icon :icon="show ? 'chevron-compact-up' : 'chevron-compact-down'"></b-icon>
           </div>
@@ -56,30 +61,26 @@
               accept=".jpg, .png, .gif"
               placeholder="Choose a file or drop it here..."
               ref="file-input"
-              @change="onFileChange">
-            </b-form-file>
+              @change="onFileChange"
+            ></b-form-file>
             <div class="my-2 d-flex">
-                <img
-                  v-if="question.image"
-                  :src="url"
-                  alt
-                  height="150"
-                  class="mx-auto rounded-lg border border-success"
-                />
+              <img
+                v-if="question.image"
+                :src="url"
+                alt
+                height="150"
+                class="mx-auto rounded-lg border border-success"
+              />
             </div>
           </div>
         </b-form-group>
 
         <div class="d-flex justify-content-between">
-            <b-button 
-              type="submit" 
-              variant="outline-primary" 
-              class="w-75"  
-              :disabled="value">
-              {{ value ? text+'ing' : text+'e' }}
-              <b-spinner v-if="value" small type="grow" class="ml-2"></b-spinner>
-            </b-button>
-            <b-button type="reset" variant="outline-danger" @click="reset">Reset</b-button>
+          <b-button type="submit" variant="outline-primary" class="w-75" :disabled="value">
+            {{ value ? text+'ing' : text+'e' }}
+            <b-spinner v-if="value" small type="grow" class="ml-2"></b-spinner>
+          </b-button>
+          <b-button type="reset" variant="outline-danger" @click="reset">Reset</b-button>
         </div>
       </b-form>
     </b-sidebar>
@@ -90,7 +91,7 @@
 import { mapGetters } from "vuex";
 export default {
   mounted() {
-    this.$store.dispatch("retrieveCategories")
+    this.$store.dispatch("retrieveCategories");
   },
   props: {
     text: {
@@ -101,18 +102,18 @@ export default {
     },
     qData: {
       type: Object,
-    }
+    },
   },
   data() {
     return {
       show: false,
       question: {
-        body: '',
-        category_id: null ,
+        body: "",
+        category_id: null,
         image: null,
         options: [
           {
-            body:"",
+            body: "",
             correct: true,
           },
           {
@@ -129,30 +130,59 @@ export default {
           },
         ],
       },
-      url: '',
+      url: "",
     };
   },
-  methods: { 
+  watch: {
+    qData: function (newVal, oldVal) {
+      console.log(newVal, oldVal);
+      if (newVal !== null) this.question = newVal;
+      else
+        this.question = {
+          body: "",
+          category_id: null,
+          image: null,
+          options: [
+            {
+              body: "",
+              correct: true,
+            },
+            {
+              body: "",
+              correct: false,
+            },
+            {
+              body: "",
+              correct: false,
+            },
+            {
+              body: "",
+              correct: false,
+            },
+          ],
+        };
+      console.log(this.question);
+    },
+  },
+  methods: {
     onFileChange(e) {
       const file = e.target.files[0];
       this.url = URL.createObjectURL(file ? file : "");
     },
     reset() {
-      this.$refs['file-input'].reset();
+      this.$refs["file-input"].reset();
       this.question.category_id = null;
     },
     onSubmit() {
-      if(!this.qData){
-        this.$emit('onSubmit', this.question);
-      }else{
-        this.$emit('onUpdate',{ id:this.qData.id, data: this.question});
+      if (!this.qData) {
+        this.$emit("onSubmit", this.question);
+      } else {
+        this.$emit("onUpdate", { id: this.qData.id, data: this.question });
       }
     },
   },
   computed: {
-    ...mapGetters([
-      'categories',
-    ]),
+    ...mapGetters(["categories"]),
   },
 };
 </script>
