@@ -1,14 +1,17 @@
 <template>
     <div  class="px-3 py-2 mb-2 border rounded-lg shadow-sm">
-        <div class="d-flex justify-content-between w-100">
-            <h4 @click="showAns = !showAns" style="cursor: pointer" class="w-100">{{ index + 1  + '.'}} {{ question.body }} </h4>
-            <b-dropdown size="sm" dropleft  variant="link" toggle-class="text-decoration-none" no-caret>
+        <div class="d-flex justify-content-between align-items-center w-100">
+            <h4  @click="showAns = !showAns" style="cursor: pointer" class="w-100">{{ index + 1  + '.'}} {{ question.body }} </h4>
+            <b-dropdown v-if="!attach" size="sm" dropleft  variant="link" toggle-class="text-decoration-none" no-caret>
                 <template v-slot:button-content>
                     <b-icon icon="text-right"></b-icon>
                 </template>
-                <b-dropdown-item @click="showEdit(question)">Edit</b-dropdown-item>
-                <b-dropdown-item @click="del(question.id)">Delete</b-dropdown-item>
+                <div>
+                    <b-dropdown-item @click="showEdit(question)">Edit</b-dropdown-item>
+                    <b-dropdown-item @click="del(question.id)">Delete</b-dropdown-item>
+                </div>
             </b-dropdown>
+            <button v-else class="btn btn-outline-primary btn-sm ml-2">Attach</button>
         </div>
         <div v-if="!showAns">
            <span class="px-2 border rounded-pill text-secondary" v-text="this.categoryName"> </span>
@@ -20,7 +23,7 @@
                         v-for="option in question.options" 
                         :key="option.id" 
                         class="px-2 rounded font-weight-bold mb-2 w-100" 
-                        :class="option.id == question.answer.option_id ? 'text-succes' : ''" 
+                        :class="option.id == question.answer.option_id ? 'text-success' : ''" 
                         v-text="option.body">
                     </li>
                 </ul>
@@ -54,6 +57,9 @@ export default {
         },
         index: {
             type: Number,
+        },
+        attach :{
+            type: Boolean,
         }
     },
     data(){
@@ -65,6 +71,9 @@ export default {
     methods: {
         showEdit(question){
            this.$emit('edit', question);
+        },
+        attachQuestion(){
+            this.$emit('attach');
         },
         del(id){
             if(confirm('Are you sure you want to delete?')){

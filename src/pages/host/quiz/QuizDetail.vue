@@ -5,7 +5,8 @@
             bg-color="#007bff"
             :actions="fabActions"
             @edit="showSidebar"
-            @deleteMe="del">
+            @deleteMe="del"
+            @attach="attachQuestions">
         </fab>
         <quiz-sidebar :text="'Updat'" v-model="isBusy" @onSubmit="updateQuiz"></quiz-sidebar>
         <div>
@@ -25,12 +26,27 @@
             </div>
         </div>
         <hr>
-        <div class="mb-4 d-flex justify-content-between align-items-center">
-            <h2>Questions</h2>
-            <button class="btn btn-outline-primary btn-sm">Attach</button>
-        </div>
+        <div v-if="questions.length > 0" class="mb-4 d-flex justify-content-between align-items-center">
+            <h2>Total Questions {{ questions.length }} </h2>
+            <b-button v-b-modal.modal-scrollable hidden ref="modal"></b-button>
 
-        <question-card></question-card>        
+            <b-modal id="modal-scrollable" scrollable title="Attach Questions to this quiz" size="lg" ok-only>
+                <!-- <input type="text" class="form-control"> -->
+                <!-- <div 
+                    v-for="question in questions" 
+                    :key="question.id" 
+                    class="p-2 mb-2 border rounded d-flex justify-content-between">
+                    <h5 v-text="question.body"></h5>
+                    <button class="btn btn-outline-primary btn-sm"> Attach </button>
+                </div> -->
+                <question-card 
+                    v-for="(question, index) in questions" 
+                    :key="question.id" 
+                    :question="question" 
+                    :index="index"
+                    :attach="true"></question-card>
+            </b-modal>
+        </div>
     </div>
 </template>
 
@@ -47,6 +63,7 @@ export default {
             this.$store.dispatch('retrieveQuiz')
                 .then(res=> {
                     if(res) this.QUIZ_DETAIL(this.$route.params.id);
+                    this.$store.dispatch('retriveQuestions')
                 });
         }    
     },
@@ -62,6 +79,10 @@ export default {
               {
                   name: 'edit',
                   icon: 'edit'
+              },
+              {
+                  name: 'attach',
+                  icon: 'attachment'
               }
           ],
         }
@@ -99,11 +120,15 @@ export default {
                         theme: 'bubble',
                     });
                 })    
+        },
+        attachQuestions(){
+            this.$refs.modal.click();
         }
     },
     computed:{
         ...mapState({
             'quizDetail': state => state.quiz.quizDetail,
+            'questions': state => state.questions.questionList,
         }),
     },
     components:{

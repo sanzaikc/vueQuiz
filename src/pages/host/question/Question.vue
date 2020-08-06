@@ -25,7 +25,8 @@
                 v-for="(question, index) in questions" 
                 :key="question.id" 
                 :question="question" 
-                :index="index" 
+                :index="index"
+                :attach="false"
                 @edit="editSidebar"></question-card>
             </transition-group>
         </div>
