@@ -31,16 +31,9 @@
             <b-button v-b-modal.modal-scrollable hidden ref="modal"></b-button>
 
             <b-modal id="modal-scrollable" scrollable title="Attach Questions to this quiz" size="lg" ok-only>
-                <!-- <input type="text" class="form-control"> -->
-                <!-- <div 
-                    v-for="question in questions" 
-                    :key="question.id" 
-                    class="p-2 mb-2 border rounded d-flex justify-content-between">
-                    <h5 v-text="question.body"></h5>
-                    <button class="btn btn-outline-primary btn-sm"> Attach </button>
-                </div> -->
+                <!-- <input v-model="filter" type="text" class="form-control mb-2" placeholder="Filter by category"> -->
                 <question-card 
-                    v-for="(question, index) in questions" 
+                    v-for="(question, index) in filterCategory" 
                     :key="question.id" 
                     :question="question" 
                     :index="index"
@@ -71,20 +64,21 @@ export default {
         return{
             isBusy: false,
             fabActions: [
-              {
-                  name: 'deleteMe',
-                  icon: 'delete',
-                  bgColor: 'red'
-              },
-              {
-                  name: 'edit',
-                  icon: 'edit'
-              },
-              {
-                  name: 'attach',
-                  icon: 'attachment'
-              }
-          ],
+                {
+                    name: 'deleteMe',
+                    icon: 'delete',
+                    bgColor: 'red'
+                },
+                {
+                    name: 'edit',
+                    icon: 'edit'
+                },
+                {
+                    name: 'attach',
+                    icon: 'attachment'
+                }
+            ],
+            filter: '',       
         }
     },
     methods: {
@@ -130,12 +124,18 @@ export default {
             'quizDetail': state => state.quiz.quizDetail,
             'questions': state => state.questions.questionList,
         }),
+        filterCategory(){
+            if(this.filter == ''){
+                return this.questions
+            }else{
+                return this.questions.filter(q => q.category_id == this.filter);
+            }
+        }
     },
     components:{
         fab,
         QuizSidebar,
         QuestionCard
     }
-
 }
 </script>
