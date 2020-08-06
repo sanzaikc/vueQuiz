@@ -134,10 +134,22 @@ export default {
     };
   },
   watch: {
-    qData: function (newVal, oldVal) {
-      console.log(newVal, oldVal);
-      if (newVal !== null) this.question = newVal;
-      else
+    qData: function (newVal) {
+      if (newVal !== null) {
+        console.log(newVal);
+        this.question = {
+          body: newVal.body,
+          category_id: newVal.category_id,
+          image: newVal.image,
+          options: [
+            ...newVal.options.map((option, i) => ({
+              id: option.id,
+              body: option.body,
+              correct: i === 0 ? true : false,
+            })),
+          ],
+        };
+      } else
         this.question = {
           body: "",
           category_id: null,
@@ -161,7 +173,6 @@ export default {
             },
           ],
         };
-      console.log(this.question);
     },
   },
   methods: {
@@ -174,6 +185,7 @@ export default {
       this.question.category_id = null;
     },
     onSubmit() {
+      console.log(this.question);
       if (!this.qData) {
         this.$emit("onSubmit", this.question);
       } else {
