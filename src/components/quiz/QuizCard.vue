@@ -1,5 +1,5 @@
 <template>
-	<div class="col-md-4 col-xl-3">
+	<div class="col-md-4">
 		<b-card
 			:title="quiz.name"
 			:img-src="
@@ -7,9 +7,10 @@
 					? quiz.image_url
 					: require('../../assets/images/quizDefault.jpg')"
 			img-alt="Image"
+			img-height="150"
 			img-top
 			tag="article"
-			class="mb-2 img-fluid"
+			class="mb-3 shadow-sm"
 		>
 			<b-card-text v-text="quiz.description" class="line-clamp"></b-card-text>
 

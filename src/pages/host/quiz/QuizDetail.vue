@@ -16,9 +16,8 @@
         </quiz-sidebar>
         <div>
             <h2> {{ quizDetail.name }} </h2>
-            <hr>
-            <div class="d-flex justify-content-between">
-                <p class="w-75 border-right"> {{ quizDetail.description }} </p>
+            <div class="d-flex justify-content-between align-content-center">
+                <h4 class="w-75 p-1 text-secondary"> {{ quizDetail.description }} </h4>
                 <div class="d-flex align-items-center">
                     <img 
                     v-if="quizDetail.image_url"
@@ -26,7 +25,7 @@
                     alt="" 
                     height="100px"
                     class="border border-success rounded-lg mx-4"> 
-                    <p v-else class="">No Image</p>
+                    <p v-else class="mx-4">No cover image</p>
                 </div>
             </div>
         </div>
@@ -45,6 +44,9 @@
                     :attach="true">
                 </question-card>
             </b-modal>
+        </div>
+        <div v-else>
+            Loading Questions
         </div>
     </div>
 </template>

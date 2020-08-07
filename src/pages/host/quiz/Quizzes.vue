@@ -29,6 +29,7 @@
 			<div v-else>
 				No quizzes by you, yet!
 			</div>
+
 		</div>
 	</div>
 </template>
