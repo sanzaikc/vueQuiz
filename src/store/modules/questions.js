@@ -84,7 +84,6 @@ const actions = {
 		});
 	},
 	updateQuestion: ({ commit }, question) => {
-		console.log(question);
 		let questionData = new FormData();
 		questionData.append("body", question.data.body);
 		questionData.append("category_id", question.data.category_id);
@@ -101,7 +100,6 @@ const actions = {
 			);
 		}
 		questionData.append("image", question.data.image);
-		console.log(questionData);
 
 		return new Promise((resolve, reject) => {
 			axios
@@ -111,7 +109,6 @@ const actions = {
 					},
 				})
 				.then((res) => {
-					console.log(res.data);
 					let question = res.data.question;
 					commit("UPDATE_LIST", question);
 					resolve(res.data.question);

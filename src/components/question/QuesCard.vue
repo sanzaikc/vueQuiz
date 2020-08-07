@@ -11,7 +11,7 @@
                     <b-dropdown-item @click="del(question.id)">Delete</b-dropdown-item>
                 </div>
             </b-dropdown>
-            <button v-else class="btn btn-outline-primary btn-sm ml-2">Attach</button>
+            <button v-else class="btn btn-outline-primary btn-sm ml-2" @click="attachQuestion(question)">Attach</button>
         </div>
         <div v-if="!showAns">
            <span class="px-2 border rounded-pill text-secondary" v-text="this.categoryName"> </span>
@@ -72,8 +72,8 @@ export default {
         showEdit(question){
            this.$emit('edit', question);
         },
-        attachQuestion(){
-            this.$emit('attach');
+        attachQuestion(question){
+            alert(question.id);
         },
         del(id){
             if(confirm('Are you sure you want to delete?')){

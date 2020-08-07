@@ -34,8 +34,7 @@
           :key="key"
           :id="'option' + key"
           :label="key === 0 ? 'Answer' : 'Option ' + key"
-          :label-for="'option' + key"
-        >
+          :label-for="'option' + key">
           <b-form-input
             id="answer"
             v-model="question.options[key].body"
@@ -136,7 +135,6 @@ export default {
   watch: {
     qData: function (newVal) {
       if (newVal !== null) {
-        console.log(newVal);
         this.question = {
           body: newVal.body,
           category_id: newVal.category_id,
@@ -181,12 +179,11 @@ export default {
       this.url = URL.createObjectURL(file ? file : "");
     },
     reset() {
-      this.$refs["file-input"].reset();
+      if(this.$refs["file-input"]) this.$refs["file-input"].reset();
       this.question.category_id = null;
     },
     onSubmit() {
-      console.log(this.question);
-      if (!this.qData) {
+        if (!this.qData) {
         this.$emit("onSubmit", this.question);
       } else {
         this.$emit("onUpdate", { id: this.qData.id, data: this.question });

@@ -113,6 +113,24 @@ export default {
             url: "",
         }
     },
+    watch: {
+      quizDetail: function (newVal) {
+        if(this.quizDetail != null){
+          this.quiz = {
+            name: newVal.name,
+            description : newVal.description,
+            image : newVal.image
+          }
+        }else {
+          this.quiz = {        
+              name: '',
+              description: '',
+              image: null,
+          }
+        }
+          
+      }
+    },
     methods: {
         getValidationState({ dirty, validated, valid = null }) {
             return dirty || validated ? valid : null;
