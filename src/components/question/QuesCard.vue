@@ -1,7 +1,10 @@
 <template>
     <div  class="px-3 py-2 mb-2 border rounded-lg shadow-sm">
         <div class="d-flex justify-content-between align-items-center w-100">
-            <h4  @click="showAns = !showAns" style="cursor: pointer" class="w-100">{{ index + 1  + '.'}} {{ question.body }} </h4>
+            <div @click="showAns = !showAns" style="cursor: pointer" class="w-100 d-flex">
+                <h4>{{ index + 1  + '.'}} </h4>
+                <h4 class="ml-2" >{{ question.body }} </h4>
+            </div>
             <b-dropdown v-if="!attach" size="sm" dropleft  variant="link" toggle-class="text-decoration-none" no-caret>
                 <template v-slot:button-content>
                     <b-icon icon="text-right"></b-icon>
@@ -13,7 +16,7 @@
             </b-dropdown>
             <button v-else class="btn btn-outline-primary btn-sm ml-2" @click="attachQuestion(question)">Attach</button>
         </div>
-        <div v-if="!showAns">
+        <div v-if="!showAns" class="ml-3">
            <span class="px-2 border rounded-pill text-secondary" v-text="this.categoryName"> </span>
         </div>
         <transition name="fade">

@@ -1,5 +1,5 @@
 <template>
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<b-card
 			:title="quiz.name"
 			:img-src="
@@ -18,8 +18,7 @@
 				:to="{ name: 'quizDetail', params: { id: quiz.id } }"
 				class="col-md-4 btn btn-outline-primary btn-sm"
 				:quiz="quiz"
-				>View</router-link
-			>
+				>View</router-link>
 		</b-card>
 	</div>
 </template>
@@ -37,7 +36,7 @@ export default {
 <style scoped>
 .line-clamp {
 	display: -webkit-box;
-	-webkit-line-clamp: 3;
+	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 }

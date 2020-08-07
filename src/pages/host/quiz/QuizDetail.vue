@@ -138,7 +138,10 @@ export default {
             }else{
                 return this.questions.filter(q => q.category_id == this.filter);
             }
-        }
+        },
+        // filterQuestions(){
+
+        // }
     },
     components:{
         fab,
