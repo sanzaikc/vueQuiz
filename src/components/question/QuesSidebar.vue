@@ -147,30 +147,7 @@ export default {
             })),
           ],
         };
-      } else
-        this.question = {
-          body: "",
-          category_id: null,
-          image: null,
-          options: [
-            {
-              body: "",
-              correct: true,
-            },
-            {
-              body: "",
-              correct: false,
-            },
-            {
-              body: "",
-              correct: false,
-            },
-            {
-              body: "",
-              correct: false,
-            },
-          ],
-        };
+      } 
     },
   },
   methods: {

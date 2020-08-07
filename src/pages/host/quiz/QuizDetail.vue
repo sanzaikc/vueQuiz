@@ -8,7 +8,12 @@
             @deleteMe="del"
             @attach="attachQuestions">
         </fab>
-        <quiz-sidebar :text="'Updat'" v-model="isBusy" @onSubmit="updateQuiz"></quiz-sidebar>
+        <quiz-sidebar 
+            :text="'Updat'" 
+            v-model="isBusy" 
+            :qData="quizDetail" 
+            @onSubmit="updateQuiz">
+        </quiz-sidebar>
         <div>
             <h2> {{ quizDetail.name }} </h2>
             <hr>
@@ -37,7 +42,8 @@
                     :key="question.id" 
                     :question="question" 
                     :index="index"
-                    :attach="true"></question-card>
+                    :attach="true">
+                </question-card>
             </b-modal>
         </div>
     </div>

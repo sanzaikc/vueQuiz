@@ -88,19 +88,35 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 export default {
-    mounted(){
-      if(this.detail){
-        this.quiz.name = this.detail.name;
-      }
-    },
     props: {
       text: {
         type: String,
       },
       value: {
         type: Boolean,
+      },
+      qData: {
+        type: Object,
+        default: null
+      }
+    },
+    watch : {
+      qData: function(newVal){
+        if(this.qData != null){
+          this.quiz = {
+            name: newVal.name,
+            description: newVal.description,
+            image: null,
+          };
+        }
+        // else{
+        //   this.quiz = {
+        //         name: '',
+        //         description: '',
+        //         image: null,
+        //     };
+        // }
       }
     },
     data(){
@@ -112,24 +128,6 @@ export default {
             },
             url: "",
         }
-    },
-    watch: {
-      quizDetail: function (newVal) {
-        if(this.quizDetail != null){
-          this.quiz = {
-            name: newVal.name,
-            description : newVal.description,
-            image : newVal.image
-          }
-        }else {
-          this.quiz = {        
-              name: '',
-              description: '',
-              image: null,
-          }
-        }
-          
-      }
     },
     methods: {
         getValidationState({ dirty, validated, valid = null }) {
@@ -143,10 +141,5 @@ export default {
           this.$emit('onSubmit', this.quiz);
         }   
     },
-    computed:{
-      ...mapState({
-        'detail': state => state.quiz.quizDetail,
-      }),
-    }
 }
 </script>
