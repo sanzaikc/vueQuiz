@@ -30,6 +30,9 @@ const mutations = {
     SET_QUIZ_QUESTIONS: (state, questions) => {
         state.quizQuestions = questions;
     },
+    ADD_QUIZ_QUESTIONS: (state, questions) => {
+        state.quizQuestions = questions;
+    },
     REMOVE_QUESTION: (state,id) => {
         let newList = state.quizQuestions.filter(q => q.id != id);
         state.quizQuestions = [...newList];
@@ -113,6 +116,8 @@ const actions = {
                 questions: data.questions
             })
             .then(res => {
+                let questions = res.data.data;
+                context.commit('ADD_QUIZ_QUESTIONS', questions)
                 resolve(res.data);
             })
             .catch(error => {

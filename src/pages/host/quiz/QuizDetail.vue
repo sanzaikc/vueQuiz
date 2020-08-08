@@ -30,8 +30,8 @@
             </div>
         </div>
         <hr>
-        <div v-if="quizDetail.questions" class="mb-4">
-            <h2 class="mb-3"> {{ quizDetail.questions.length }}  Questions </h2>
+        <div v-if="quizQuestions" class="mb-4">
+            <h2 class="mb-3"> {{ quizQuestions.length }}  Questions </h2>
             <transition-group name="slide-fade" mode="out-in">
                 <question-card 
                     v-for="(question, index) in quizQuestions" 
