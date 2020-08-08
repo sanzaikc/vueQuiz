@@ -100,12 +100,30 @@ const actions = {
         });
     },
     attachQuestions: (context, data) => {
-        axios.post('/questions/attach/' + data.quizId, {
-            questions: data.questions
-        })
-            .then(res => {
-                console.log(res.data);
+        return new Promise((resolve, reject)=>{
+            axios.post('/questions/attach/' + data.quizId, {
+                questions: data.questions
             })
+            .then(res => {
+                resolve(res.data);
+            })
+            .catch(error => {
+                reject(error.response.data);
+            });
+        });
+    },
+    detachQuestion: (context, data) => {
+        return new Promise((resolve, reject)=>{
+            axios.post('/questions/detach/' + data.quizId, {
+                questions: data.questionId
+            })
+            .then(res => {
+                resolve(res.data);
+            })
+            .catch(error => {
+                reject(error.response.data);
+            });
+        });
     }
 };
 const getters = {};

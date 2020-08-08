@@ -34,17 +34,19 @@
             <h2> {{ quizDetail.questions.length }}  Questions </h2>
             <transition-group name="slide-fade" mode="out-in">
                 <question-card 
-                v-for="(question, index) in quizDetail.questions" 
-                :key="question.id" 
-                :question="question" 
-                :index="index"
-                :attach="false"></question-card>
+                    v-for="(question, index) in quizDetail.questions" 
+                    :key="question.id" 
+                    :question="question" 
+                    :index="index"
+                    :attach="true"
+                    @detach="detach">
+                </question-card>
             </transition-group>
         </div>
         <div v-else>
             No Questions attached yet
         </div>
-         <b-modal v-model="show" id="modal-scrollable" scrollable centered title="Select Questions to attach to this Quiz." size="lg">
+        <b-modal v-model="show" id="modal-scrollable" scrollable centered title="Select Questions to attach to this Quiz." size="lg">
             <div class="row d-flex align-items-center mx-1">
                 <span class="border rounded-pill px-2 py-0 mb-2" @click="filter=''" :class="filter == '' ? 'selected': ''"> All </span>
                 <div v-for="cat in categories" :key="cat.id" class="mb-2">
@@ -55,10 +57,10 @@
                     @click="filter=cat.id"> {{ cat.name }} </span>
                 </div>
             </div>
-            <div v-if="filterCategory.length > 0">
+            <div v-if="filterByCategory.length > 0">
                 <transition-group name="fade">
                     <div 
-                        v-for="(question, index) in filterCategory" 
+                        v-for="(question, index) in filterByCategory" 
                         :key="question.id" 
                         class="d-flex justify-content-between align-items-center border px-2 py-1 mb-1 rounded ">
                         <h5> {{ index + 1  + "."}} {{ question.body }} </h5>
@@ -103,9 +105,9 @@ import QuizSidebar from '../../../components/quiz/QuizSidebar.vue';
 import QuestionCard from '../../../components/question/QuesCard.vue'
 export default {
     mounted(){
-        console.log(this.quizDetail.questions);
         if(this.$store.state.quiz.quizList.length > 0){
             this.QUIZ_DETAIL(this.$route.params.id);
+            this.$store.dispatch('retriveQuestions')
         }else{
             this.$store.dispatch('retrieveQuiz')
                 .then(res=> {
@@ -180,12 +182,34 @@ export default {
             this.attachment = []
             this.filter= ""
         },
-        // isAttached(id){
-        //     return !!this.quizDetail.questions.find(q => q.id ===id);
-        // },
         attach(){
-            alert(this.attachment);
-            this.$store.dispatch('attachQuestions', { quizId: this.quizDetail.id, questions: this.attachment});
+            this.$store.dispatch('attachQuestions', { quizId: this.quizDetail.id, questions: this.attachment})
+                .then(res => {
+                    if(res){
+                        this.closeModal();
+                        this.$toasted.show('Questions attached!');
+                    }
+                })
+                .catch(error => {
+                    this.$toasted.show(error, {
+                        theme: "bubble",
+                    })
+                })
+        },
+        detach(id){
+            if(confirm("Are you sure you want to deattach this question ?")){
+                this.$store.dispatch('detachQuestion', { quizId: this.quizDetail.id, questionId: id})
+                .then(res => {
+                    if(res){
+                        this.$toasted.show('Detached');
+                    }
+                })
+                .catch(error => {
+                    this.$toasted.show(error, {
+                        theme: "bubble",
+                    })
+                })
+            }
         }
     },
     computed:{
@@ -194,7 +218,7 @@ export default {
             'questions': state => state.questions.questionList,
             'categories': state => state.categories.categoryList,
         }),
-        filterCategory(){
+        filterByCategory(){
             if(this.filter == ''){
                 return this.questions
             }else{

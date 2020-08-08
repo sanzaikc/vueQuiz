@@ -14,7 +14,7 @@
                     <b-dropdown-item @click="del(question.id)">Delete</b-dropdown-item>
                 </div>
             </b-dropdown>
-            <button v-else class="btn btn-outline-primary btn-sm ml-2" @click="attachQuestion(question)">Attach</button>
+            <b-icon v-else icon="x-circle" role="button" scale="1.2" variant="danger" @click="detachQuestion(question.id)"></b-icon>
         </div>
         <div v-if="!showAns" class="ml-3">
            <span class="px-2 border rounded-pill text-secondary" v-text="this.categoryName"> </span>
@@ -41,7 +41,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-// import Sidebar from '../question/QuesSidebar.vue';
 export default {
     mounted(){
         this.$store.dispatch('retrieveCategories')
@@ -75,8 +74,8 @@ export default {
         showEdit(question){
            this.$emit('edit', question);
         },
-        attachQuestion(question){
-            alert(question.id);
+        detachQuestion(id){
+            this.$emit('detach', id);
         },
         del(id){
             if(confirm('Are you sure you want to delete?')){
@@ -101,9 +100,6 @@ export default {
             'categories'
         ]),
     },
-    components: {
-        // Sidebar,
-    }
 }
 </script>
 
