@@ -35,20 +35,28 @@
 
             <b-modal v-model="show" id="modal-scrollable" scrollable centered title="Select Questions to attach to this Quiz." size="lg">
                 <!-- <input v-model="filter" type="text" class="form-control mb-2" placeholder="Filter by category"> -->
+                <div class="row d-flex mx-1">
+                    <div v-for="cat in categories" :key="cat.id" class="mb-2">
+                        <span class="border rounded-pill px-2 mx-1" @click="filter=cat.id"> {{ cat.name }} </span>
+                    </div>
+                </div>
+                <div>Selected Category: {{ filter }} </div>
                 <div class="mb-2">
                     <span>Selected id:  {{ attachedQuestions }}  </span>
                 </div>
-                <div 
-                    v-for="(question, index) in filterCategory" 
-                    :key="question.id" 
-                    class="d-flex justify-content-between align-items-center border px-2 py-1 mb-1 rounded ">
-                    <h5> {{ index + 1  + "."}} {{ question.body }} </h5>
-                    <input 
-                    type="checkbox" 
-                    v-model="attachedQuestions" 
-                    :id="question.id" 
-                    :value="question.id">
-                </div>
+                <transition-group name="fade">
+                    <div 
+                        v-for="(question, index) in filterCategory" 
+                        :key="question.id" 
+                        class="d-flex justify-content-between align-items-center border px-2 py-1 mb-1 rounded ">
+                        <h5> {{ index + 1  + "."}} {{ question.body }} </h5>
+                        <input 
+                            type="checkbox" 
+                            v-model="attachedQuestions" 
+                            :id="question.id" 
+                            :value="question.id">
+                    </div>
+                </transition-group>
                 <template v-slot:modal-footer>
                     <div class="w-100">
                         <p class="float-left">Modal Footer Content</p>
@@ -84,6 +92,8 @@ export default {
                     this.$store.dispatch('retriveQuestions')
                 });
         }    
+        this.$store.dispatch('retrieveCategories');
+
     },
     data(){
         return{
@@ -106,7 +116,6 @@ export default {
             filter: '',  
             attachedQuestions: [],
             show: false,
-            checked: false,  
         }
     },
     methods: {
@@ -149,12 +158,14 @@ export default {
         closeModal(){
             this.show = false,
             this.attachedQuestions = []
+            this.filter= ""
         }
     },
     computed:{
         ...mapState({
             'quizDetail': state => state.quiz.quizDetail,
             'questions': state => state.questions.questionList,
+            'categories': state => state.categories.categoryList,
         }),
         filterCategory(){
             if(this.filter == ''){
@@ -163,9 +174,6 @@ export default {
                 return this.questions.filter(q => q.category_id == this.filter);
             }
         },
-        // filterQuestions(){
-
-        // }
     },
     components:{
         fab,
