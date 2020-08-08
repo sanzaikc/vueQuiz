@@ -36,11 +36,18 @@
             <b-modal v-model="show" id="modal-scrollable" scrollable centered title="Select Questions to attach to this Quiz." size="lg">
                 <!-- <input v-model="filter" type="text" class="form-control mb-2" placeholder="Filter by category"> -->
                 <div class="mb-2">
-                    <span>Selected id:  {{ attachedQuestions }} </span>
+                    <span>Selected id:  {{ attachedQuestions }}  </span>
                 </div>
-                <div v-for="(question, index) in filterCategory" :key="question.id" class="d-flex justify-content-between align-items-center">
+                <div 
+                    v-for="(question, index) in filterCategory" 
+                    :key="question.id" 
+                    class="d-flex justify-content-between align-items-center border px-2 py-1 mb-1 rounded ">
                     <h5> {{ index + 1  + "."}} {{ question.body }} </h5>
-                    <input type="checkbox" :id="question.id" :value="question.id" v-model="attachedQuestions">
+                    <input 
+                    type="checkbox" 
+                    v-model="attachedQuestions" 
+                    :id="question.id" 
+                    :value="question.id">
                 </div>
                 <template v-slot:modal-footer>
                     <div class="w-100">
@@ -98,7 +105,8 @@ export default {
             ],
             filter: '',  
             attachedQuestions: [],
-            show: false     
+            show: false,
+            checked: false,  
         }
     },
     methods: {
