@@ -32,20 +32,33 @@
         <hr>
         <div v-if="questions.length > 0" class="mb-4 d-flex justify-content-between align-items-center">
             <h2>Total Questions {{ questions.length }} </h2>
-            <b-button v-b-modal.modal-scrollable hidden ref="modal"></b-button>
 
-            <b-modal id="modal-scrollable" scrollable title="Attach Questions to this quiz" size="lg" ok-only>
+            <b-modal v-model="show" id="modal-scrollable" scrollable title="Attach Questions to this quiz" size="lg">
                 <!-- <input v-model="filter" type="text" class="form-control mb-2" placeholder="Filter by category"> -->
-                <div v-for="question in filterCategory" :key="question.id" class="d-flex justify-content-between">
-                    <h5 v-text="question.body"></h5>
+                <div class="mb-2">
+                    <span>Selected id:  {{ attachedQuestions }} </span>
+                </div>
+                <div v-for="(question, index) in filterCategory" :key="question.id" class="d-flex justify-content-between align-items-center">
+                    <h5> {{ index + 1  + "."}} {{ question.body }} </h5>
                     <input type="checkbox" :id="question.id" :value="question.id" v-model="attachedQuestions">
                 </div>
+                <template v-slot:modal-footer>
+                    <div class="w-100">
+                        <p class="float-left">Modal Footer Content</p>
+                        <b-button
+                            variant="primary"
+                            size="sm"
+                            class="float-right"
+                            @click="closeModal">Close
+                        </b-button>
+                    </div>
+                </template>
             </b-modal>
         </div>
         <div v-else>
             Loading Questions
         </div>
-        {{ attachedQuestions }}
+       
     </div>
 </template>
 
@@ -84,7 +97,8 @@ export default {
                 }
             ],
             filter: '',  
-            attachedQuestions: [],     
+            attachedQuestions: [],
+            show: false     
         }
     },
     methods: {
@@ -122,7 +136,11 @@ export default {
                 })    
         },
         attachQuestions(){
-            this.$refs.modal.click();
+            this.show = true
+        },
+        closeModal(){
+            this.show = false,
+            this.attachedQuestions = []
         }
     },
     computed:{
