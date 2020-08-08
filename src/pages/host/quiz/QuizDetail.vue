@@ -35,12 +35,16 @@
 
             <b-modal v-model="show" id="modal-scrollable" scrollable centered title="Select Questions to attach to this Quiz." size="lg">
                 <!-- <input v-model="filter" type="text" class="form-control mb-2" placeholder="Filter by category"> -->
-                <div class="row d-flex mx-1">
+                <div class="row d-flex align-items-center mx-1">
+                    <span class="border rounded-pill px-2 py-0 mb-2" @click="filter=''" :class="filter == '' ? 'selected': ''"> All </span>
                     <div v-for="cat in categories" :key="cat.id" class="mb-2">
-                        <span class="border rounded-pill px-2 mx-1" @click="filter=cat.id"> {{ cat.name }} </span>
+                        <span 
+                        class="border rounded-pill px-2 mx-1" 
+                        role="button" 
+                        :class="cat.id == filter ? 'selected' : ''"  
+                        @click="filter=cat.id"> {{ cat.name }} </span>
                     </div>
                 </div>
-                <div>Selected Category: {{ filter }} </div>
                 <div class="mb-2">
                     <span>Selected id:  {{ attachedQuestions }}  </span>
                 </div>
@@ -181,3 +185,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .selected{
+        background-color: #dbf3fc ;
+        color: steelblue;
+        font-weight: bold;
+    }
+</style>
