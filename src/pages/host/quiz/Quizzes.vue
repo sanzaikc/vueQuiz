@@ -41,6 +41,7 @@ import QuizSidebar from "../../../components/quiz/QuizSidebar.vue";
 export default {
 	mounted() {
 		document.title = "Quiz";
+		console.log(this.quizzes);
 	},
 	created() {
 		this.$store

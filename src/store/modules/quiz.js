@@ -4,6 +4,7 @@ import store from '../store';
 const state = {
     quizList: [],
     quizDetail: {},
+    quizQuestions: [],
 };
 const mutations = {
     SET_QUIZ_LIST: (state, list) => {
@@ -25,7 +26,14 @@ const mutations = {
     UPDATE_LIST: (state, updates) => {
         let updatedList = state.quizList.map( q => q.id == updates.id ? updates : q );
         state.quizList = [...updatedList];
-    }
+    },
+    SET_QUIZ_QUESTIONS: (state, questions) => {
+        state.quizQuestions = questions;
+    },
+    REMOVE_QUESTION: (state,id) => {
+        let newList = state.quizQuestions.filter(q => q.id != id);
+        state.quizQuestions = [...newList];
+    },
 };
 const actions = {
     retrieveQuiz: ({commit}) => {
@@ -119,6 +127,7 @@ const actions = {
             })
             .then(res => {
                 resolve(res.data);
+                context.commit('REMOVE_QUESTION', data.questionId);
             })
             .catch(error => {
                 reject(error.response.data);

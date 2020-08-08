@@ -31,10 +31,10 @@
         </div>
         <hr>
         <div v-if="quizDetail.questions" class="mb-4">
-            <h2> {{ quizDetail.questions.length }}  Questions </h2>
+            <h2 class="mb-3"> {{ quizDetail.questions.length }}  Questions </h2>
             <transition-group name="slide-fade" mode="out-in">
                 <question-card 
-                    v-for="(question, index) in quizDetail.questions" 
+                    v-for="(question, index) in quizQuestions" 
                     :key="question.id" 
                     :question="question" 
                     :index="index"
@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div v-if="filterByCategory.length > 0">
-                <transition-group name="fade">
+                <transition-group name="slide-fade" mode="out-in">
                     <div 
                         v-for="(question, index) in filterByCategory" 
                         :key="question.id" 
@@ -68,8 +68,7 @@
                             type="checkbox" 
                             v-model="attachment" 
                             :id="question.id" 
-                            :value="question.id"
-                            >
+                            :value="question.id">
                     </div>
                 </transition-group>
             </div>
@@ -78,7 +77,6 @@
             </div>
             <template v-slot:modal-footer>
                 <div class="w-100">
-                    <p class="float-left">Modal Footer Content</p>
                     <b-button
                         variant="outline-primary"
                         size="sm"
@@ -108,11 +106,23 @@ export default {
         if(this.$store.state.quiz.quizList.length > 0){
             this.QUIZ_DETAIL(this.$route.params.id);
             this.$store.dispatch('retriveQuestions')
+                .then(res=>{
+                    if(res){
+                        let quizQuestions = this.quizDetail.questions;
+                        this.SET_QUIZ_QUESTIONS(quizQuestions);
+                    }
+                })
         }else{
             this.$store.dispatch('retrieveQuiz')
                 .then(res=> {
                     if(res) this.QUIZ_DETAIL(this.$route.params.id);
                     this.$store.dispatch('retriveQuestions')
+                        .then(res=>{
+                            if(res){
+                                let quizQuestions = this.quizDetail.questions;
+                                this.SET_QUIZ_QUESTIONS(quizQuestions);
+                            }
+                        })
                 });
         }    
         this.$store.dispatch('retrieveCategories');
@@ -142,7 +152,8 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'QUIZ_DETAIL'
+            'QUIZ_DETAIL',
+            'SET_QUIZ_QUESTIONS'
         ]),
         showSidebar(){
             document.getElementById('sidebar').click();
@@ -201,7 +212,9 @@ export default {
                 this.$store.dispatch('detachQuestion', { quizId: this.quizDetail.id, questionId: id})
                 .then(res => {
                     if(res){
-                        this.$toasted.show('Detached');
+                        this.$toasted.show('Question detached!', {
+                            theme: "bubble"
+                        });
                     }
                 })
                 .catch(error => {
@@ -217,6 +230,7 @@ export default {
             'quizDetail': state => state.quiz.quizDetail,
             'questions': state => state.questions.questionList,
             'categories': state => state.categories.categoryList,
+            'quizQuestions' : state => state.quiz.quizQuestions,
         }),
         filterByCategory(){
             if(this.filter == ''){
