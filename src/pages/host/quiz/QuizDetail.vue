@@ -8,12 +8,14 @@
             @deleteMe="del"
             @attach="showModal">
         </fab>
+
         <quiz-sidebar 
             :text="'Updat'" 
             v-model="isBusy" 
             :qData="quizDetail" 
             @onSubmit="updateQuiz">
         </quiz-sidebar>
+
         <div>
             <h2> {{ quizDetail.name }} </h2>
             <div class="d-flex justify-content-between align-content-center">
@@ -29,9 +31,14 @@
                 </div>
             </div>
         </div>
+
         <hr>
-        <div v-if="quizQuestions" class="mb-4">
-            <h2 class="mb-3"> {{ quizQuestions.length }}  Questions </h2>
+
+        <div v-if="quizQuestions.length > 0" class="mb-4">
+            <h2 class="mb-3" > 
+                Questions 
+                <!-- {{ quizQuestions.length }}  -->
+            </h2>
             <transition-group name="slide-fade" mode="out-in">
                 <question-card 
                     v-for="(question, index) in quizQuestions" 
@@ -43,18 +50,31 @@
                 </question-card>
             </transition-group>
         </div>
+
         <div v-else>
             No Questions attached yet
         </div>
-        <b-modal v-model="show" id="modal-scrollable" scrollable centered title="Select Questions to attach to this Quiz." size="lg">
-            <div class="row d-flex align-items-center mx-1">
-                <span class="border rounded-pill px-2 py-0 mb-2" @click="filter=''" :class="filter == '' ? 'selected': ''"> All </span>
+
+        <b-modal 
+            v-model="show" 
+            id="modal-scrollable"
+            scrollable 
+            size="lg"
+            title="Select Questions to attach to this Quiz." >
+            <div class="row d-flex align-items-center mx-1 mb-2">
+                <span 
+                    class="border rounded-pill px-3 mb-2"
+                    role="button" 
+                    @click="filter=''" 
+                    :class="filter == '' ? 'selected': ''"> All </span>
                 <div v-for="cat in categories" :key="cat.id" class="mb-2">
                     <span 
-                    class="border rounded-pill px-2 mx-1" 
-                    role="button" 
-                    :class="cat.id == filter ? 'selected' : ''"  
-                    @click="filter=cat.id"> {{ cat.name }} </span>
+                        class="border rounded-pill px-3 py-1 mx-1" 
+                        role="button" 
+                        :class="cat.id == filter ? 'selected' : ''"  
+                        @click="filter=cat.id"
+                        v-text="cat.name">
+                    </span>
                 </div>
             </div>
             <div v-if="filterByCategory.length > 0">
@@ -72,8 +92,8 @@
                     </div>
                 </transition-group>
             </div>
-            <div v-else>
-                No Questions with such category
+            <div v-else class="text-center p-3">
+                <h5 class="text-secondary">No Questions with such category</h5>
             </div>
             <template v-slot:modal-footer>
                 <div class="w-100">

@@ -7,19 +7,39 @@
             </div>
             <b-dropdown v-if="!attach" size="sm" dropleft  variant="link" toggle-class="text-decoration-none" no-caret>
                 <template v-slot:button-content>
-                    <b-icon icon="text-right"></b-icon>
+                    <b-icon 
+                        icon="three-dots-vertical"
+                        role="button">
+                    </b-icon>
                 </template>
-                <div>
-                    <b-dropdown-item @click="showEdit(question)">Edit</b-dropdown-item>
-                    <b-dropdown-item @click="del(question.id)">Delete</b-dropdown-item>
-                </div>
+                 <b-dropdown-item @click="showEdit(question)">
+                        <b-icon 
+                            icon="pencil" 
+                            scale="0.80"
+                            animation="throb">
+                        </b-icon> Edit
+                        </b-dropdown-item>
+                        <b-dropdown-item @click="del(question.id)">
+                            <b-icon 
+                                icon="trash" 
+                                variant="danger"
+                                scale="0.80"
+                                animation="throb">
+                            </b-icon> Delete
+                        </b-dropdown-item>
             </b-dropdown>
-            <b-icon v-else icon="x-circle" role="button" scale="1.2" variant="danger" @click="detachQuestion(question.id)"></b-icon>
+            <b-icon v-else 
+                icon="backspace" 
+                role="button" 
+                scale="1.2"
+                animation="throb" 
+                @click="detachQuestion(question.id)">
+            </b-icon>
         </div>
         <div v-if="!showAns" class="ml-3">
            <span class="px-2 border rounded-pill text-secondary" v-text="this.categoryName"> </span>
         </div>
-        <transition name="fade">
+        <transition name="fade" mode="out-in">
             <div v-if="showAns" class="d-flex justify-content-between">
                 <ul class="list list-unstyled w-75 ml-3">
                     <li 
@@ -31,7 +51,7 @@
                     </li>
                 </ul>
                 <div v-if="question.image_url" class="w-50 text-center">
-                    <p>This question contains an image</p>
+                    <p class="mb-0">This question contains an image</p>
                     <img :src="question.image_url" class="rounded" height="100px">
                 </div>
             </div>
