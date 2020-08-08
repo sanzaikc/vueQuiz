@@ -6,7 +6,7 @@
             :actions="fabActions"
             @edit="showSidebar"
             @deleteMe="del"
-            @attach="attachQuestions">
+            @attach="showModal">
         </fab>
         <quiz-sidebar 
             :text="'Updat'" 
@@ -33,7 +33,7 @@
         <div v-if="questions.length > 0" class="mb-4 d-flex justify-content-between align-items-center">
             <h2>Total Questions {{ questions.length }} </h2>
 
-            <b-modal v-model="show" id="modal-scrollable" scrollable title="Attach Questions to this quiz" size="lg">
+            <b-modal v-model="show" id="modal-scrollable" scrollable centered title="Select Questions to attach to this Quiz." size="lg">
                 <!-- <input v-model="filter" type="text" class="form-control mb-2" placeholder="Filter by category"> -->
                 <div class="mb-2">
                     <span>Selected id:  {{ attachedQuestions }} </span>
@@ -49,7 +49,7 @@
                             variant="primary"
                             size="sm"
                             class="float-right"
-                            @click="closeModal">Close
+                            @click="closeModal">Cancel
                         </b-button>
                     </div>
                 </template>
@@ -135,7 +135,7 @@ export default {
                     });
                 })    
         },
-        attachQuestions(){
+        showModal(){
             this.show = true
         },
         closeModal(){
