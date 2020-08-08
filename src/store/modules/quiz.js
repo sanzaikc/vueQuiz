@@ -99,6 +99,14 @@ const actions = {
             })
         });
     },
+    attachQuestions: (context, data) => {
+        axios.post('/questions/attach/' + data.quizId, {
+            questions: data.questions
+        })
+            .then(res => {
+                console.log(res.data);
+            })
+    }
 };
 const getters = {};
 
