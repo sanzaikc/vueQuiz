@@ -36,18 +36,16 @@
 
             <b-modal id="modal-scrollable" scrollable title="Attach Questions to this quiz" size="lg" ok-only>
                 <!-- <input v-model="filter" type="text" class="form-control mb-2" placeholder="Filter by category"> -->
-                <question-card 
-                    v-for="(question, index) in filterCategory" 
-                    :key="question.id" 
-                    :question="question" 
-                    :index="index"
-                    :attach="true">
-                </question-card>
+                <div v-for="question in filterCategory" :key="question.id" class="d-flex justify-content-between">
+                    <h5 v-text="question.body"></h5>
+                    <input type="checkbox" :id="question.id" :value="question.id" v-model="attachedQuestions">
+                </div>
             </b-modal>
         </div>
         <div v-else>
             Loading Questions
         </div>
+        {{ attachedQuestions }}
     </div>
 </template>
 
@@ -55,7 +53,6 @@
 import { mapState, mapMutations } from 'vuex';
 import fab from 'vue-fab';
 import QuizSidebar from '../../../components/quiz/QuizSidebar';
-import QuestionCard from '../../../components/question/QuesCard';
 export default {
     mounted(){
         if(this.$store.state.quiz.quizList.length > 0){
@@ -86,7 +83,8 @@ export default {
                     icon: 'attachment'
                 }
             ],
-            filter: '',       
+            filter: '',  
+            attachedQuestions: [],     
         }
     },
     methods: {
@@ -143,7 +141,6 @@ export default {
     components:{
         fab,
         QuizSidebar,
-        QuestionCard
     }
 }
 </script>
