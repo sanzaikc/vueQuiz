@@ -61,15 +61,16 @@
             scrollable 
             size="lg"
             title="Select Questions to attach to this Quiz." >
-            <div class="row d-flex align-items-center mx-1 mb-2">
+            <h6>    Filter by category: </h6>
+            <div class="row d-flex align-items-center mb-2 bg-light p-2">
                 <span 
-                    class="border rounded-pill px-3 mb-2"
+                    class="border rounded-pill px-3 mb-2 ml-1"
                     role="button" 
                     @click="filter=''" 
                     :class="filter == '' ? 'selected': ''"> All </span>
                 <div v-for="cat in categories" :key="cat.id" class="mb-2">
                     <span 
-                        class="border rounded-pill px-3 py-1 mx-1" 
+                        class="border rounded-pill px-3 mx-1" 
                         role="button" 
                         :class="cat.id == filter ? 'selected' : ''"  
                         @click="filter=cat.id"
@@ -86,6 +87,7 @@
                         <h5> {{ index + 1  + "."}} {{ question.body }} </h5>
                         <input 
                             type="checkbox" 
+                            role="button"
                             v-model="attachment" 
                             :id="question.id" 
                             :value="question.id">
@@ -125,13 +127,8 @@ export default {
     mounted(){
         if(this.$store.state.quiz.quizList.length > 0){
             this.QUIZ_DETAIL(this.$route.params.id);
-            this.$store.dispatch('retriveQuestions')
-                .then(res=>{
-                    if(res){
-                        let quizQuestions = this.quizDetail.questions;
-                        this.SET_QUIZ_QUESTIONS(quizQuestions);
-                    }
-                })
+            let quizQuestions = this.quizDetail.questions;
+            this.SET_QUIZ_QUESTIONS(quizQuestions);
         }else{
             this.$store.dispatch('retrieveQuiz')
                 .then(res=> {
@@ -228,7 +225,7 @@ export default {
                 })
         },
         detach(id){
-            if(confirm("Are you sure you want to deattach this question ?")){
+            if(confirm("Are you sure you want to deattach this question from this quiz ?")){
                 this.$store.dispatch('detachQuestion', { quizId: this.quizDetail.id, questionId: id})
                 .then(res => {
                     if(res){

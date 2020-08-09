@@ -26,13 +26,11 @@
                                 scale="0.80"
                                 animation="throb">
                             </b-icon> Delete
-                        </b-dropdown-item>
+                </b-dropdown-item>
             </b-dropdown>
             <b-icon v-else 
                 icon="backspace" 
                 role="button" 
-                scale="1.2"
-                animation="throb" 
                 @click="detachQuestion(question.id)">
             </b-icon>
         </div>
