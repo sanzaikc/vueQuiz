@@ -17,8 +17,6 @@ export default {
       '$route'(to){
           this.id = to.params.id;
       }
-  },
-  methods: {
-  },   
+  },  
 }
 </script>

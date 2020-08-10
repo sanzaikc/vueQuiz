@@ -2,41 +2,35 @@
 	<div class="row h-100">
 		<div class="col-md-2 bg-light">
 			<b-nav vertical class="w-100 text py-3">
-				<router-link
-					:to="{ name: 'admin.users' }"
+				<router-link :to="{ name: 'admin.users' }"
 					tag="b-nav-item"
-					active-class="activeTab"
-				>
+					active-class="activeTab">
 					<b-icon
 						icon="person"
 						variant="dark"
 						@click="edit = false"
 						class="mr-2"
-					></b-icon
-					>Users
+					></b-icon>Users
 				</router-link>
-				<router-link
-					:to="{ name: 'admin.categories' }"
+				<router-link :to="{ name: 'admin.categories' }"
 					tag="b-nav-item"
-					active-class="activeTab"
-				>
+					active-class="activeTab">
 					<b-icon
 						icon="folder"
 						variant="dark"
 						@click="edit = false"
-						class="mr-2"
-					></b-icon
-					>Categories
+						class="mr-2">
+					</b-icon>Categories
 				</router-link>
-				<router-link :to="{ name: 'admin.users' }" tag="b-nav-item">
+				<!-- <router-link :to="{ name: 'admin.users' }" 
+					tag="b-nav-item">
 					<b-icon
 						icon="book"
 						variant="dark"
 						@click="edit = false"
-						class="mr-2"
-					></b-icon
-					>Quiz
-				</router-link>
+						class="mr-2">
+					</b-icon>Quiz
+				</router-link> -->
 			</b-nav>
 		</div>
 		<div class="col-md-10 pl-4 py-3 bg-white">

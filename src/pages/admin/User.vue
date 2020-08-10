@@ -4,8 +4,8 @@
 			v-if="isLoading"
 			variant="primary"
 			label="Spinning"
-			style="position: fixed; top: 50%; left: 50%"
-		></b-spinner>
+			style="position: fixed; top: 50%; left: 50%">
+		</b-spinner>
 		<div v-else>
 			<h2>Users</h2>
 			<table class="table table-hover border-top-0">
@@ -64,21 +64,16 @@
 import moment from "moment";
 import { mapState } from "vuex";
 export default {
-	data() {
-		return {
-			isLoading: true,
-			isBusy: false,
-		};
-	},
 	mounted() {
 		this.$store.dispatch("retrieveUsers").finally(() => {
 			this.isLoading = false;
 		});
 	},
-	computed: {
-		...mapState({
-			userList: (state) => state.users.userList,
-		}),
+	data() {
+		return {
+			isLoading: true,
+			isBusy: false,
+		};
 	},
 	methods: {
 		isDisabled(user) {
@@ -107,7 +102,10 @@ export default {
 				});
 		},
 	},
+	computed: {
+		...mapState({
+			userList: (state) => state.users.userList,
+		}),
+	},
 };
 </script>
-
-<style></style>

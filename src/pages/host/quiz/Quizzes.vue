@@ -46,7 +46,9 @@ export default {
 				if (res) this.isLoading = false;
 				this.$store.dispatch('retrieveCategories');
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => this.$toasted.show(error, {
+				theme: 'bubble',
+			}));
 	},
 	data() {
 		return {

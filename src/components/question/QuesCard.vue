@@ -5,6 +5,7 @@
                 <h4>{{ index + 1  + '.'}} </h4>
                 <h4 class="ml-2" >{{ question.body }} </h4>
             </div>
+
             <b-dropdown v-if="!attach" size="sm" dropleft  variant="link" toggle-class="text-decoration-none" no-caret>
                 <template v-slot:button-content>
                     <b-icon 
@@ -28,6 +29,7 @@
                             </b-icon> Delete
                 </b-dropdown-item>
             </b-dropdown>
+            
             <b-icon v-else 
                 icon="backspace" 
                 role="button" 
