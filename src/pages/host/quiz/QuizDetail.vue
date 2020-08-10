@@ -34,26 +34,28 @@
 
         <hr>
 
-        <div v-if="quizQuestions.length > 0" class="mb-4">
-            <h2 class="mb-3" > 
-                Questions 
-                <!-- {{ quizQuestions.length }}  -->
-            </h2>
-            <transition-group name="slide-fade" mode="out-in">
-                <question-card 
-                    v-for="(question, index) in quizQuestions" 
-                    :key="question.id" 
-                    :question="question" 
-                    :index="index"
-                    :attach="true"
-                    @detach="detach">
-                </question-card>
-            </transition-group>
+        <div v-if="quizQuestions">
+            <div v-if="quizQuestions.length > 0" class="mb-4">
+                <h2 class="mb-3" > 
+                    Questions 
+                    <!-- {{ quizQuestions.length }}  -->
+                </h2>
+                <transition-group name="slide-fade" mode="out-in">
+                    <question-card 
+                        v-for="(question, index) in quizQuestions" 
+                        :key="question.id" 
+                        :question="question" 
+                        :index="index"
+                        :attach="true"
+                        @detach="detach">
+                    </question-card>
+                </transition-group>
+            </div>
+            <div v-else>
+                No Questions attached yet
+            </div>
         </div>
-
-        <div v-else>
-            No Questions attached yet
-        </div>
+        <div v-else>Try adding questions</div>
 
         <b-modal 
             v-model="show" 
@@ -125,25 +127,12 @@ import QuizSidebar from '../../../components/quiz/QuizSidebar.vue';
 import QuestionCard from '../../../components/question/QuesCard.vue'
 export default {
     mounted(){
-        if(this.$store.state.quiz.quizList.length > 0){
+            console.log(this.filterByCategory);
+            console.log(this.questions);
             this.QUIZ_DETAIL(this.$route.params.id);
             let quizQuestions = this.quizDetail.questions;
             this.SET_QUIZ_QUESTIONS(quizQuestions);
-        }else{
-            this.$store.dispatch('retrieveQuiz')
-                .then(res=> {
-                    if(res) this.QUIZ_DETAIL(this.$route.params.id);
-                    this.$store.dispatch('retriveQuestions')
-                        .then(res=>{
-                            if(res){
-                                let quizQuestions = this.quizDetail.questions;
-                                this.SET_QUIZ_QUESTIONS(quizQuestions);
-                            }
-                        })
-                });
-        }    
-        this.$store.dispatch('retrieveCategories');
-    },
+    },  
     data(){
         return{
             isBusy: false,
@@ -244,10 +233,11 @@ export default {
     },
     computed:{
         ...mapState({
+            'quizList': state => state.quiz.quizList,
             'quizDetail': state => state.quiz.quizDetail,
+            'quizQuestions' : state => state.quiz.quizQuestions,
             'questions': state => state.questions.questionList,
             'categories': state => state.categories.categoryList,
-            'quizQuestions' : state => state.quiz.quizQuestions,
         }),
         filterByCategory(){
             if(this.filter == ''){

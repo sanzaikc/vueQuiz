@@ -20,15 +20,18 @@
                 @onSubmit="create" 
                 @onUpdate="update" >
             </sidebar>
-            <transition-group name="slide-fade" mode="out-in">
-                <question-card 
-                v-for="(question, index) in questions" 
-                :key="question.id" 
-                :question="question" 
-                :index="index"
-                :attach="false"
-                @edit="editSidebar"></question-card>
-            </transition-group>
+            <div v-if="questions.length > 0">
+                <transition-group name="slide-fade" mode="out-in">
+                    <question-card 
+                    v-for="(question, index) in questions" 
+                    :key="question.id" 
+                    :question="question" 
+                    :index="index"
+                    :attach="false"
+                    @edit="editSidebar"></question-card>
+                </transition-group>
+            </div>
+            <div v-else>No questions by you, yet!</div>
         </div>
     </div>
     
