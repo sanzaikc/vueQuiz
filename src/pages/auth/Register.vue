@@ -2,11 +2,9 @@
 	<div class="mx-auto col-md-3 p-4 rounded">
 		<validation-observer ref="observer" v-slot="{ handleSubmit }">
 			<b-form @submit.prevent="handleSubmit(onRegister)">
-				<validation-provider
-					name="Name"
+				<validation-provider name="Name"
 					:rules="{ required: true, min: 5 }"
-					v-slot="validationContext"
-				>
+					v-slot="validationContext">
 					<b-form-group id="input-group-1" label="Name" label-for="name">
 						<b-form-input
 							id="name"
@@ -14,19 +12,16 @@
 							type="text"
 							placeholder="Enter name"
 							:state="getValidationState(validationContext)"
-							aria-describedby="input-1-live-feedback"
-						></b-form-input>
-						<b-form-invalid-feedback id="input-1-live-feedback">{{
-							validationContext.errors[0]
-						}}</b-form-invalid-feedback>
+							aria-describedby="input-1-live-feedback">
+						</b-form-input>
+						<b-form-invalid-feedback id="input-1-live-feedback">{{ validationContext.errors[0]}}
+						</b-form-invalid-feedback>
 					</b-form-group>
 				</validation-provider>
 
-				<validation-provider
-					name="Email"
+				<validation-provider name="Email"
 					:rules="{ required: true, email: true }"
-					v-slot="validationContext"
-				>
+					v-slot="validationContext">
 					<b-form-group id="input-group-2" label="Email" label-for="email">
 						<b-form-input
 							id="email"
@@ -35,17 +30,14 @@
 							:state="getValidationState(validationContext)"
 							aria-describedby="input-2-live-feedback"
 						></b-form-input>
-						<b-form-invalid-feedback id="input-2-live-feedback">{{
-							validationContext.errors[0]
-						}}</b-form-invalid-feedback>
+						<b-form-invalid-feedback id="input-2-live-feedback">{{ validationContext.errors[0] }}
+						</b-form-invalid-feedback>
 					</b-form-group>
 				</validation-provider>
 
-				<validation-provider
-					name="Password"
+				<validation-provider name="Password"
 					:rules="{ required: true, min: 6 }"
-					v-slot="validationContext"
-				>
+					v-slot="validationContext">
 					<b-form-group id="input-group-3">
 						<div class="d-flex justify-content-between align-items-center">
 							<label for="password">Password</label>
@@ -53,8 +45,8 @@
 								class="text-primary mb-2"
 								role="button"
 								@click="showPassword = !showPassword"
-								v-text="showPassword ? 'Hide password' : 'Show password'"
-							></small>
+								v-text="showPassword ? 'Hide password' : 'Show password'">
+							</small>
 						</div>
 						<b-form-input
 							id="password"
@@ -74,8 +66,7 @@
 					type="submit"
 					variant="outline-primary"
 					class="w-100"
-					:disabled="isLoading"
-				>
+					:disabled="isLoading">
 					{{ isLoading ? "Registering" : "Register" }}
 					<b-spinner
 						v-if="isLoading"
@@ -91,7 +82,7 @@
 
 <script>
 export default {
-	created() {
+	mounted() {
 		document.title = "Register Account";
 	},
 	data() {
@@ -111,7 +102,6 @@ export default {
 		},
 		onRegister() {
 			this.isLoading = true;
-
 			this.$store
 				.dispatch("register", this.form)
 				.then(() => {
