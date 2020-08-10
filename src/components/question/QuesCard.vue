@@ -60,17 +60,6 @@
 <script>
 import { mapGetters } from 'vuex';
 export default {
-    mounted(){
-        this.$store.dispatch('retrieveCategories')
-            .then(res=>{
-                if(res){
-                    if(this.categories){
-                        let cat = this.categories.find(q => q.value === this.question.category_id);
-                        this.categoryName = cat.text;
-                    }
-                }
-            })
-    },
     props: {
         question: {
             type: Object,
@@ -85,7 +74,6 @@ export default {
     data(){
         return{
             showAns: false,
-            categoryName: ''
         }
     },
     methods: {
@@ -117,6 +105,10 @@ export default {
         ...mapGetters([
             'categories'
         ]),
+        categoryName(){
+            let category = this.categories.find(q => q.value === this.question.category_id);
+            return category.text;
+        }
     },
 }
 </script>

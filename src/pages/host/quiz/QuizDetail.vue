@@ -127,8 +127,6 @@ import QuizSidebar from '../../../components/quiz/QuizSidebar.vue';
 import QuestionCard from '../../../components/question/QuesCard.vue'
 export default {
     mounted(){
-            console.log(this.filterByCategory);
-            console.log(this.questions);
             this.QUIZ_DETAIL(this.$route.params.id);
             let quizQuestions = this.quizDetail.questions;
             this.SET_QUIZ_QUESTIONS(quizQuestions);

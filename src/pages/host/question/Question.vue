@@ -1,11 +1,11 @@
 <template>
     <div>
-         <b-spinner
-			v-if="isLoading"
+         <b-spinner v-if="isLoading"
 			variant="primary"
 			label="Spinning"
 			style="position: fixed; top: 50%; left: 50%">
         </b-spinner>
+
         <div v-else>
             <fab
                 main-icon="menu"
@@ -20,6 +20,7 @@
                 @onSubmit="create" 
                 @onUpdate="update" >
             </sidebar>
+            
             <div v-if="questions.length > 0">
                 <transition-group name="slide-fade" mode="out-in">
                     <question-card 
@@ -47,6 +48,7 @@ export default {
         this.$store.dispatch('retriveQuestions')
             .then(res => {
                 if(res) this.isLoading = false;
+                this.$store.dispatch('retrieveCategories')
             });
     },
     data(){
