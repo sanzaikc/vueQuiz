@@ -48,11 +48,11 @@
 				<div v-for="category in categories"
 					:key="category.id"
 					class="col-lg-4 col-xl-4 mb-3">
-					<category
+					<category-card
 						:category="category"
 						@onDelete="deleteCategory"
 						@onUpdate="updateCategory">
-					</category>
+					</category-card>
 				</div>
 			</transition-group>
 		</div>
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import Category from "../../components/Category.vue";
+import CategoryCard from "../../components/CategoryCard.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -126,7 +126,7 @@ export default {
 		},
 	},
 	components: {
-		Category,
+		CategoryCard,
 	},
 };
 </script>
