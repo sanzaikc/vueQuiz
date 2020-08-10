@@ -26,7 +26,7 @@ export default {
     },
     watch: {
         number: function(newValue) {
-            gsap.to(this.$data, { duration: 1.5, tweenedNumber: newValue });
+            gsap.to(this.$data, { duration: 1, tweenedNumber: newValue });
         }
     }
 }
