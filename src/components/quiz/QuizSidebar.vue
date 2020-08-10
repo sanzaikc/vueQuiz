@@ -8,7 +8,9 @@
         shadow
         :lazy="true"
         width="400px">
+
           <div class="px-3 py-2 border-top">
+
             <validation-observer ref="observer" v-slot="{ handleSubmit }">
               <b-form @submit.prevent="handleSubmit(onSubmit)">
                 <validation-provider
@@ -75,8 +77,7 @@
                   type="submit"
                   variant="outline-primary"
                   class="w-100"
-                  :disabled="value"
-                >
+                  :disabled="value">
                   {{ value ? text+'ing' : text+'e' }}
                   <b-spinner v-if="value" small type="grow" class="ml-2"></b-spinner>
                 </b-button>
@@ -110,13 +111,6 @@ export default {
             image: null,
           };
         }
-        // else{
-        //   this.quiz = {
-        //         name: '',
-        //         description: '',
-        //         image: null,
-        //     };
-        // }
       }
     },
     data(){

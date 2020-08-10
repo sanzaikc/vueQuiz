@@ -10,12 +10,11 @@
 			img-height="150"
 			img-top
 			tag="article"
-			class="mb-3 shadow-sm"
-		>
+			class="mb-3 shadow-sm">
+
 			<b-card-text v-text="quiz.description" class="line-clamp"></b-card-text>
 
-			<router-link
-				:to="{ name: 'quizDetail', params: { id: quiz.id } }"
+			<router-link :to="{ name: 'quizDetail', params: { id: quiz.id } }"
 				class="col-md-4 btn btn-outline-primary btn-sm"
 				:quiz="quiz">View
 			</router-link>

@@ -89,9 +89,6 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  mounted() {
-    this.$store.dispatch("retrieveCategories");
-  },
   props: {
     text: {
       type: String,
