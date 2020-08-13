@@ -14,10 +14,13 @@
 
 			<b-card-text v-text="quiz.description" class="line-clamp"></b-card-text>
 
-			<router-link :to="{ name: 'quizDetail', params: { id: quiz.id } }"
-				class="col-md-4 btn btn-outline-primary btn-sm"
-				:quiz="quiz">View
-			</router-link>
+			<div class="d-flex justify-content-between">
+				<router-link :to="{ name: 'quizDetail', params: { id: quiz.id } }"
+					class="col-md-4 btn btn-outline-primary btn-sm">View
+				</router-link>
+				
+				<button class="col-md-4 btn btn-outline-info btn-sm" @click="host(quiz)"> Host </button>
+			</div>
 		</b-card>
 	</div>
 </template>
@@ -29,6 +32,18 @@ export default {
 			type: Object,
 		},
 	},
+	methods: {
+		host(quiz){
+			let pin = Math.floor(Math.random() * 90000) + 10000;
+			this.$store.dispatch('updatePin', {id: quiz.id, pin: pin})
+				.then(res => {
+					if(res) this.$router.push({ name: 'quiz.host', params:{ id: quiz.id } });
+				})
+				.catch(error => {
+					alert(error);
+				})
+		}
+	}
 };
 </script>
 

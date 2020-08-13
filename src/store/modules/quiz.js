@@ -138,6 +138,17 @@ const actions = {
                 reject(error.response.data);
             });
         });
+    },
+    updatePin: (context, data) => {
+        return new Promise((resolve, reject)=>{
+            axios.post('/quizzes/'+ data.id, {
+                pin: data.pin
+            })
+                .then(res => {
+                    resolve(res);
+                })
+                .catch(error => reject(error.response.data));
+        });
     }
 };
 const getters = {};

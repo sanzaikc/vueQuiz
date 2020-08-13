@@ -82,7 +82,7 @@ export const routes = [
 				component: ()=> import(/* webpackChunkName: "home" */ './pages/host/Home.vue'),
 			},
 			{
-				path: "quiz",
+				path: "quizzes",
 				name: "host.quiz",
 				beforeEnter: disableGuard,
 				component:()=> import(/* webpackChunkName: "quiz" */ './pages/host/quiz/Quiz.vue'),
@@ -99,6 +99,12 @@ export const routes = [
 						path: ':id',
 						name: 'quizDetail',
 						component: ()=> import(/* webpackChunkName: "quizDetail" */ './pages/host/quiz/QuizDetail.vue')
+					},
+					{
+						path:'hostQuiz/:id',
+						name: 'quiz.host',
+						props: true,
+						component: () => import( /* webpackChunkName: "hostQuiz" */ './pages/host/quiz/HostQuiz.vue')
 					}
 				]
 			},
