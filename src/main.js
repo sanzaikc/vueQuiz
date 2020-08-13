@@ -19,6 +19,7 @@ import { ValidationObserver, ValidationProvider, extend, localize } from "vee-va
 import VueToasted from 'vue-toasted';
 
 
+
 // Install VeeValidate rules and localization
 Object.keys(rules).forEach(rule => {
   extend(rule, rules[rule]);

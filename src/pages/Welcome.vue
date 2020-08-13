@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     mounted(){
         document.title = "Welcome to Quizy";
@@ -59,7 +60,18 @@ export default {
     },
     methods: {
         join(){
-            this.isBusy = !this.isBusy;
+            this.isBusy = true
+            axios.post('player', {
+                name: this.name,
+                pin: this.pin
+            })
+            .then(res => {
+                if(res){
+                    console.log(res.data);
+                     this.isBusy = false;
+                }
+            })
+            .catch(error => error.response && console.log(error.response.data));
         }
     }
 }
