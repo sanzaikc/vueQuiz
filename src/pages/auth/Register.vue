@@ -1,7 +1,7 @@
 <template>
-	<div class="mx-auto col-md-3 p-4 rounded">
+	<div class="mx-auto col-md-4 p-4 rounded">
 		<validation-observer ref="observer" v-slot="{ handleSubmit }">
-			<b-form @submit.prevent="handleSubmit(onRegister)">
+			<b-form @submit.prevent="handleSubmit(onRegister)"  class="bg-white p-4 rounded-lg shadow">
 				<validation-provider name="Name"
 					:rules="{ required: true, min: 5 }"
 					v-slot="validationContext">

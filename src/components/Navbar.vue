@@ -5,10 +5,13 @@
 		class="border-bottom bg-white px-4"
 		sticky>
 
-		<b-navbar-brand class="d-flex align-items-center">
-			<b-icon icon="egg-fried" scale="1.5"></b-icon>
-			<h4 class="ml-2">Quizy</h4>
-		</b-navbar-brand>
+		<router-link to="/"
+			tag="b-navbar-brand" 
+			role="button"
+			class="d-flex align-items-center">
+				<b-icon icon="egg-fried" scale="1.5"></b-icon>
+				<h4 class="ml-2">Quizy</h4>
+		</router-link>
 
 		<b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 		<b-collapse id="nav-collapse" is-nav>

@@ -1,8 +1,8 @@
 <template>
-	<div class="mx-auto col-md-3 p-4 rounded-lg">
+	<div class="mx-auto col-md-4 p-4 rounded-lg">
 
 		<validation-observer ref="observer" v-slot="{ handleSubmit }">
-			<b-form @submit.prevent="handleSubmit(onLogin)">
+			<b-form @submit.prevent="handleSubmit(onLogin)" class="bg-white p-4 rounded-lg shadow">
 				<b-alert v-if="successMessage" variant="success" show dismissible fade>
 					{{ successMessage }}
 				</b-alert>
