@@ -4,7 +4,7 @@
            <div class="ml-4">
                <p class="display-4">Welcome to Quizy,</p>
                <h3 class="text-secondary">Are you bored sitting in your house thinking about when the pandemic is over?</h3>
-               <h3 class="text-secondary"> Well, get ready to play #exciting, #imersive and #fun quiz.</h3>
+               <h3 class="text-secondary"> Well, get ready to play <span>#exciting</span>, <span>#imersive</span> and <span>#fun quiz</span> .</h3>
            </div>
        </div>
        <div class="col-md-6">
@@ -64,3 +64,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    span{
+        color: steelblue
+    }
+</style>
