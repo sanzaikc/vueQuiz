@@ -37,6 +37,9 @@ const mutations = {
         let newList = state.quizQuestions.filter(q => q.id != id);
         state.quizQuestions = [...newList];
     },
+    UPDATE_PIN: (state, data) => {
+        state.quizList = state.quizList.map(q => q.id == data.id ? {...q, pin: data.pin} : q);
+    }
 };
 const actions = {
     retrieveQuiz: ({commit}) => {
@@ -145,9 +148,13 @@ const actions = {
                 pin: data.pin
             })
                 .then(res => {
+                    let data = res.data.quiz;
+                    context.commit("UPDATE_PIN", data);
                     resolve(res);
                 })
-                .catch(error => reject(error.response.data));
+                .catch(error => {
+                    reject(error.response.data)
+                });
         });
     }
 };

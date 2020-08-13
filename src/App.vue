@@ -25,6 +25,9 @@
 <script>
 import Navbar from "./components/Navbar.vue";
 
+import Echo from 'laravel-echo';
+window.Pusher = require('pusher-js');
+ 
 export default {
 	name: "App",
 	components: {
@@ -38,6 +41,12 @@ export default {
 	mounted() {
 		this.$store.dispatch("restoreToken").finally(() => {
 			this.isLoading = false;
+		});
+		window.Echo = new Echo({
+			broadcaster: 'pusher',
+			key: '006560e2f54b86fac2be',
+			cluster: 'ap2',
+			forceTLS: true
 		});
 	},
 };

@@ -6,18 +6,29 @@
         </div>
         <p>Players: </p>
         <ul>
-            <li>Player 1 </li>
-            <li>Player 2 </li>
-            <li>Player 3 </li>
+            <li v-for="player in players" :key="player.id"> {{ player.name }} </li>
         </ul>
+
+        <p v-for="player in quizDetail.players" :key="player.id" v-text="player.name"></p>
+
     </div>
 </template>
 
 <script>
 import { mapMutations, mapState } from 'vuex';
+
 export default {
     mounted(){
         this.QUIZ_DETAIL(this.$route.params.id);
+        window.Echo.channel('quizy' + this.$route.params.id)
+            .listen('PlayerJoined', (e) => {
+                this.players.push(e.player)
+            });
+    },
+    data(){
+        return{
+            players: [],
+        }
     },
     methods: {
         ...mapMutations([
