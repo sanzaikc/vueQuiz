@@ -19,7 +19,13 @@
 					class="col-md-4 btn btn-outline-primary btn-sm">View
 				</router-link>
 				
-				<button class="col-md-4 btn btn-outline-info btn-sm" @click="host(quiz)"> Host </button>
+				<button class="col-md-4 btn btn-outline-info btn-sm" @click="host(quiz)"> 
+					<b-spinner v-if="isBusy"
+							small
+							type="grow">
+					</b-spinner>
+					<span v-else> Host </span>
+				</button>
 			</div>
 		</b-card>
 	</div>
@@ -32,15 +38,25 @@ export default {
 			type: Object,
 		},
 	},
+	data(){
+		return{
+			isBusy: false,
+		}
+	},
 	methods: {
 		host(quiz){
+			this.isBusy = true;
 			let pin = Math.floor(Math.random() * 90000) + 10000;
 			this.$store.dispatch('updatePin', {id: quiz.id, pin: pin})
 				.then(res => {
-					if(res) this.$router.push({ name: 'quiz.host', params:{ id: quiz.id } });
+					if(res) this.$router.push({ name: 'quiz.start', params:{ id: quiz.id } });
+					this.isBusy = false;
 				})
 				.catch(error => {
-					alert(error);
+					this.$toasted.show(error, {
+						theme: "bubble",
+					})
+					this.isBusy = false;
 				})
 		}
 	}

@@ -1,12 +1,4 @@
 import Welcome from './pages/Welcome.vue';
-import Login from './pages/auth/Login.vue';
-import Register from './pages/auth/Register.vue';
-import Logout from './pages/auth/Logout.vue';
-import Admin from './pages/admin/Admin.vue';
-import User from './pages/admin/User.vue';
-import Host from './pages/host/Host.vue';
-// import Categories from './pages/admin/Categories.vue';
-
 import store from './store/store';
 
 function adminGuard(to, from, next) {
@@ -29,26 +21,26 @@ export const routes = [
 	{
 		path: "/login",
 		name: "login",
-		component: Login,
+		component: () => import(/* webpackChunkName: "login" */ './pages/auth/Login.vue'),
 		props: true,
 		meta: { guest: true },
 	},
 	{
 		path: "/register",
 		name: "register",
-		component: Register,
+		component: () => import(/* webpackChunkName: "register" */ './pages/auth/Register.vue'),
 		meta: { guest: true },
 	},
 	{
 		path: "/logout",
 		name: "logout",
-		component: Logout,
+		component: () => import(/* webpackChunkName: "logout" */ './pages/auth/Logout.vue'),
 		meta: { auth: true }
 	},
 	{
 		path: "/admin",
 		name: "admin",
-		component: Admin,
+		component: () => import(/* webpackChunkName: "admin" */ './pages/admin/Admin.vue'),
 		beforeEnter: adminGuard,
         meta: { auth: true },
         redirect: {
@@ -58,7 +50,7 @@ export const routes = [
             {
                 path: 'users',
                 name: 'admin.users',
-                component: User,
+				component: () => import(/* webpackChunkName: "login" */ './pages/admin/User.vue'),
             },
             {
                 path: 'categories',
@@ -70,7 +62,7 @@ export const routes = [
 	{
 		path: "/host",
 		name: "host",
-		component: Host,
+		component: () => import(/* webpackChunkName: "login" */ './pages/host/Host.vue'),
 		meta: { auth: true },
 		redirect: {
 			name: 'host.home'
@@ -101,9 +93,8 @@ export const routes = [
 						component: ()=> import(/* webpackChunkName: "quizDetail" */ './pages/host/quiz/QuizDetail.vue')
 					},
 					{
-						path:'hostQuiz/:id',
-						name: 'quiz.host',
-						props: true,
+						path:'startQuiz/:id',
+						name: 'quiz.start',
 						component: () => import( /* webpackChunkName: "hostQuiz" */ './pages/host/quiz/HostQuiz.vue')
 					}
 				]

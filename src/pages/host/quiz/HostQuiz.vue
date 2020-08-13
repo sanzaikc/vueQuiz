@@ -4,7 +4,12 @@
             <h3 v-text="quizDetail.name"></h3>
             <h4> Pin: {{ quizDetail.pin ? quizDetail.pin : "1234" }} </h4>
         </div>
-        {{ quizDetail }}
+        <p>Players: </p>
+        <ul>
+            <li>Player 1 </li>
+            <li>Player 2 </li>
+            <li>Player 3 </li>
+        </ul>
     </div>
 </template>
 
