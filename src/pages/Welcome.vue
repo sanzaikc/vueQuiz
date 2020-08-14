@@ -15,7 +15,7 @@
                         <b-form-input
                             id="name"
                             type="text"
-                            v-model="name"
+                            v-model="data.name"
                             placeholder="Enter name">
                         </b-form-input>
                     </b-form-group>
@@ -23,7 +23,7 @@
                         <b-form-input
                             id="pin"
                             type="text"
-                            v-model="pin"
+                            v-model="data.pin"
                             placeholder="Enter pin">
                         </b-form-input>
                     </b-form-group>
@@ -46,7 +46,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 export default {
     mounted(){
         document.title = "Welcome to Quizy";
@@ -54,24 +53,37 @@ export default {
     data(){
         return{
             isBusy: false,
-            name: '',
-            pin: ''
+            data: {
+                name: '',
+                pin: '',
+            }
         }
     },
     methods: {
         join(){
             this.isBusy = true
-            axios.post('player', {
-                name: this.name,
-                pin: this.pin
-            })
+            this.$store.dispatch('joinQuiz', this.data)
             .then(res => {
                 if(res){
-                    console.log(res.data);
                      this.isBusy = false;
+                     if(res.message) {
+                         this.$toasted.show(res.message, { 
+                             theme: 'bubble'
+                         });
+                         this.data.pin = '';
+                     }
                 }
             })
-            .catch(error => error.response && console.log(error.response.data));
+            .catch(error => {
+                this.isBusy = false;
+                this.$toasted.show(error, {
+                    theme: "bubble",
+                }),
+                this.data = {
+                        name: '',
+                        pin: '',
+                    }
+            });
         }
     }
 }

@@ -153,8 +153,19 @@ const actions = {
                     resolve(res);
                 })
                 .catch(error => {
-                    reject(error.response.data)
+                    reject(error.response.data);
                 });
+        });
+    },
+    joinQuiz: (context, data) => {
+        return new Promise((resolve, reject)=>{
+            axios.post('player', data)
+                .then(res => {
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    reject(error.response.data.errors.name)
+                })
         });
     }
 };

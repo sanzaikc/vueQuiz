@@ -1,8 +1,11 @@
 <template>
     <div>
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between align-items-center">
             <h3 v-text="quizDetail.name"></h3>
-            <h4> Pin: {{ quizDetail.pin ? quizDetail.pin : "1234" }} </h4>
+            <div class="d-flex align-items-baseline">
+                <h4>Pin: </h4>
+                <h2 class="mx-3" style="color: steelblue"> {{ quizDetail.pin }}</h2>
+            </div>
         </div>
         <p>Players: </p>
         <ul>
