@@ -43,9 +43,9 @@ export default {
 			this.isLoading = false;
 		});
 		window.Echo = new Echo({
-			broadcaster: 'pusher',
-			key: '006560e2f54b86fac2be',
-			cluster: 'ap2',
+			broadcaster: process.env.VUE_APP_BROADCAST_DRIVER,
+			key: process.env.VUE_APP_PUSHER_APP_KEY,
+			cluster: process.env.VUE_APP_PUSHER_APP_CLUSTER,
 			forceTLS: true
 		});
 	},
