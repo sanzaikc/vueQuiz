@@ -113,14 +113,14 @@ const actions = {
             })
         });
     },
-    attachQuestions: (context, data) => {
+    attachQuestions: ({commit}, data) => {
         return new Promise((resolve, reject)=>{
             axios.post('/questions/attach/' + data.quizId, {
                 questions: data.questions
             })
             .then(res => {
                 let questions = res.data.data;
-                context.commit('ADD_QUIZ_QUESTIONS', questions)
+                commit('ADD_QUIZ_QUESTIONS', questions)
                 resolve(res.data);
             })
             .catch(error => {
@@ -128,14 +128,14 @@ const actions = {
             });
         });
     },
-    detachQuestion: (context, data) => {
+    detachQuestion: ({commit}, data) => {
         return new Promise((resolve, reject)=>{
             axios.post('/questions/detach/' + data.quizId, {
                 questions: data.questionId
             })
             .then(res => {
                 resolve(res.data);
-                context.commit('REMOVE_QUESTION', data.questionId);
+                commit('REMOVE_QUESTION', data.questionId);
             })
             .catch(error => {
                 reject(error.response.data);
