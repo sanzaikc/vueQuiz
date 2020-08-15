@@ -13,12 +13,18 @@
                 </div>
             </div>
         </div>
-        <p>Players: </p>
-        <ul>
-            <li v-for="player in players" :key="player.id"> {{ player.name }} </li>
-        </ul>
-
-        <p v-for="player in quizDetail.players" :key="player.id" v-text="player.name"></p>
+        <div class="my-4" v-if="quizDetail.players">
+            <h5> {{ quizDetail.players.length }} Participants:</h5>
+            <div class="px-4 rounded-lg">
+                <ul class="list-unstyled">
+                    <li v-for="player in quizDetail.players" :key="player.id"> {{ player.name }} </li>
+                </ul>
+            </div>
+        </div>
+        <button 
+            class="btn btn-outline-primary btn-block w-25" 
+            style="position: fixed; bottom: 5%; left: 45%">Start Quiz
+        </button>
 
     </div>
 </template>
@@ -31,18 +37,19 @@ export default {
         this.QUIZ_DETAIL(this.$route.params.id);
         window.Echo.channel('quizy' + this.$route.params.id)
             .listen('PlayerJoined', (e) => {
-                this.players.push(e.player)
-            });
+                this.UPDATE_PLAYERS(e.player)
+                this.$toasted.show(e.player.name+" joined!");
+         });
     },
     data(){
         return{
             copied: false,
-            players: [],
         }
     },
     methods: {
         ...mapMutations([
             'QUIZ_DETAIL',
+            'UPDATE_PLAYERS',
         ]),
         selectText(element) {
             var range;
@@ -73,7 +80,7 @@ export default {
     computed: {
         ...mapState({
             'quizDetail': state => state.quiz.quizDetail,
-        })
+        }),
     }
 }
 </script>

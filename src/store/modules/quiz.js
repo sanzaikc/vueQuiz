@@ -39,6 +39,10 @@ const mutations = {
     },
     UPDATE_PIN: (state, data) => {
         state.quizList = state.quizList.map(q => q.id == data.id ? {...q, pin: data.pin} : q);
+    },
+    UPDATE_PLAYERS: (state, data) => {
+        if(!state.quizDetail.players) state.quizDetail.players = [];
+        state.quizDetail.players.push(data);
     }
 };
 const actions = {
@@ -142,14 +146,14 @@ const actions = {
             });
         });
     },
-    updatePin: (context, data) => {
+    updatePin: ({commit}, data) => {
         return new Promise((resolve, reject)=>{
             axios.post('/quizzes/'+ data.id, {
                 pin: data.pin
             })
                 .then(res => {
                     let data = res.data.quiz;
-                    context.commit("UPDATE_PIN", data);
+                    commit("UPDATE_PIN", data);
                     resolve(res);
                 })
                 .catch(error => {
@@ -169,7 +173,9 @@ const actions = {
         });
     }
 };
-const getters = {};
+const getters = {
+    players: state =>  state.quizDetail.players
+};
 
 export default {
     state,

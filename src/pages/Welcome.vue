@@ -16,6 +16,7 @@
                             id="name"
                             type="text"
                             v-model="data.name"
+                            required
                             placeholder="Enter name">
                         </b-form-input>
                     </b-form-group>
@@ -24,6 +25,7 @@
                             id="pin"
                             type="text"
                             v-model="data.pin"
+                            required
                             placeholder="Enter pin">
                         </b-form-input>
                     </b-form-group>
@@ -59,7 +61,7 @@ export default {
             }
         }
     },
-    methods: {
+    methods: {  
         join(){
             this.isBusy = true
             this.$store.dispatch('joinQuiz', this.data)
