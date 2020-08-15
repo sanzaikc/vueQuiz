@@ -15,11 +15,7 @@
         </div>
         <div class="my-4" v-if="players">
             <h5> {{ players.length }} Participants:</h5>
-            <div class="px-4 rounded-lg">
-                <ul class="list-unstyled">
-                    <li v-for="player in players" :key="player.id"> {{ player.name }} </li>
-                </ul>
-            </div>
+            <h5 v-for="player in players" :key="player.id" class="text-info"> {{ player.name }} </h5>
         </div>
         <button 
             class="btn btn-outline-primary btn-block w-25" 

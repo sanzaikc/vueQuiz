@@ -60,7 +60,7 @@ export default {
 						this.isBusy = false;
 				});
 			}else {
-				alert('Oops, the number of questions is 0');
+				alert('Oops, questions aren\'t sufficeint!');
 			}
 			
 		}
