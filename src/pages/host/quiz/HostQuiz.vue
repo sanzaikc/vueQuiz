@@ -26,14 +26,20 @@
         </div>
 
         <div v-show="start" class="mt-5">
-            <div>
-                <h3>{{ questions[qIndex].body }}</h3>
-                <p v-for="option in questions[qIndex].options" :key="option.id"> {{ option.body }} </p>
-            </div>
-            <button v-if="!lastQuestion" @click="next">Next</button>
-            <button v-else @click="finish">Finish</button>
+            <transition name="fade" mode="out-in">
+                <div class="my-4 p-4 border rounded">
+                    <h1> {{ questions[qIndex].body }} </h1>
+                    <h3 v-for="(option, index) in questions[qIndex].options" 
+                        :key="option.id" 
+                        class="text-secondary bg-light rounded-pill px-3 py-2 w-25"> {{ index + 1 + '.'}}  {{ option.body }} 
+                    </h3>
+                </div>
+            </transition>
+           <div class="float-right w-25">
+                <button v-if="!lastQuestion" @click="next" class="btn btn-outline-primary btn-block" >Next</button>
+                <button v-else @click="finish" class="btn btn-outline-info btn-block" >End</button>     
+           </div>
         </div>
-
     </div>
 </template>
 
@@ -87,8 +93,12 @@ export default {
             window.getSelection().removeAllRanges();
         },
         startGame(){
-            this.start = true;
-            this.currentQ(this.questions[0].id);
+            // if(this.players.length > 1){
+                this.start = true;
+                this.currentQ(this.questions[0].id);
+            // }else{
+            //     alert("Not enough participants")
+            // }
         },
         currentQ(id){
             axios.post('quizzes/' + this.quizDetail.id, {
@@ -104,8 +114,10 @@ export default {
             this.currentQ(this.questions[this.qIndex].id);
         },
         finish(){
-            this.qIndex = 0;
-            this.start = false
+            if(confirm("End this Quiz? ")){
+                this.qIndex = 0;
+                this.start = false
+            }
         }
     },
     computed: {
