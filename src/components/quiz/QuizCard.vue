@@ -19,7 +19,9 @@
 					class="col-md-4 btn btn-outline-primary btn-sm">View
 				</router-link>
 				
-				<button class="col-md-4 btn btn-outline-info btn-sm" @click="host(quiz)"> 
+				<button class="col-md-4 btn btn-outline-info btn-sm" 
+					@click="host(quiz)" 
+					:disabled="quiz.questions.length <= 0"> 
 					<b-spinner v-if="isBusy"
 							small
 							type="grow">
@@ -57,7 +59,7 @@ export default {
 						theme: "bubble",
 					})
 					this.isBusy = false;
-				})
+			})
 		}
 	}
 };
