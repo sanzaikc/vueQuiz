@@ -30,7 +30,8 @@
                 <h3>{{ questions[qIndex].body }}</h3>
                 <p v-for="option in questions[qIndex].options" :key="option.id"> {{ option.body }} </p>
             </div>
-            <button @click="next" :disabled="lastQuestion"> Next </button>
+            <button v-if="!lastQuestion" @click="next">Next</button>
+            <button v-else @click="finish">Finish</button>
         </div>
 
     </div>
@@ -101,6 +102,10 @@ export default {
         next(){
             this.qIndex ++;
             this.currentQ(this.questions[this.qIndex].id);
+        },
+        finish(){
+            this.qIndex = 0;
+            this.start = false
         }
     },
     computed: {

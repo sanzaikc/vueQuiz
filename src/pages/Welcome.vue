@@ -74,7 +74,6 @@ export default {
                             });
                             this.data.pin = '';
                             this.isBusy = false;
-
                         }else{
                             this.$router.push({ name: 'game', params: { data: res.player }});
                             this.isBusy = false;

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>Game here</h2>
+        <h2>Hi, {{ data.name }} </h2>
         <div v-if="this.currentQuestion">
             {{ this.currentQuestion.body }}
         </div>
