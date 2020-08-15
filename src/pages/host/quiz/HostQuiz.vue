@@ -13,40 +13,46 @@
                 </div>
             </div>
         </div>
-        <div class="my-4" v-if="players">
-            <h5> {{ players.length }} Participants:</h5>
-            <h5 v-for="player in players" :key="player.id" class="text-info"> {{ player.name }} </h5>
+        <div v-if="players">
+            <div class="my-4" v-show="!start">
+                <h5> {{ players.length }} Participants:</h5>
+                <h5 v-for="player in players" :key="player.id" class="text-info"> {{ player.name }} </h5>
+            </div>
+            <button v-show="!start"
+                class="btn btn-outline-primary btn-block w-25" 
+                style="position: fixed; bottom: 5%; left: 45%"
+                @click="startGame">Start Quiz
+            </button>
         </div>
-        <button 
-            class="btn btn-outline-primary btn-block w-25" 
-            style="position: fixed; bottom: 5%; left: 45%">Start Quiz
-        </button>
+
+        <div v-show="start" class="mt-5">
+            <div>
+                <h3>{{ questions[qIndex].body }}</h3>
+                <p v-for="option in questions[qIndex].options" :key="option.id"> {{ option.body }} </p>
+            </div>
+            <button @click="nextQ(questions[qIndex].id)" :disabled="qIndex == questions.length - 1"> Next </button>
+        </div>
 
     </div>
 </template>
 
 <script>
 import { mapMutations, mapState, mapGetters } from 'vuex';
-
+import axios from 'axios';
 export default {
     mounted(){
         this.QUIZ_DETAIL(this.$route.params.id);
         window.Echo.channel('quizy' + this.$route.params.id)
             .listen('PlayerJoined', (e) => {
-                this.UPDATE_PLAYERS(e.player)
+                this.UPDATE_PLAYERS(e.player);
                 this.$toasted.show(e.player.name+" joined!");
-            //    try{
-            //         this.UPDATE_PLAYERS(e.player)
-            //    }catch(error){
-            //         console.log(error);
-            //    }finally{
-            //         this.$toasted.show(e.player.name+" joined!");
-            //    }
          });
     },
     data(){
         return{
             copied: false,
+            start: false,
+            qIndex: 0,
         }
     },
     methods: {
@@ -78,6 +84,15 @@ export default {
                 alert('Oops, unable to copy');
             }
             window.getSelection().removeAllRanges();
+        },
+        startGame(){
+            this.start = true;
+        },
+        nextQ(id){
+           axios.post('quizzes/' + this.quizDetail.id, {
+                current_question: id
+            })
+            .then(res => console.log(res.data));
         }
     },
     computed: {
@@ -87,6 +102,10 @@ export default {
         ...mapGetters([
             'players'
         ]),
+        questions(){
+            let questions = this.quizDetail.questions;
+            return questions;
+        },
     }
 }
 </script>

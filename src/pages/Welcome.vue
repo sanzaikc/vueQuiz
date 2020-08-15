@@ -63,29 +63,31 @@ export default {
     },
     methods: {  
         join(){
+            console.log("Pressed");
             this.isBusy = true
             this.$store.dispatch('joinQuiz', this.data)
-            .then(res => {
-                if(res){
-                     this.isBusy = false;
-                     if(res.message) {
-                         this.$toasted.show(res.message, { 
-                             theme: 'bubble'
-                         });
-                         this.data.pin = '';
-                     }
-                }
-            })
-            .catch(error => {
-                this.isBusy = false;
-                this.$toasted.show(error, {
-                    theme: "bubble",
-                }),
-                this.data = {
-                        name: '',
-                        pin: '',
+                .then(res => {
+                    if(res){
+                        this.$router.push({ name: 'game', params: { data: res.player }});
+                        this.isBusy = false;
+                        if(res.message) {
+                            this.$toasted.show(res.message, { 
+                                theme: 'bubble'
+                            });
+                            this.data.pin = '';
+                        }
                     }
-            });
+                })
+                .catch(error => {
+                    this.isBusy = false;
+                    this.$toasted.show(error, {
+                        theme: "bubble",
+                    }),
+                    this.data = {
+                            name: '',
+                            pin: '',
+                        }
+                });
         }
     }
 }

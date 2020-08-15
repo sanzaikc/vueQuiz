@@ -107,5 +107,11 @@ export const routes = [
 			}
 		]
 	},
+	{
+		path: '/game',
+		name: 'game',
+		props: true,
+		component: () => import(/* webpackChunkName: "game" */ './pages/Game.vue')
+	}
 ];
 
