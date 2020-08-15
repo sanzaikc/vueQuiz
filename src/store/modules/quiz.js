@@ -41,7 +41,6 @@ const mutations = {
         state.quizList = state.quizList.map(q => q.id == data.id ? {...q, pin: data.pin} : q);
     },
     UPDATE_PLAYERS: (state, data) => {
-        if(!state.quizDetail.players) state.quizDetail.players = [];
         state.quizDetail.players.push(data);
     }
 };

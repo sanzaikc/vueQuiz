@@ -13,11 +13,11 @@
                 </div>
             </div>
         </div>
-        <div class="my-4" v-if="quizDetail.players">
-            <h5> {{ quizDetail.players.length }} Participants:</h5>
+        <div class="my-4" v-if="players">
+            <h5> {{ players.length }} Participants:</h5>
             <div class="px-4 rounded-lg">
                 <ul class="list-unstyled">
-                    <li v-for="player in quizDetail.players" :key="player.id"> {{ player.name }} </li>
+                    <li v-for="player in players" :key="player.id"> {{ player.name }} </li>
                 </ul>
             </div>
         </div>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapMutations, mapState, mapGetters } from 'vuex';
 
 export default {
     mounted(){
@@ -39,6 +39,13 @@ export default {
             .listen('PlayerJoined', (e) => {
                 this.UPDATE_PLAYERS(e.player)
                 this.$toasted.show(e.player.name+" joined!");
+            //    try{
+            //         this.UPDATE_PLAYERS(e.player)
+            //    }catch(error){
+            //         console.log(error);
+            //    }finally{
+            //         this.$toasted.show(e.player.name+" joined!");
+            //    }
          });
     },
     data(){
@@ -81,6 +88,9 @@ export default {
         ...mapState({
             'quizDetail': state => state.quiz.quizDetail,
         }),
+        ...mapGetters([
+            'players'
+        ]),
     }
 }
 </script>

@@ -19,9 +19,7 @@
 					class="col-md-4 btn btn-outline-primary btn-sm">View
 				</router-link>
 				
-				<button class="col-md-4 btn btn-outline-info btn-sm" 
-					@click="host(quiz)" 
-					:disabled="quiz.questions.length <= 0"> 
+				<button v-if="quiz.questions" class="col-md-4 btn btn-outline-info btn-sm" @click="host(quiz)"> 
 					<b-spinner v-if="isBusy"
 							small
 							type="grow">
@@ -47,19 +45,24 @@ export default {
 	},
 	methods: {
 		host(quiz){
-			this.isBusy = true;
 			let pin = Math.floor(Math.random() * 90000) + 10000;
-			this.$store.dispatch('updatePin', {id: quiz.id, pin: pin})
-				.then(res => {
-					if(res) this.$router.push({ name: 'quiz.start', params:{ id: quiz.id } });
-					this.isBusy = false;
-				})
-				.catch(error => {
-					this.$toasted.show(error, {
-						theme: "bubble",
+			if(!quiz.questions.length <= 0){
+				this.isBusy = true;
+				this.$store.dispatch('updatePin', {id: quiz.id, pin: pin})
+					.then(res => {
+						if(res) this.$router.push({ name: 'quiz.start', params:{ id: quiz.id } });
+						this.isBusy = false;
 					})
-					this.isBusy = false;
-			})
+					.catch(error => {
+						this.$toasted.show(error, {
+							theme: "bubble",
+						})
+						this.isBusy = false;
+				});
+			}else {
+				alert('Oops, the number of questions is 0');
+			}
+			
 		}
 	}
 };
