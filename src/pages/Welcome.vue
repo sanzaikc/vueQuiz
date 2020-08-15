@@ -68,14 +68,17 @@ export default {
             this.$store.dispatch('joinQuiz', this.data)
                 .then(res => {
                     if(res){
-                        this.$router.push({ name: 'game', params: { data: res.player }});
-                        this.isBusy = false;
                         if(res.message) {
                             this.$toasted.show(res.message, { 
                                 theme: 'bubble'
                             });
                             this.data.pin = '';
-                        }
+                            this.isBusy = false;
+
+                        }else{
+                            this.$router.push({ name: 'game', params: { data: res.player }});
+                            this.isBusy = false;
+                        }    
                     }
                 })
                 .catch(error => {

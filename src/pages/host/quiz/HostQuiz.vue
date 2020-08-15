@@ -30,7 +30,7 @@
                 <h3>{{ questions[qIndex].body }}</h3>
                 <p v-for="option in questions[qIndex].options" :key="option.id"> {{ option.body }} </p>
             </div>
-            <button @click="nextQ(questions[qIndex].id)" :disabled="qIndex == questions.length - 1"> Next </button>
+            <button @click="next" :disabled="lastQuestion"> Next </button>
         </div>
 
     </div>
@@ -87,12 +87,20 @@ export default {
         },
         startGame(){
             this.start = true;
+            this.currentQ(this.questions[0].id);
         },
-        nextQ(id){
-           axios.post('quizzes/' + this.quizDetail.id, {
+        currentQ(id){
+            axios.post('quizzes/' + this.quizDetail.id, {
                 current_question: id
             })
-            .then(res => console.log(res.data));
+            .then(res => {
+                console.log(res);
+            })
+            .catch(error => console.log(error));
+        },
+        next(){
+            this.qIndex ++;
+            this.currentQ(this.questions[this.qIndex].id);
         }
     },
     computed: {
@@ -106,6 +114,9 @@ export default {
             let questions = this.quizDetail.questions;
             return questions;
         },
+        lastQuestion(){
+            return this.qIndex == this.questions.length - 1;
+        }
     }
 }
 </script>
