@@ -10,9 +10,10 @@
                     @click="selectedAns(option.id)"
                     role="button"
                     class="w-25 mx-2 border border-info p-3 rounded-pill"
-                    :class="selected == option.id ? 'selected' : ''"> {{ option.body }} 
+                    :class="selected == option.id ? 'selected' : ''"> {{ option.body }}
                 </h4>
             </div>
+            <p>Score: {{ score }} </p>
         </div>
         <div v-else>
             Wait till the host starts the quiz
@@ -26,7 +27,6 @@ export default {
          window.Echo.channel('quizy' + this.data.quiz_id )
             .listen('QuestionChanged', (e) => {
                 this.currentQuestion = e.question;
-                console.log(this.currentQuestion.answer.id);
                 this.quizStarted = true;
          });
      },
@@ -40,14 +40,14 @@ export default {
              quizStarted: false,
              currentQuestion: '',
              selected: '',
+             score: 0,
          }
      },
      methods: {
          selectedAns(id){
              this.selected = id;
-             console.log(this.selected);
-             if(this.currentQuestion.answer.id == id){
-                alert("correct");
+             if(this.currentQuestion.answer.option_id == id){
+                 this.score++;
              }
          }
      }
