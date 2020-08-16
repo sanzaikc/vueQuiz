@@ -15,8 +15,10 @@
         </div>
         <div v-if="players">
             <div class="my-4" v-show="!start">
-                <h5> {{ players.length }} Participants:</h5>
-                <h5 v-for="player in players" :key="player.id" class="text-info"> {{ player.name }} </h5>
+                <h5>Participants:</h5>
+                <h5 v-for="(player, index) in players" 
+                    :key="player.id" 
+                    class="text-info">  {{ index + 1 + '.'}} {{ player.name }} </h5>
             </div>
             <button v-show="!start"
                 class="btn btn-outline-primary btn-block w-25" 
@@ -25,8 +27,8 @@
             </button>
         </div>
 
-        <div v-show="start" class="mt-5">
-            <transition name="fade" mode="out-in">
+        <transition name="fade" mode="slide-fade">
+            <div v-show="start" class="mt-5">
                 <div class="my-4 p-4 border rounded">
                     <h1> {{ questions[qIndex].body }} </h1>
                     <h3 v-for="(option, index) in questions[qIndex].options" 
@@ -34,12 +36,12 @@
                         class="text-secondary bg-light rounded-pill px-3 py-2 w-25"> {{ index + 1 + '.'}}  {{ option.body }} 
                     </h3>
                 </div>
-            </transition>
-           <div class="float-right w-25">
-                <button v-if="!lastQuestion" @click="next" class="btn btn-outline-primary btn-block" >Next</button>
-                <button v-else @click="finish" class="btn btn-outline-info btn-block" >End</button>     
-           </div>
-        </div>
+                <div class="float-right w-25">
+                        <button v-if="!lastQuestion" @click="next" class="btn btn-outline-primary btn-block" >Next</button>
+                        <button v-else @click="finish" class="btn btn-outline-info btn-block" >End</button>     
+                </div>
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -115,8 +117,16 @@ export default {
         },
         finish(){
             if(confirm("End this Quiz? ")){
-                this.qIndex = 0;
-                this.start = false
+                axios.post('quizzes/end/' + this.quizDetail.id)
+                    .then(res => {
+                        if(res){
+                            this.$toasted.show("Quiz terminated", {
+                                theme: "bubble"
+                            });
+                            this.$router.push({ name: 'host.quiz'});
+                        }
+                    })
+                    .catch(error => console.log(error.response.data));
             }
         }
     },
