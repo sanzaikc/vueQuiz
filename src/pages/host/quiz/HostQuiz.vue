@@ -26,19 +26,39 @@
                 @click="startGame">Start Quiz
             </button>
         </div>
-
         <transition name="fade" mode="slide-fade">
             <div v-show="start" class="mt-5">
-                <div class="my-4 p-4 border rounded">
-                    <h1> {{ questions[qIndex].body }} </h1>
-                    <h3 v-for="(option, index) in questions[qIndex].options" 
-                        :key="option.id" 
-                        class="text-secondary bg-light rounded-pill px-3 py-2 w-25"> {{ index + 1 + '.'}}  {{ option.body }} 
-                    </h3>
-                </div>
-                <div class="float-right w-25">
-                        <button v-if="!lastQuestion" @click="next" class="btn btn-outline-primary btn-block" >Next</button>
-                        <button v-else @click="finish" class="btn btn-outline-info btn-block" >End</button>     
+                <div class="row">
+                    <div class="p-4 border rounded col-md-8">
+                        <h2> {{ questions[qIndex].body }} </h2>
+                        <hr>
+                        <h4 v-for="(option, index) in questions[qIndex].options" 
+                            :key="option.id" 
+                            class="text-secondary bg-light rounded-pill px-3 py-2 w-50"> {{ index + 1 + '.'}}  {{ option.body }} 
+                        </h4>
+                        <div class="float-right w-25">
+                            <button v-if="!lastQuestion" @click="next" class="btn btn-outline-primary btn-block" >Next Question</button>
+                            <button v-else @click="finish" class="btn btn-outline-danger btn-block" >End Quiz</button>     
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                         <b-card no-body header="Scoreboard">
+                            <b-list-group flush>
+                                <b-list-group-item class="d-flex justify-content-between align-items-center">
+                                    <p class="m-0"><b-badge variant="success" class="py-1 mr-2" pill>1st</b-badge>John</p>
+                                    30
+                                </b-list-group-item>
+                                    <b-list-group-item class="d-flex justify-content-between align-items-center">
+                                    <p class="m-0"><b-badge variant="info" class="py-1 mr-2" pill>2nd</b-badge>Jane</p>
+                                    20
+                                </b-list-group-item>
+                                    <b-list-group-item class="d-flex justify-content-between align-items-center">
+                                    <p class="m-0"><b-badge variant="warning" class="py-1 mr-2" pill>3rd</b-badge>Example</p>
+                                    15
+                                </b-list-group-item>
+                            </b-list-group>
+                        </b-card>
+                    </div>
                 </div>
             </div>
         </transition>
