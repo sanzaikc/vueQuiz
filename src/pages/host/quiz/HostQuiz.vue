@@ -71,7 +71,6 @@ import { mapMutations, mapState, mapGetters } from 'vuex';
 import axios from 'axios';
 export default {
     mounted(){
-        console.log(this.$route.params.id);
         this.QUIZ_DETAIL(this.$route.params.id);
         window.Echo.channel('quizy' + this.$route.params.id)
             .listen('PlayerJoined', (e) => {
@@ -117,21 +116,21 @@ export default {
             window.getSelection().removeAllRanges();
         },
         startGame(){
-            // if(this.players.length > 1){
+            if(this.players.length > 0){
                 this.start = true;
                 this.currentQ(this.questions[0].id);
-            // }else{
-            //     alert("Not enough participants")
-            // }
+            }else{
+                alert("Not enough participants")
+            }
         },
         currentQ(id){
             axios.post('quizzes/' + this.quizDetail.id, {
                 current_question: id
             })
-            .then(res => {
-                console.log(res);
-            })
-            .catch(error => console.log(error));
+            // .then(res => {
+            //     console.log(res);
+            // })
+            // .catch(error => console.log(error));
         },
         next(){
             this.qIndex ++;

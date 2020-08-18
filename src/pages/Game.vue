@@ -1,27 +1,27 @@
 <template>
-    <div class="container">
-        <div v-if="quizStarted" class="p-4 border rounded">
-            <h1 class="text-center">{{ this.currentQuestion.body }}</h1>
+    <div class="container h-75 d-flex align-items-center">
+        <div v-if="quizStarted" class="p-4 rounded w-100">
+            <h1 class="text-center"> Q: {{ this.currentQuestion.body }}</h1>
             <hr>
-            <div class="row">
-                <h4 v-for="(option) in currentQuestion.options" 
+            <div class="row d-flex justify-content-around">
+                <h3 v-for="(option) in currentQuestion.options" 
                     :key="option.id"
                     @click="selectedAns(option.id)"
                     role="button"
-                    class="col-6 border border-info p-3 rounded-pill text-center"
+                    class="col-5 my-3 py-3 border rounded-pill shadow-sm text-center"
                     :class="selected == option.id ? 'selected' : ''"> {{ option.body }}
-                </h4>
+                </h3>
             </div>
         </div>
         <div v-else>
             <h2>Hi, {{ data.name }} </h2>
             Wait till the host starts the quiz.
-            <h5>Other Participants:</h5>
-                <h5 v-for="(player, index) in players" 
-                    :key="player.id" 
-                    class="text-info">  {{ index + 1 + '.'}} {{ player.name }}
-                </h5>        
-            </div>
+            <h5 v-show="players">Other Participants:</h5>
+            <h5 v-for="(player, index) in players" 
+                :key="player.id" 
+                class="text-info">  {{ index + 1 + '.'}} {{ player.name }}
+            </h5>           
+        </div>
     </div>
 </template>
 
@@ -31,7 +31,7 @@ export default {
         window.Echo.channel('quizy' + this.data.quiz_id)
             .listen('PlayerJoined', (e) => {
                 this.players.push(e.player);
-                this.$toasted.show(e.player.name+" joined!");
+                // this.$toasted.show(e.player.name+" joined!");
          });
          window.Echo.channel('Quizy' + this.data.quiz_id )
             .listen('QuestionChanged', (e) => {
@@ -66,7 +66,7 @@ export default {
 
 <style scoped>
     .selected{
-        color: white;
-        background-color: lightsteelblue
+        color: steelblue;
+        background-color: #DBF3FC;
     }
 </style>
