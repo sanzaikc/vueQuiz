@@ -1,30 +1,39 @@
 <template>
     <div class="container">
-        <h2>Hi, {{ data.name }} </h2>
         <div v-if="quizStarted" class="p-4 border rounded">
             <h1 class="text-center">{{ this.currentQuestion.body }}</h1>
             <hr>
-            <div class="d-flex text-center my-5">
+            <div class="row">
                 <h4 v-for="(option) in currentQuestion.options" 
                     :key="option.id"
                     @click="selectedAns(option.id)"
                     role="button"
-                    class="w-25 mx-2 border border-info p-3 rounded-pill"
+                    class="col-6 border border-info p-3 rounded-pill text-center"
                     :class="selected == option.id ? 'selected' : ''"> {{ option.body }}
                 </h4>
             </div>
-            <p>Score: {{ score }} </p>
         </div>
         <div v-else>
-            Wait till the host starts the quiz
-        </div>
+            <h2>Hi, {{ data.name }} </h2>
+            Wait till the host starts the quiz.
+            <h5>Other Participants:</h5>
+                <h5 v-for="(player, index) in players" 
+                    :key="player.id" 
+                    class="text-info">  {{ index + 1 + '.'}} {{ player.name }}
+                </h5>        
+            </div>
     </div>
 </template>
 
 <script>
 export default {
      mounted(){
-         window.Echo.channel('quizy' + this.data.quiz_id )
+        window.Echo.channel('quizy' + this.data.quiz_id)
+            .listen('PlayerJoined', (e) => {
+                this.players.push(e.player);
+                this.$toasted.show(e.player.name+" joined!");
+         });
+         window.Echo.channel('Quizy' + this.data.quiz_id )
             .listen('QuestionChanged', (e) => {
                 this.currentQuestion = e.question;
                 this.quizStarted = true;
@@ -41,6 +50,7 @@ export default {
              currentQuestion: '',
              selected: '',
              score: 0,
+             players: [],
          }
      },
      methods: {

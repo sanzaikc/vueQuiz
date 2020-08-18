@@ -63,7 +63,6 @@ export default {
     },
     methods: {  
         join(){
-            console.log("Pressed");
             this.isBusy = true
             this.$store.dispatch('joinQuiz', this.data)
                 .then(res => {

@@ -18,7 +18,8 @@
                 <h5>Participants:</h5>
                 <h5 v-for="(player, index) in players" 
                     :key="player.id" 
-                    class="text-info">  {{ index + 1 + '.'}} {{ player.name }} </h5>
+                    class="text-info">  {{ index + 1 + '.'}} {{ player.name }}
+                </h5>
             </div>
             <button v-show="!start"
                 class="btn btn-outline-primary btn-block w-25" 
@@ -26,7 +27,7 @@
                 @click="startGame">Start Quiz
             </button>
         </div>
-        <transition name="fade" mode="slide-fade">
+        <transition name="fade" mode="out-in">
             <div v-show="start" class="mt-5">
                 <div class="row">
                     <div class="p-4 border rounded col-md-8">
@@ -44,18 +45,18 @@
                     <div class="col-md-4">
                          <b-card no-body header="Scoreboard">
                             <b-list-group flush>
-                                <b-list-group-item class="d-flex justify-content-between align-items-center">
-                                    <p class="m-0"><b-badge variant="success" class="py-1 mr-2" pill>1st</b-badge>John</p>
+                                <b-list-group-item v-for="player in players" :key="player.id" class="d-flex justify-content-between align-items-center">
+                                    <p class="m-0"><b-badge variant="success" class="py-1 mr-2" pill>1st</b-badge> {{ player.name }} </p>
                                     30
                                 </b-list-group-item>
-                                    <b-list-group-item class="d-flex justify-content-between align-items-center">
+                                <!-- <b-list-group-item class="d-flex justify-content-between align-items-center">
                                     <p class="m-0"><b-badge variant="info" class="py-1 mr-2" pill>2nd</b-badge>Jane</p>
                                     20
                                 </b-list-group-item>
                                     <b-list-group-item class="d-flex justify-content-between align-items-center">
                                     <p class="m-0"><b-badge variant="warning" class="py-1 mr-2" pill>3rd</b-badge>Example</p>
                                     15
-                                </b-list-group-item>
+                                </b-list-group-item> -->
                             </b-list-group>
                         </b-card>
                     </div>
@@ -70,6 +71,7 @@ import { mapMutations, mapState, mapGetters } from 'vuex';
 import axios from 'axios';
 export default {
     mounted(){
+        console.log(this.$route.params.id);
         this.QUIZ_DETAIL(this.$route.params.id);
         window.Echo.channel('quizy' + this.$route.params.id)
             .listen('PlayerJoined', (e) => {
