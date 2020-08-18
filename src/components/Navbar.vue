@@ -16,7 +16,7 @@
 		<b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 		<b-collapse id="nav-collapse" is-nav>
 			<!-- Right aligned nav items -->
-			<b-navbar-nav class="ml-auto">
+			<b-navbar-nav class="ml-auto" v-if="routeName != 'game'">
 				<router-link
 					v-if="!loggedIn"
 					:to="{ name: 'login' }"
@@ -53,6 +53,9 @@ export default {
 			user: (state) => state.auth.currentUser,
 		}),
 		...mapGetters(["loggedIn", "isAdmin"]),
+		routeName(){
+			return this.$route.name;
+		}
 	},
 };
 </script>
