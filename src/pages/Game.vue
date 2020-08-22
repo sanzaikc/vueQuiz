@@ -4,7 +4,7 @@
             <h1 class="text-center"> Q: {{ this.currentQuestion.body }}</h1>
             <hr>
             <div class="row d-flex justify-content-around">
-                <h3 v-for="(option) in currentQuestion.options" 
+                <h3 v-for="(option) in shuffledOptions"
                     :key="option.id"
                     @click="selectedAns(option.id)"
                     role="button"
@@ -17,10 +17,10 @@
             <h2>Hi, {{ data.name }} </h2>
             Wait till the host starts the quiz.
             <h5 v-show="players">Other Participants:</h5>
-            <h5 v-for="(player, index) in players" 
-                :key="player.id" 
+            <h5 v-for="(player, index) in players"
+                :key="player.id"
                 class="text-info">  {{ index + 1 + '.'}} {{ player.name }}
-            </h5>           
+            </h5>
         </div>
     </div>
 </template>
@@ -60,6 +60,27 @@ export default {
                  this.score++;
              }
          }
+     },
+     computed: {
+         shuffledOptions() {
+            var array = this.currentQuestion.options;
+            var currentIndex = array.length, temporaryValue, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+                }
+
+        return array;
+        }
      }
 }
 </script>

@@ -116,12 +116,12 @@ export default {
             window.getSelection().removeAllRanges();
         },
         startGame(){
-            if(this.players.length > 0){
+            // if(this.players.length > 0){
                 this.start = true;
                 this.currentQ(this.questions[0].id);
-            }else{
-                alert("Not enough participants")
-            }
+            // }else{
+            //     alert("Not enough participants")
+            // }
         },
         currentQ(id){
             axios.post('quizzes/' + this.quizDetail.id, {
