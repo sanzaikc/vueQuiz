@@ -10,7 +10,7 @@
         <div class="col-md-6">
             <div class=" col-md-8 mx-auto p-4">
                 <h3>Join a Quiz</h3>
-                <b-form @submit.prevent="join" class="bg-white p-4 rounded-lg shadow"> 
+                <b-form @submit.prevent="join" class="bg-white p-4 rounded-lg shadow">
                     <b-form-group id="input-group-2" label="Name" label-for="name">
                         <b-form-input
                             id="name"
@@ -38,10 +38,10 @@
                         </b-spinner>
                     </b-button>
                     <hr>
-                    <router-link :to="{ name: 'login' }" 
-                        class="btn btn-outline-info w-100">Sign up to Host Quiz
+                    <router-link :to="{ name: 'login' }"
+                        class="btn btn-outline-info w-100">Sign in to Host Quiz
                     </router-link>
-                </b-form>    
+                </b-form>
             </div>
         </div>
     </div>
@@ -61,14 +61,14 @@ export default {
             }
         }
     },
-    methods: {  
+    methods: {
         join(){
             this.isBusy = true
             this.$store.dispatch('joinQuiz', this.data)
                 .then(res => {
                     if(res){
                         if(res.message) {
-                            this.$toasted.show(res.message, { 
+                            this.$toasted.show(res.message, {
                                 theme: 'bubble'
                             });
                             this.data.pin = '';
@@ -76,7 +76,7 @@ export default {
                         }else{
                             this.$router.push({ name: 'game', params: { data: res.player }});
                             this.isBusy = false;
-                        }    
+                        }
                     }
                 })
                 .catch(error => {

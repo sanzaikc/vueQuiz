@@ -1,8 +1,10 @@
 <template>
     <div>
         <div v-if="disabled"> You are not approved yet!</div>
-        <div v-else class="d-flex justify-content-around">
-            <div class="col-md-6">
+        <div v-else >
+            <Greetings/>
+            <div class="my-3 d-flex justify-content-around">
+                <div class="col-md-6">
                 <div class="d-flex justify-content-center align-items-center">
                     <animated-counter :num="10"></animated-counter>
                     <h3 class="ml-3 text-secondary">Quizes</h3>
@@ -14,6 +16,7 @@
                     <h3 class="ml-3 text-secondary">Questions</h3>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 </template>
@@ -21,6 +24,7 @@
 <script>
 import { mapState } from 'vuex';
 import AnimatedCounter from '../../components/AnimatedCounter.vue'
+import Greetings from '../../components/Greetings.vue'
 export default {
     mounted(){
         document.title = "Home";
@@ -28,10 +32,12 @@ export default {
     computed: {
         ...mapState({
             'disabled': state => state.auth.currentUser.is_disabled,
-        })
+            'userName': state => state.auth.currentUser.name
+        }),
     },
     components: {
         AnimatedCounter,
+        Greetings
     }
 }
 </script>
