@@ -27,7 +27,7 @@ import Navbar from "./components/Navbar.vue";
 
 import Echo from 'laravel-echo';
 window.Pusher = require('pusher-js');
- 
+
 export default {
 	name: "App",
 	components: {
