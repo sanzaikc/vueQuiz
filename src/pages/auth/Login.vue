@@ -1,6 +1,5 @@
 <template>
-	<div class="mx-auto col-md-4 p-4 rounded-lg">
-
+	<div class="mx-auto mt-5 col-md-4 p-4 rounded-lg">
 		<validation-observer ref="observer" v-slot="{ handleSubmit }">
 			<b-form @submit.prevent="handleSubmit(onLogin)" class="bg-white p-4 rounded-lg shadow">
 				<b-alert v-if="successMessage" variant="success" show dismissible fade>
@@ -18,7 +17,7 @@
 							:state="getValidationState(validationContext)"
 							aria-describedby="input-1-live-feedback">
 						</b-form-input>
-						<b-form-invalid-feedback id="input-1-live-feedback"> {{validationContext.errors[0] }} 
+						<b-form-invalid-feedback id="input-1-live-feedback"> {{validationContext.errors[0] }}
 						</b-form-invalid-feedback>
 					</b-form-group>
 				</validation-provider>
@@ -51,8 +50,8 @@
 				</validation-provider>
 
 				<div class="d-flex flex-column align-items-start">
-					<router-link :to="{}" 
-						tag="b-link" 
+					<router-link :to="{}"
+						tag="b-link"
 						class="text-center mb-3">Forgot password?
 					</router-link>
 					<b-button type="submit" variant="outline-primary w-100" :disabled="isLoading">
@@ -65,6 +64,10 @@
 						</b-spinner>
 					</b-button>
 				</div>
+				<hr>
+				<router-link :to="{ name: 'register' }"
+					class="btn btn-outline-info w-100">Sign up to Quizy
+				</router-link>
 			</b-form>
 		</validation-observer>
 	</div>

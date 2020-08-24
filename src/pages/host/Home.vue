@@ -23,8 +23,8 @@
 
 <script>
 import { mapState } from 'vuex';
-import AnimatedCounter from '../../components/AnimatedCounter.vue'
 import Greetings from '../../components/Greetings.vue'
+import AnimatedCounter from '../../components/AnimatedCounter.vue'
 export default {
     mounted(){
         document.title = "Home";
@@ -36,8 +36,8 @@ export default {
         }),
     },
     components: {
-        AnimatedCounter,
-        Greetings
+        Greetings,
+        AnimatedCounter
     }
 }
 </script>
