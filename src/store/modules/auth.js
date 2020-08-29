@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 
 const state = {
     token: Cookies.get('accessToken') || null,
-    currentUser: JSON.parse(Cookies.get('currentUser')) || null,
+    currentUser:  null,
 };
 const mutations = {
 	RETRIEVE_TOKEN: (state, token) => {
@@ -96,6 +96,8 @@ const actions = {
 	},
 };
 const getters = {
+	token: state => state.token,
+
 	loggedIn: (state) => {
 		return state.token != null;
 	},

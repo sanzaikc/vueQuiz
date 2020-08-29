@@ -1,5 +1,4 @@
 import  axios from 'axios';
-import store from '../store'
 
 export default {
     state: {
@@ -23,7 +22,6 @@ export default {
     },
     actions: {
         retrieveCategories: ({commit}) => {
-            axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
             return new Promise((resolve, reject) => {
                 axios.get("/categories")
                 .then(res=> {
@@ -34,7 +32,7 @@ export default {
                 .catch(error => {
                     console.log(error.response.data.errors.name);
                     reject(error);
-                })  
+                })
             });
         },
         createCategory: ({commit}, category) => {

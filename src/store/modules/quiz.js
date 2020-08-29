@@ -1,5 +1,4 @@
 import axios from 'axios';
-import store from '../store';
 
 const state = {
     quizList: [],
@@ -46,7 +45,6 @@ const mutations = {
 };
 const actions = {
     retrieveQuiz: ({commit}) => {
-        axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
         return new Promise((resolve, reject)=> {
             axios.get('/quizzes')
             .then(res => {
@@ -59,12 +57,12 @@ const actions = {
             });
         });
     },
-    createQuiz: ( {commit}, quiz) => {   
+    createQuiz: ( {commit}, quiz) => {
         let quizData = new FormData();
         quizData.append('name', quiz.name);
         quizData.append('description', quiz.description);
         quizData.append('image', quiz.image);
-      
+
         return new Promise((resolve, reject) => {
             axios.post('/quizzes', quizData, {
                 headers: {
@@ -85,7 +83,7 @@ const actions = {
      return new Promise((resolve, reject) => {
         axios.delete('/quizzes/'+ id)
         .then(res=>{
-            commit('REMOVE_QUIZ', res.data.quiz);            
+            commit('REMOVE_QUIZ', res.data.quiz);
             resolve(res.data.message);
         })
         .catch(error=>{
@@ -98,7 +96,7 @@ const actions = {
         quizData.append('name', quiz.data.name);
         quizData.append('description', quiz.data.description);
         quizData.append('image', quiz.data.image);
-      
+
         return new Promise((resolve, reject) => {
             axios.post('/quizzes/'+ quiz.id, quizData, {
                 headers: {

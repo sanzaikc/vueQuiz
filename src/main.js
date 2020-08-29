@@ -12,12 +12,19 @@ import {router} from './router';
 import store from './store/store';
 
 import Axios from 'axios'
-Axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
 
 import { ValidationObserver, ValidationProvider, extend, localize } from "vee-validate";
 
 import VueToasted from 'vue-toasted';
 
+Axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
+Axios.interceptors.request.use(config => {
+  const token = store.getters.token;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 
 // Install VeeValidate rules and localization

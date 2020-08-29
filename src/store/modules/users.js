@@ -1,5 +1,4 @@
 import axios from 'axios'
-import store from '../store'
 
 const state = {
     userList: [],
@@ -12,12 +11,11 @@ const mutations = {
         let updatedList = state.userList.map(q => q.id != user.id ? q : user);
         state.userList = updatedList;
     }
-    
+
 };
 const actions = {
     retrieveUsers: ({commit}) => {
         return new Promise((resolve, reject)=>{
-            axios.defaults.headers.common["Authorization"] = "Bearer " + store.state.auth.token;
             axios.get('/users')
                     .then(res => {
                         let users = res.data.users;

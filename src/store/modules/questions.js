@@ -1,5 +1,4 @@
 import axios from "axios";
-import store from "../store";
 
 const state = {
 	questionList: [],
@@ -24,8 +23,6 @@ const mutations = {
 };
 const actions = {
 	retriveQuestions: ({ commit }) => {
-		axios.defaults.headers.common["Authorization"] =
-			"Bearer " + store.state.auth.token;
 		return new Promise((resolve, reject) => {
 			axios
 				.get("/questions")
