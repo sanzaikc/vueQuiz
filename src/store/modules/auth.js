@@ -1,30 +1,31 @@
 import axios from "axios";
+import Cookies from 'js-cookie'
 
 const state = {
-    token: localStorage.getItem('accessToken') || null, 
-    currentUser: JSON.parse(localStorage.getItem('currentUser')) || null,
+    token: Cookies.get('accessToken') || null,
+    currentUser: JSON.parse(Cookies.get('currentUser')) || null,
 };
 const mutations = {
 	RETRIEVE_TOKEN: (state, token) => {
 		state.token = token;
-		localStorage.setItem("accessToken", token); 
+		Cookies.set("accessToken", token, { expires: 7 });
 	},
 	DESTROY_TOKEN: (state) => {
-		state.token = null; 
-		localStorage.removeItem("accessToken"); 
+		state.token = null;
+		Cookies.remove("accessToken")
 	},
 	SET_CURRENT_USER: (state, user) => {
-		state.currentUser = user; 
-		localStorage.setItem("currentUser", JSON.stringify(user)); 
+		state.currentUser = user;
+		Cookies.set("currentUser", user, { expires: 7 })
 	},
 	REMOVE_USER: (state) => {
-		state.currentUser = null; 
-		localStorage.removeItem("currentUser"); 
+		state.currentUser = null;
+		Cookies.remove("currentUser");
 	},
 };
 const actions = {
 	restoreToken: (context) => {
-		let token = localStorage.getItem("accessToken");
+		let token = Cookies.get("accessToken");
 		if (token) {
 			axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 			return new Promise((resolve, reject) => {
@@ -50,7 +51,7 @@ const actions = {
 				.post("/login", credentials)
 				.then((res) => {
 					let token = res.data.token;
-					commit("RETRIEVE_TOKEN", token); 
+					commit("RETRIEVE_TOKEN", token);
 
 					let user = res.data.user;
 					commit("SET_CURRENT_USER", user);
