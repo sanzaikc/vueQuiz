@@ -1,4 +1,4 @@
-import axios from "axios";
+import $axios from "../../plugins/axios";
 
 const state = {
 	questionList: [],
@@ -24,7 +24,7 @@ const mutations = {
 const actions = {
 	retriveQuestions: ({ commit }) => {
 		return new Promise((resolve, reject) => {
-			axios
+			$axios
 				.get("/questions")
 				.then((res) => {
 					commit("SET_QUESTION_LIST", res.data.questions);
@@ -50,7 +50,7 @@ const actions = {
 		questionData.append("image", question.image);
 
 		return new Promise((resolve, reject) => {
-			axios
+			$axios
 				.post("/questions", questionData, {
 					headers: {
 						"Content-Type": "multipart/form-data",
@@ -69,7 +69,7 @@ const actions = {
 	},
 	deleteQuestion: ({ commit }, id) => {
 		return new Promise((resolve, reject) => {
-			axios
+			$axios
 				.delete("/questions/" + id)
 				.then((res) => {
 					commit("REMOVE_QUESTION", res.data.question);
@@ -99,7 +99,7 @@ const actions = {
 		questionData.append("image", question.data.image);
 
 		return new Promise((resolve, reject) => {
-			axios
+			$axios
 				.post("/questions/" + question.id, questionData, {
 					headers: {
 						"Content-Type": "multipart/form-data",

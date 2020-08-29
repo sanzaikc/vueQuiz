@@ -1,4 +1,4 @@
-import axios from "axios";
+import $axios from "../../plugins/axios";
 import Cookies from 'js-cookie'
 
 const state = {
@@ -27,9 +27,8 @@ const actions = {
 	restoreToken: (context) => {
 		let token = Cookies.get("accessToken");
 		if (token) {
-			axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 			return new Promise((resolve, reject) => {
-				axios
+				$axios
 					.get("/users/me")
 					.then((res) => {
 						let user = res.data.user;
@@ -47,7 +46,7 @@ const actions = {
 	},
 	login: ({ commit }, credentials) => {
 		return new Promise((resolve, reject) => {
-			axios
+			$axios
 				.post("/login", credentials)
 				.then((res) => {
 					let token = res.data.token;
@@ -65,7 +64,7 @@ const actions = {
 	},
 	register: (context,credentials) => {
 		return new Promise((resolve, reject) => {
-			axios
+			$axios
 				.post("/register", credentials)
 				.then((res) => {
 					resolve(res);
@@ -76,10 +75,9 @@ const actions = {
 		});
 	},
 	logout: (context) => {
-		axios.defaults.headers.common["Authorization"] = "Bearer " + context.state.token;
 		if (context.getters.loggedIn) {
 			return new Promise((resolve, reject) => {
-				axios
+				$axios
 					.post("/logout")
 					.then((res) => {
 						context.commit("DESTROY_TOKEN");

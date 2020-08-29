@@ -1,4 +1,4 @@
-import axios from 'axios';
+import $axios from "../../plugins/axios";
 
 const state = {
     quizList: [],
@@ -46,7 +46,7 @@ const mutations = {
 const actions = {
     retrieveQuiz: ({commit}) => {
         return new Promise((resolve, reject)=> {
-            axios.get('/quizzes')
+            $axios.get('/quizzes')
             .then(res => {
                 let quizzes = res.data.quizzes;
                 commit('SET_QUIZ_LIST', quizzes);
@@ -64,7 +64,7 @@ const actions = {
         quizData.append('image', quiz.image);
 
         return new Promise((resolve, reject) => {
-            axios.post('/quizzes', quizData, {
+            $axios.post('/quizzes', quizData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -81,7 +81,7 @@ const actions = {
     },
     deleteQuiz: ({commit}, id) => {
      return new Promise((resolve, reject) => {
-        axios.delete('/quizzes/'+ id)
+        $axios.delete('/quizzes/'+ id)
         .then(res=>{
             commit('REMOVE_QUIZ', res.data.quiz);
             resolve(res.data.message);
@@ -98,7 +98,7 @@ const actions = {
         quizData.append('image', quiz.data.image);
 
         return new Promise((resolve, reject) => {
-            axios.post('/quizzes/'+ quiz.id, quizData, {
+            $axios.post('/quizzes/'+ quiz.id, quizData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -116,7 +116,7 @@ const actions = {
     },
     attachQuestions: ({commit}, data) => {
         return new Promise((resolve, reject)=>{
-            axios.post('/questions/attach/' + data.quizId, {
+            $axios.post('/questions/attach/' + data.quizId, {
                 questions: data.questions
             })
             .then(res => {
@@ -131,7 +131,7 @@ const actions = {
     },
     detachQuestion: ({commit}, data) => {
         return new Promise((resolve, reject)=>{
-            axios.post('/questions/detach/' + data.quizId, {
+            $axios.post('/questions/detach/' + data.quizId, {
                 questions: data.questionId
             })
             .then(res => {
@@ -145,7 +145,7 @@ const actions = {
     },
     updatePin: ({commit}, data) => {
         return new Promise((resolve, reject)=>{
-            axios.post('/quizzes/'+ data.id, {
+            $axios.post('/quizzes/'+ data.id, {
                 pin: data.pin
             })
                 .then(res => {
@@ -160,7 +160,7 @@ const actions = {
     },
     joinQuiz: (context, data) => {
         return new Promise((resolve, reject)=>{
-            axios.post('player', data)
+            $axios.post('player', data)
                 .then(res => {
                     resolve(res.data);
                 })

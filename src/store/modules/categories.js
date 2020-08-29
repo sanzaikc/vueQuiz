@@ -1,4 +1,4 @@
-import  axios from 'axios';
+import $axios from "../../plugins/axios";
 
 export default {
     state: {
@@ -23,7 +23,7 @@ export default {
     actions: {
         retrieveCategories: ({commit}) => {
             return new Promise((resolve, reject) => {
-                axios.get("/categories")
+                $axios.get("/categories")
                 .then(res=> {
                     let categories = res.data.categories;
                     commit('SET_CATEGORIES', categories);
@@ -37,7 +37,7 @@ export default {
         },
         createCategory: ({commit}, category) => {
             return new Promise((resolve, reject)=>{
-                axios.post("/categories", category)
+                $axios.post("/categories", category)
                 .then(res => {
                     let newCategory = res.data.category;
                     commit('ADD_CATEGORY', newCategory);
@@ -51,7 +51,7 @@ export default {
         deleteCategory: ({commit}, id) => {
             return new Promise((resolve, reject)=>{
                 if(confirm("Are you sure you want to delete?")){
-                    axios.delete("/categories/"+ id + "/1")
+                    $axios.delete("/categories/"+ id + "/1")
                     .then(res => {
                         let cate = res.data.category;
                         commit("REMOVE_CATEGORY",cate);
@@ -65,7 +65,7 @@ export default {
         },
         updateCategory: ({commit}, payload) => {
             return new Promise((resolve, reject)=>{
-                axios.put("/categories/" + payload.id + "/",  {
+                $axios.put("/categories/" + payload.id + "/",  {
                     name: payload.category,
                     })
                     .then(res => {

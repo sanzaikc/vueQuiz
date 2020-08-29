@@ -1,4 +1,4 @@
-import axios from 'axios'
+import $axios from "../../plugins/axios";
 
 const state = {
     userList: [],
@@ -16,7 +16,7 @@ const mutations = {
 const actions = {
     retrieveUsers: ({commit}) => {
         return new Promise((resolve, reject)=>{
-            axios.get('/users')
+            $axios.get('/users')
                     .then(res => {
                         let users = res.data.users;
                         commit("SET_USERS", users);
@@ -30,7 +30,7 @@ const actions = {
     },
     updateStatus: ({commit}, user) => {
         return new Promise((resolve, reject)=>{
-            axios.put('/users/update/' + user.id, {
+            $axios.put('/users/update/' + user.id, {
                 is_disabled: user.status
             })
                 .then(res => {
