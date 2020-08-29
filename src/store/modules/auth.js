@@ -2,7 +2,7 @@ import $axios from "../../plugins/axios";
 import Cookies from 'js-cookie'
 
 const state = {
-    token: Cookies.get('accessToken') || null,
+    token: null,
     currentUser:  null,
 };
 const mutations = {

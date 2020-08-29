@@ -41,7 +41,7 @@ import QuizSidebar from "../../../components/quiz/QuizSidebar.vue";
 export default {
 	mounted() {
 		document.title = "Quiz";
-		this.$store.dispatch("retrieveQuiz")	
+		this.$store.dispatch("retrieveQuiz")
 			.then((res) => {
 				if (res) this.isLoading = false;
 				this.$store.dispatch('retrieveCategories');

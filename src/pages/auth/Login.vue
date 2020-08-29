@@ -50,10 +50,10 @@
 				</validation-provider>
 
 				<div class="d-flex flex-column align-items-start">
-					<router-link :to="{}"
+					<!-- <router-link :to="{}"
 						tag="b-link"
 						class="text-center mb-3">Forgot password?
-					</router-link>
+					</router-link> -->
 					<b-button type="submit" variant="outline-primary w-100" :disabled="isLoading">
 						{{ isLoading ? "Logging in" : "Login" }}
 						<b-spinner

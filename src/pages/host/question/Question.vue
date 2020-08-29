@@ -13,29 +13,30 @@
                 :actions="fabActions"
                 @show="createSidebar">
             </fab>
-            <sidebar 
-                v-model="isBusy" 
-                :text=" sideBarTitle " 
+            <sidebar
+                v-model="isBusy"
+                :text=" sideBarTitle "
                 :qData="data"
-                @onSubmit="create" 
+                @onSubmit="create"
                 @onUpdate="update" >
             </sidebar>
-            
+
             <div v-if="questions.length > 0">
                 <transition-group name="slide-fade" mode="out-in">
-                    <question-card 
-                    v-for="(question, index) in questions" 
-                    :key="question.id" 
-                    :question="question" 
-                    :index="index"
-                    :attach="false"
-                    @edit="editSidebar"></question-card>
+                    <question-card
+                        v-for="(question, index) in questions"
+                        :key="question.id"
+                        :question="question"
+                        :index="index"
+                        :attach="false"
+                        @edit="editSidebar">
+                    </question-card>
                 </transition-group>
             </div>
             <div v-else>No questions by you, yet!</div>
         </div>
     </div>
-    
+
 </template>
 
 <script>
@@ -45,6 +46,7 @@ import QuestionCard from '../../../components/question/QuesCard.vue';
 import Sidebar from '../../../components/question/QuesSidebar.vue';
 export default {
     mounted(){
+        document.title="Questions"
         this.$store.dispatch('retriveQuestions')
             .then(res => {
                 if(res) this.isLoading = false;
@@ -90,7 +92,7 @@ export default {
                             theme: 'bubble',
                         });
                         this.isBusy = false;
-                    }  
+                    }
                 });
         },
         update(question){
@@ -107,7 +109,7 @@ export default {
                     this.$toasted.show(error, {
                         theme: 'bubble',
                     });
-                    this.isBusy = false; 
+                    this.isBusy = false;
                 });
         },
     },
