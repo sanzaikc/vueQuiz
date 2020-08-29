@@ -8,8 +8,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import en from "vee-validate/dist/locale/en.json";
 import * as rules from "vee-validate/dist/rules";
 
-import {router} from './router';
-import store from './store/store';
+import {router} from './router/index';
+import store from './store/index';
 
 import { ValidationObserver, ValidationProvider, extend, localize } from "vee-validate";
 
