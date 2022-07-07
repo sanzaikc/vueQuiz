@@ -13,7 +13,7 @@
     "core-js": "^3.6.5",
     "es6-promise-promise": "^1.0.0",
     "gsap": "^3.4.2",
-    "moment": "^2.27.0",
+    "moment": "^2.29.4",
     "vee-validate": "^3.3.7",
     "vue": "^2.6.11",
     "vue-fab": "^2.3.1",
